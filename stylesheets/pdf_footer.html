@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+
+<!--
+documentation
+Footers And Headers:
+
+   * [page]       Replaced by the number of the pages currently being printed
+   * [frompage]   Replaced by the number of the first page to be printed
+   * [topage]     Replaced by the number of the last page to be printed
+   * [webpage]    Replaced by the URL of the page being printed
+   * [section]    Replaced by the name of the current section
+   * [subsection] Replaced by the name of the current subsection
+   * [date]       Replaced by the current date in system local format
+   * [isodate]    Replaced by the current date in ISO 8601 extended format
+   * [time]       Replaced by the current time in system local format
+   * [title]      Replaced by the title of the of the current page object
+   * [doctitle]   Replaced by the title of the output document
+   * [sitepage]   Replaced by the number of the page in the current site being converted
+   * [sitepages]  Replaced by the number of pages in the current site being converted
+-->
+
+<html>
+<head>
+<script>
+  function subst() {
+    var vars={};
+    var x=window.location.search.substring(1).split('&');
+    for (var i in x) {var z=x[i].split('=',2);vars[z[0]] = unescape(z[1]);}
+    var x=['frompage','topage','page','webpage','section','subsection','subsubsection', 'doctitle', 'title'];
+    for (var i in x) {
+      var y = document.getElementsByClassName(x[i]);
+      for (var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
+    }
+  }
+</script>
+</head>
+
+<body style="border:0; margin: 0; font-family: Verdana, arial, sans-serif;" onload="subst()">
+<div style="padding-top:1em;">
+<table style="border-top: 1px solid black; width: 100%">
+  <tr>
+    <td class="title"></td>
+    <td class="section"></td>
+    <td><b>P</b>rofessional <b>M</b>arkdown <b>Doc</b>umentation</b></td>
+    <td style="text-align:right">
+      Page <span class="page"></span> of <span class="topage"></span>
+    </td>
+  </tr>
+</table>
+</div>
+</body></html>

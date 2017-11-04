@@ -1,0 +1,61 @@
+{
+  "name": "wavedrom-cli",
+  "version": "0.3.1",
+  "description": "WaveDrom command-line interface (CLI) on PhantomJS",
+  "main": "lib/index.js",
+  "bin": {
+    "wavedrom": "./bin/wavedrom-cli.js"
+  },
+  "scripts": {
+    "build-wavedrom-cli": "./build-wavedrom-cli.sh",
+    "build-phantom2": "./build-phantom2.sh",
+    "test": "./build-wavedrom-cli.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wavedrom/cli.git"
+  },
+  "keywords": [
+    "PhantomJS",
+    "WaveDrom"
+  ],
+  "author": {
+    "name": "Aliaksei Chapyzhenka"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wavedrom/cli/issues"
+  },
+  "homepage": "https://github.com/wavedrom/cli#readme",
+  "devDependencies": {
+    "browserify": "^13.0.0",
+    "minimist": "^1.2.0",
+    "wavedrom": "^1.2.6"
+  },
+  "gitHead": "d913cdfaf0c3abf7d92893e2099ddcfb7d101f34",
+  "_id": "wavedrom-cli@0.3.1",
+  "_shasum": "c5ba52218611f920f2ecd9ee4b0bfebefc593d24",
+  "_from": "wavedrom-cli@latest",
+  "_npmVersion": "2.14.12",
+  "_nodeVersion": "4.3.1",
+  "_npmUser": {
+    "name": "drom",
+    "email": "alex.drom@gmail.com"
+  },
+  "dist": {
+    "shasum": "c5ba52218611f920f2ecd9ee4b0bfebefc593d24",
+    "tarball": "https://registry.npmjs.org/wavedrom-cli/-/wavedrom-cli-0.3.1.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "drom",
+      "email": "alex.drom@gmail.com"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/wavedrom-cli-0.3.1.tgz_1459926122155_0.24935874110087752"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/wavedrom-cli/-/wavedrom-cli-0.3.1.tgz"
+}

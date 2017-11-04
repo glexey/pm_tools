@@ -1,0 +1,84 @@
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>$if(title-prefix)$$title-prefix$ – $endif$$pagetitle$</title>
+
+<style type="text/css">
+code { white-space: pre; }
+body { font-family: Calibri; font-size: 11pt; color: #333; }
+p { margin: 0.5em 0; }
+td p { margin: 0.2em 0; }
+p.title, p.subtitle, p.author, p.date { font-weight: bold; margin-left: 0; }
+h1, h2, h3, h4, h5 { margin: 1em 0 0.8 0; }
+h1, p.title { font-family: "Calibri Light"; font-size: 18pt; color: #0071c5; }
+h2 { font-family: "Calibri Light"; font-size: 14pt; }
+h3, p.subtitle { font-family: "Calibri Light"; font-size: 12pt; }
+h4 { font-family: "Calibri"; font-weight: bold; font-size: 11pt; }
+h5 { font-family: "Calibri"; font-style: italic; font-size: 11pt; }
+table { border-collapse: collapse; }
+th { background-color: #C2DFE8; }
+th, td { border: 1px solid #777; padding: 2px 7px; }
+pre, code { background-color: #f8f8f8; }
+span.kw { color: #204a87; font-weight: bold; }
+span.dt { color: #204a87; }
+span.dv, span.bn, span.fl { color: #0000cf; }
+span.ch, span.st { color: #4e9a06; }
+span.co, span.pp { color: #8f5902; font-style: italic; }
+span.ot { color: #8f5902; }
+span.al { color: #ef2929; }
+span.er { color: #a40000; font-weight: bold; }
+span.wa { color: #8f5902; font-weight: bold; font-style: italic; }
+span.cn, span.sc, span.fu, span.va { color: #000000; }
+span.vs, span.ss { color: #4e9a06; }
+span.cf { color: #204a87; font-weight: bold; }
+span.op { color: #ce5c00; font-weight: bold; }
+span.at { color: #c4a000; }
+span.do, span.an, span.cv, span.in { color: #8f5902; font-weight: bold; font-style: italic; }
+.fasmCode       { line-height: 18px; }
+.fasm_instrs    { color: #b76161; }
+.fasm_comment   { color: #4d72e1; }
+.fasm_labels    { color: #4e438f; }
+.fasm_fixme     { color: #ff1493; font-weight: bold; }
+.fasm_registers { color: #3e6a8f; }
+.fasm_constants { color: #921192; }
+.fasm_variables { color: #008b8b; font-weight: bold; }
+p.table_notes { display: none; }
+table.notes td { border: 0; }
+.register.bits { width: 4em; }
+.register.field { width: 14em; }
+.register.description { width: 45em; }
+table.packet { table-layout: fixed; }
+td.bitnum.wd16 { min-width: 2.5em }
+td.bitnum.wd32 { min-width: 1.5em }
+td.bitnum.wd64 { min-width: 0.9em }
+td.rsvd { background-color: #cccccc; }
+td.bitnum, td.bitnumr { font-size: 75%; color: grey; padding: 2px; text-align: center; border: 0; }
+td.bitnumr { padding: 2px 8px; }
+td.field_reset, td.field_bits, td.field_access { text-align: center; }
+.field_name { font-weight: bold; }
+p.field_name { margin-top: 1px; margin-bottom: 3px; }
+</style>
+</head>
+
+<body>
+$for(include-before)$
+$include-before$
+$endfor$
+$if(title)$
+<div id="$idprefix$header">
+<p class="title">$title$</p>
+$if(subtitle)$
+<p class="subtitle">$subtitle$</p>
+$endif$
+$for(author)$
+<p class="author">$author$</p>
+$endfor$
+$if(date)$
+<p class="date">$date$</p>
+$endif$
+</div>
+$endif$
+$body$
+$for(include-after)$
+$include-after$
+$endfor$
+</body>

@@ -1,0 +1,3 @@
+# Update version in this file to trigger documentation rebuild
+
+version = 5.7

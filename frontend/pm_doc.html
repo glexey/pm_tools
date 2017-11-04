@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html xmlns="http://www.w3.org/1999/xhtml"$if(lang)$ lang="$lang$" xml:lang="$lang$"$endif$$if(dir)$ dir="$dir$"$endif$>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,11,10">
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="mmd2doc version=$toolver$" />
+$for(author-meta)$
+  <meta name="author" content="$author-meta$" />
+$endfor$
+$if(date-meta)$
+  <meta name="date" content="$date-meta$" />
+$endif$
+$if(keywords)$
+  <meta name="keywords" content="$for(keywords)$$keywords$$sep$, $endfor$" />
+$endif$
+  <meta name="application-name" content="pm_doc" 
+        data-src-path="$src_path$"
+        data-src-sha1="$src_path$"
+        data-src-rev="$src_path$"
+        data-owner="$username$"
+  />
+  <title>$if(title-prefix)$$title-prefix$ – $endif$$pagetitle$</title>
+  <style type="text/css">code{white-space: pre;}</style>
+
+  <!-- FONTS -->
+
+$if(math)$
+<script type="text/x-mathjax-config">
+   var isIE11 = navigator.userAgent.match(/Trident/g);
+   var isNavigate = window.performance && (window.performance.navigation.type == 0);
+   MathJax.Hub.Config({
+       // positionToHash completely messes up the layout in IE11;
+       // in Chrome, it also jumps to hash on *reload*, which is BAD
+       positionToHash: !isIE11 && isNavigate,
+       // Zoom on mouse hover
+       menuSettings: { zoom: "Hover" },
+       // Prevent tiny mathjax fonts in wkhtmltopdf 
+       "HTML-CSS": { minScaleAdjust: 100 }, // Used for PDF rendering as wkhtml2pdf works weirdly with CHTML
+       CommonHTML: { minScaleAdjust: 100, linebreaks: {automatic: true, width: "container"} },
+   });
+</script>
+
+<!-- MATHJAX -->
+$endif$
+
+$if(highlighting-css)$
+  <style type="text/css">
+$highlighting-css$
+  </style>
+$endif$
+$for(css)$
+  <link rel="stylesheet" href="$css$" type="text/css" />
+$endfor$
+$for(header-includes)$
+  $header-includes$
+$endfor$
+
+</head>
+<body onload="init()">
+<div id="feedback_cover" class="dim-body"></div>
+<section id="feedback_section">
+<div id="feedback_help" class="feedback-help">
+    Select the text that you want to reference in your feedback.<br>
+    Alternatively, make selection first, and then click on a comment button.<br>
+    Hit Escape to exit selection mode.
+</div>
+<div id="feedback_form" class="feedback-form">
+  <div class="feedback-border"><div class="feedback-content">
+     <h2>Submit feedback / comment</h2>
+     <table>
+        <tr class="nohover"><td>Doc&nbsp;Owner:</td><td><input class="wide" type="text" id="fb-form-owner"></td></tr>
+        <tr class="nohover"><td>Feedback:</td><td><textarea rows="8" id="feedback_text" oninput="f.fb_text_update(this)"></textarea></td></tr>
+     </table>
+     <div class="feedback-escape">Press 'Esc' to cancel</div>
+     <div class="feedback-submit" id="feedback_submit" onclick="f.submit_feedback()">Submit</div>
+  </div></div>
+</div>
+</section>
+<div id="TOCCLOSE">
+    <button class="menubutton hastooltip" id="subscribe_button" onclick="f.subscribe()" style="display:none">
+        <span class="fa fa-envelope"></span>
+        <span class="tooltip2">Subscribe to this document's updates and comments</span>
+    </button>
+    <button class="menubutton hastooltip" id="feedback_button" onclick="f.start_feedback()" style="display:none">
+        <span class="fa fa-pencil-square-o"></span>
+        <span class="tooltip2">Provide feedback to the author, or ask a question</span>
+    </button>
+    <div class="toclevel" onclick="f.closeTOC()"><span>&laquo;</span></div>
+</div>
+<div id="TOCOPEN" onclick="f.openTOC()">&raquo;</div>
+<div id="SIDEBAR">
+$if(toc)$
+<div id="$idprefix$TOC">
+$toc$
+</div>
+$endif$
+</div>
+<div id="EDGE"></div>
+<div id="MAIN">
+$for(include-before)$
+$include-before$
+$endfor$
+$if(title)$
+<div id="$idprefix$header">
+<p class="title">$title$</p>
+$if(subtitle)$
+<p class="subtitle">$subtitle$</p>
+$endif$
+$for(author)$
+<p class="author">$author$</p>
+$endfor$
+$if(date)$
+<p class="date">$date$</p>
+$endif$
+</div>
+$endif$
+$body$
+$for(include-after)$
+$include-after$
+$endfor$
+</div>
+</body>
+</html>
