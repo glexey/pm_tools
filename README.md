@@ -53,15 +53,19 @@ Run from the git bash (recommended) console:
 
     python $PM_DOC/scripts/mmd2doc.py hello.md
 
-This command should produce hello.html file similar to [this](https://glexey.github.io/pm_tools/doc/hello_world/hello.html).
+Above command should produce hello.html file similar to
+[this](https://glexey.github.io/pm_tools/doc/hello_world/hello.html).
 
 # Next steps
 
 An overview of all features with the examples can be found here:
 [example.html](https://glexey.github.io/pm_tools/doc/example.html). The source of this document is
-in `doc/example.mmd`. Best way to learn pm_tools features is to display source `example.mmd` and
-output [example.html](https://glexey.github.io/pm_tools/doc/example.html) side-by-side and scroll
-through the examples.
+in [doc/example.mmd](doc/example.mmd). Best way to learn pm_tools features is to display source
+[example.mmd](doc/example.mmd) and output
+[example.html](https://glexey.github.io/pm_tools/doc/example.html) side-by-side and compare.
+
+Note: PM_TOOLS rendering of the [README.md](README.md) you are reading right now can be viewed here:
+[README.html](https://glexey.github.io/pm_tools/README.html).
 
 # FIXME
 
