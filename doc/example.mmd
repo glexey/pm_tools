@@ -1,11 +1,15 @@
 ---
 title: Sample Markdown Document
-date: 2016/06/02 
 ...
 
-This file was generated from the source code [here](Example.mmd).  Open in a separate window to compare it with the rendered output.
+This file was generated from the source code [here](Example.mmd).  Open in a separate window to
+compare it with the rendered output.
 
-[Markdown](https://en.wikipedia.org/wiki/Markdown) syntax used for pm_doc documentation is used widely on the Web today. Core markdown syntax is fairly standard, however there are several flavors of the language that allow additional features like tables, etc. The flavor of markdown used in pm_doc is called **pandoc markdown**. Good reference for pandoc markdown syntax can be found here: [Pandoc Markdown](http://rmarkdown.rstudio.com/authoring_pandoc_markdown.html).
+[Markdown](https://en.wikipedia.org/wiki/Markdown) syntax used for pm_doc documentation is used
+widely on the Web today. Core markdown syntax is fairly standard, however there are several flavors
+of the language that allow additional features like tables, etc. The flavor of markdown used in
+pm_doc is called **pandoc markdown**. Good reference for pandoc markdown syntax can be found here:
+[Pandoc Markdown](http://rmarkdown.rstudio.com/authoring_pandoc_markdown.html).
 
 # Header1
 
@@ -58,7 +62,9 @@ A `*` or `_` character surrounded by spaces, or backslash-escaped, will not trig
 
 This is * not emphasized *, and \*neither is this\*.
 
-Because `_` is sometimes used inside words and identifiers, pandoc does not interpret a `_` surrounded by alphanumeric characters as an emphasis marker. If you want to emphasize just part of a word, use `*`:
+Because `_` is sometimes used inside words and identifiers, pandoc does not interpret a `_`
+surrounded by alphanumeric characters as an emphasis marker. If you want to emphasize just part of a
+word, use `*`:
 
 feas*ible*, not feas*able*.
 
@@ -93,7 +99,8 @@ This will not appear in the output.
 
 ## Tables
 
-Simple tables can be created using markdown syntax as described [here](http://rmarkdown.rstudio.com/authoring_pandoc_markdown.html#tables).
+Simple tables can be created using markdown syntax as described
+[here](http://rmarkdown.rstudio.com/authoring_pandoc_markdown.html#tables).
 
   Right     Left     Center     Default
 -------     ------ ----------   -------
@@ -138,7 +145,8 @@ multiple lines.
 
 The alternative for markdown syntax for simple tables is [Embedded CSV and TSV tables].
 
-[Embedded XLSX Sheet] plugin allows inserting more complex tables with formatting, cell highlighting, column span, and so on.
+[Embedded XLSX Sheet] plugin allows inserting more complex tables with formatting, cell
+highlighting, column span, and so on.
 
 ## Footnotes
 
@@ -150,13 +158,21 @@ Pandoc[^pandoc]-style markdown footnotes[^1] are supported^[Both inlines and non
 
 ## Math formulas
 
-Markdown supports LaTeX-style syntax for rendering formulas. Good quick reference for the syntax here: <http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference>. There's also excellent app to identify TeX symbols from handwriting: <http://detexify.kirelabs.org/classify.html> - just scribble any symbol there and it will give you couple of variant to represent it in the formula. For more info, Google "latex formulas".
+Markdown supports LaTeX-style syntax for rendering formulas. Good quick reference for the syntax
+here:
+<http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference>.
+There's also excellent app to identify TeX symbols from handwriting:
+<http://detexify.kirelabs.org/classify.html> - just scribble any symbol there and it will give you
+couple of variant to represent it in the formula. For more info, Google "latex formulas".
 
-To insert a formula in line with the text, surround it in `$` .. `$`, e.g.: `$P_{total} = P_{leak} + C_{dyn} * V^2 * F$`.
+To insert a formula in line with the text, surround it in `$` .. `$`, e.g.:
+`$P_{total} = P_{leak} + C_{dyn} * V^2 * F$`.
 
 The result looks like this: $P_{total} = P_{leak} + C_{dyn} * V^2 * F$.
 
-To insert a formula centered on a separate line, surround it in `$$` .. `$$`, e.g. `$$\sum_{n=1}^{\infty} 2^{-n} = 1$$`. Here's what the result looks like: $$\sum_{n=1}^{\infty} 2^{-n} = 1$$ 
+To insert a formula centered on a separate line, surround it in `$$` .. `$$`, e.g.
+`$$\sum_{n=1}^{\infty} 2^{-n} = 1$$`. Here's what the result looks like:
+$$\sum_{n=1}^{\infty} 2^{-n} = 1$$ 
 
 ## Cross-References
 
@@ -164,7 +180,8 @@ To insert a formula centered on a separate line, surround it in `$$` .. `$$`, e.
 
 You may insert a cross reference by simply using a section header's exact text such as [Numbered List]
 
-You can also [add an explicit reference](#explicit_reference) in case it is not uniquely named in the document.  To set up that reference, use code like this:
+You can also [add an explicit reference](#explicit_reference) in case it is not uniquely named in
+the document.  To set up that reference, use code like this:
 
 ```
 ### Numbered List {#explicit_reference}
@@ -252,13 +269,22 @@ Full list of languages supported for syntax highlighting:
 
 ## Inline Markdown Files
 
-For large documents, it may be useful to compose text in several chapters and then merge them together in a master document.  The tools support this using a unique tag indicating file insertion.  This tag must be in the first column of the file (no spaces at the front of the line) and must refer to a valid markdown file (*.md or *.mmd).  See the example below.
+For large documents, it may be useful to compose text in several chapters and then merge them
+together in a master document.  The tools support this using a unique tag indicating file insertion.
+This tag must be in the first column of the file (no spaces at the front of the line) and must refer
+to a valid markdown file (*.md or *.mmd).  See the example below.
 
 `[_chapter1.md]`
 
-When this file is parsed, all section headings are adjusted so that it is nested within the current document.  For example, if the current section heading level of this document is H3 (###), then all H1 (#) elements and text in the included file will be modified to be H4 (####).  Raw text in the main body that is not under a heading will be inserted at the H3 level.
+When this file is parsed, all section headings are adjusted so that it is nested within the current
+document.  For example, if the current section heading level of this document is H3 (###), then all
+H1 (#) elements and text in the included file will be modified to be H4 (####). Raw text in the
+main body that is not under a heading will be inserted at the H3 level.
 
-In many cases, when developing chapters, the user would like to put them together as isolated documents and rely on the build tools to stitch them together.  Therefore, to differentiate a chapter from a normal document, we are using a simple underscore.  If a document starts with an underscore, it will be excluded from the builds.
+In many cases, when developing chapters, the user would like to put them together as isolated
+documents and rely on the build tools to stitch them together. Therefore, to differentiate a
+chapter from a normal document, we are using a simple underscore. If a document starts with an
+underscore, it will be excluded from the builds.
 
 The following text is inserted by the tools as a nested chapter.
 
@@ -268,11 +294,13 @@ You can also insert file located in different folder relative to the current fil
 
 `[../chapters/_chapter1.md]`
 
-If you choose to insert a file that doesn't exist, it will just pass through as-is.  No warnings or errors are thrown.  For example, see below a non-existent file.
+If you choose to insert a file that doesn't exist, it will just pass through as-is.  No warnings or
+errors are thrown. For example, see below a non-existent file.
 
 [_chapter2.md]
 
-Finally, in some cases you may want to insert a chapter at the base heading level (versus inline with the containing header).  To do this:
+Finally, in some cases you may want to insert a chapter at the base heading level (versus inline
+with the containing header). To do this:
 
 `[!_chapter1.md]`
 
@@ -283,17 +311,23 @@ Which results in:
 
 # Plugins
 
-In PM_DOC context, "plugins" term refers to extensions of the regular markdown syntax that enable pm_doc-specific functionality, such as register descriptions, flow diagrams, embedding Visio or Excel, and so on.
+In PM_DOC context, "plugins" term refers to extensions of the regular markdown syntax that enable
+pm_doc-specific functionality, such as register descriptions, flow diagrams, embedding Visio or
+Excel, and so on.
 
 ## Specifying max-width for plugin content
 
-Most of the time default width/height generated by the tools for showing the plugin content works fine. Sometimes, however the result may look nicer if a particular diagram/drawing/etc. is constrained to a certain width. In this case, specifying max-width attribute is helpful:
+Most of the time default width/height generated by the tools for showing the plugin content works
+fine. Sometimes, however the result may look nicer if a particular diagram/drawing/etc. is
+constrained to a certain width. In this case, specifying max-width attribute is helpful:
 
     ```plugin("blah"){max-width: 600px}
     ...
     ```
 
-The syntax for attribute specification is regular [CSS style declaration](http://www.w3schools.com/css/css_syntax.asp). When it is specified, plugin generated content will be put inside a `<div>` element with specified style attributes.
+The syntax for attribute specification is regular [CSS style
+declaration](http://www.w3schools.com/css/css_syntax.asp). When it is specified, plugin generated
+content will be put inside a `<div>` element with specified style attributes.
 
 ## Embedded Plantuml 
 
@@ -342,10 +376,10 @@ Here is an example of a diagram using ditaa.
 
 ## Signal Interface Definition
 
-Using the simple syntax provided below, you can develop some simple but effective diagrams to 
+Using the simple syntax provided below, you can develop some simple but effective diagrams to
 describe signal interfaces between two logic blocks.  This plugin is called `sigint`.
 
-Syntax is as follows.  The 'clock' and 'power' tags are special.  They are detected by looking for 
+Syntax is as follows.  The 'clock' and 'power' tags are special.  They are detected by looking for
 the exact syntax as show below.  If found, they will be picked up and placed in the summary table.
 
 ```
@@ -386,7 +420,8 @@ This is an *example*
 
 ## Embedded DOT / Graphviz
 
-You can integrate dot diagrams as follows.  It's super easy.  The syntax spec for dot graphs can be found at [graphviz.org](http://www.graphviz.org).
+You can integrate dot diagrams as follows.  It's super easy.  The syntax spec for dot graphs can be
+found at [graphviz.org](http://www.graphviz.org).
 
 ```dot("Sample Flowchart"){width:600px}
 digraph { 
@@ -453,9 +488,11 @@ And when you are done, it will produce a format like this
 
 ### Rich Register Format
 
-Rich registers allow for things like markdown in the individual cells (multi-line descriptions) and enumerations.
+Rich registers allow for things like markdown in the individual cells (multi-line descriptions) and
+enumerations.
 
-Format for rich registers is as follows.  Note that access type and reset default are optional parameters
+Format for rich registers is as follows.  Note that access type and reset default are optional
+parameters
 
 ```
 ---
@@ -536,13 +573,16 @@ This formatting:
 
 `xls("pm_doc_demo.xlsx", "Sheet name" [, "Title Override (optional)"])`
 
-Tells the tools to open crashlog.xlsx, grab the sheet ID named 'Sheet name', and insert its contents into the document. It will also automatically link the table to the original XLSX for further detailed review. If the optional title override is supplied, it will be used when displaying the table instead of the actual sheet name.
+Tells the tools to open crashlog.xlsx, grab the sheet ID named 'Sheet name', and insert its contents
+into the document. It will also automatically link the table to the original XLSX for further
+detailed review. If the optional title override is supplied, it will be used when displaying the
+table instead of the actual sheet name.
 
 ```xls("pm_doc_demo.xlsx", "Project Tracker", "Sample Excel Sheet")
 ```
 
-Footnotes may be added automatically to the spreadsheet by inserting comments in the cell in which 
-you want a footnote attached.  For example, see below a few footnotes automatically inserted from 
+Footnotes may be added automatically to the spreadsheet by inserting comments in the cell in which
+you want a footnote attached.  For example, see below a few footnotes automatically inserted from
 the excel spreadsheet's comments.  Cross-reference hyperlinks are also included for easy navigation.
 
 ```xls("assets\pm_doc_demo.xlsx", "Invoices")
@@ -550,7 +590,8 @@ the excel spreadsheet's comments.  Cross-reference hyperlinks are also included 
 
 ## Embedded XLSX Image Snapshot
 
-Ranges of cells from excel files can be embedded as pictures to preserve exact appearance as when viewed in Excel application.
+Ranges of cells from excel files can be embedded as pictures to preserve exact appearance as when
+viewed in Excel application.
 
 Command Syntax:
 
@@ -558,9 +599,12 @@ Command Syntax:
 
 Arguments:
 
-* "Sheet name (optional)" - specifies sheet name to snapshot. If not supplied or equals "" and range doesn't specify the page either, first sheet will be selected.
-* "Range (optional)" - Excel range to snapshot. Syntax is whatever Excel allows - see examples below. If not supplied or equals "", all used cells in a sheet are selected.
-* "Title Override (optional)" - when supplied, will be used when displaying the table instead of the sheet name.
+* "Sheet name (optional)" - specifies sheet name to snapshot. If not supplied or equals "" and range
+  doesn't specify the page either, first sheet will be selected.
+* "Range (optional)" - Excel range to snapshot. Syntax is whatever Excel allows - see examples
+  below. If not supplied or equals "", all used cells in a sheet are selected.
+* "Title Override (optional)" - when supplied, will be used when displaying the table instead of the
+  sheet name.
 
 Example syntax:
 
@@ -637,7 +681,10 @@ similar to one described in [Specifying max-width for plugin content], e.g.:
 
 ## Embedded Wavedrom Timing Diagram
 
-For drawing timing diagrams, the wavedrom tool is very handy.  See the [wavedrom help documentation](http://wavedrom.com/tutorial.html) for proper syntax.  You may integrate a raw wavedrom source input into the document and it will be rendered by the build tools and integrated as a figure similar to other figures.
+For drawing timing diagrams, the wavedrom tool is very handy.  See the [wavedrom help
+documentation](http://wavedrom.com/tutorial.html) for proper syntax.  You may integrate a raw
+wavedrom source input into the document and it will be rendered by the build tools and integrated as
+a figure similar to other figures.
 
 For example, the below code:
 
@@ -687,15 +734,23 @@ Is rendered into this wavedrom output
 
 ### Wave Diagram Short Syntax
 
-The syntax is basically the same, but it avoids all of the json syntax and focuses on a single line definition of the waveform.
+The syntax is basically the same, but it avoids all of the json syntax and focuses on a single line
+definition of the waveform.
 
 The format is as follows for each signal name:
 
 `signal name   | waveform | data value list (space separated)`
 
-A full waveform definition would look like the following.  To get nice aligned visualizations, you may use editor tricks.  With VIM, you can use the Tabularize plugin to nicely format the text so that it is vertically aligned at the pipes.  Once the text has been selected using visual block mode, you can simply type `Tabularize /|` to get it to be aligned.  You can also use visual block mode to insert columns into the waveform for easy addition or subtraction of the sequence.  Comments are annotated with #.
+A full waveform definition would look like the following.  To get nice aligned visualizations, you
+may use editor tricks.  With VIM, you can use the Tabularize plugin to nicely format the text so
+that it is vertically aligned at the pipes.  Once the text has been selected using visual block
+mode, you can simply type `Tabularize /|` to get it to be aligned.  You can also use visual block
+mode to insert columns into the waveform for easy addition or subtraction of the sequence.
+Comments are annotated with #.
 
-Lines may be defined immediately below the signal waveform.  The parser assumes that a line with no signal name that starts with | is a node definition.  It is required that the string length of the line definition matches that of the signal preceding it.
+Lines may be defined immediately below the signal waveform.  The parser assumes that a line with no
+signal name that starts with | is a node definition.  It is required that the string length of the
+line definition matches that of the signal preceding it.
 
 Blank lines between signals are assumed to be intentional spacers
 
@@ -872,22 +927,26 @@ d.save("<image file name>")
 
 ## Integrated XSD Documentation
 
-For an XML schema that you wish to document, the build tools have automated flows for generating XSD schema specifications in a standard documentation template.
+For an XML schema that you wish to document, the build tools have automated flows for generating XSD
+schema specifications in a standard documentation template.
 
 To embed documentation, implement code such as this:
 
 `xsd2html("assets\simple_schema.xsd", "Simple Schema")`
 
-The resulting code is a simple pointer to the documentation as well as a pointer to the original source file for the schema.
+The resulting code is a simple pointer to the documentation as well as a pointer to the original
+source file for the schema.
 
 ```xsd2html("assets\simple_schema.xsd", "Simple Schema")
 ```
 
 ## Integrated Python Scripts
 
-The 'python_run' plugin may be used to execute python code and generate output.  The script is run standalone in a separate executable shell and the output is captured.
+The 'python_run' plugin may be used to execute python code and generate output.  The script is run
+standalone in a separate executable shell and the output is captured.
 
-For example, the following code will produce a date string when embedded inside the `python_run` plugin block:
+For example, the following code will produce a date string when embedded inside the `python_run`
+plugin block:
 
 ```python
 import time

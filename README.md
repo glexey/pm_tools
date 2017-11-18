@@ -1,4 +1,4 @@
-# pm_tools
+# Overview
 
 **pm_tools** is a framework for authoring technical documentation in markdown. Basic markdown
 capabilities are provided by pandoc. Pm_tools extends pandoc-flavored markdown with "plugin" syntax
@@ -37,19 +37,33 @@ Principles of pm_doc:
 
 # Quick start
 
-Create `hello.md` with the following content:
+Create a file named `hello.md` with the following content:
 
-    # Hello, World
+    # Quick start example
+
+    ## Hello, World
 
     ```plantuml("Communication to the world")
     Pm_doc -> World: Hello there
     ```
 
-Run from the console:
+Run from the git bash (recommended) console:
 
     python $PM_DOC/scripts/mmd2doc.py hello.md
 
-An overview of all features with the examples is in `doc/Example.mmd`.
+Above command should produce hello.html file similar to
+[this](https://glexey.github.io/pm_tools/doc/hello_world/hello.html).
+
+# Next steps
+
+An overview of all features with the examples can be found here:
+[example.html](https://glexey.github.io/pm_tools/doc/example.html). The source of this document is
+in [doc/example.mmd](doc/example.mmd). Best way to learn pm_tools features is to display source
+[example.mmd](doc/example.mmd) and output
+[example.html](https://glexey.github.io/pm_tools/doc/example.html) side-by-side and compare.
+
+Note: PM_TOOLS rendering of the [README.md](README.md) you are reading right now can be viewed here:
+[README.html](https://glexey.github.io/pm_tools/README.html).
 
 # FIXME
 
