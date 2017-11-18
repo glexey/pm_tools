@@ -1,0 +1,12 @@
+{
+signal: [{ name: 'clk', wave: 'p..Pp..P', node: '.a......' },
+{ name: 'write', wave: '01.0....' },
+{ name: 'read', wave: '0...1..0' },
+{ name: 'addr', wave: 'x3.x4..x', data: [ 'A1', 'A2' ], node: '....b...' },
+{},
+{ name: 'wdata', wave: 'x3.x....', data: [ 'D1' ] },
+{ name: 'ack', wave: 'x01x0.1x', node: '......c.' },
+{ name: 'rdata', wave: 'x.....4x', data: [ 'Q2' ] }],
+edge: ['a~>b This is an edge definition','b-|>c a sharp edge'],
+config: {hscale: 2}
+}

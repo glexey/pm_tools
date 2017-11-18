@@ -1,0 +1,58 @@
+distrib/
+tools/
+.*/
+
+*.time
+
+*.db
+*.backup
+build_profile.csv
+unused_sources.txt
+
+# credentials for pmdb
+vcap_services.txt
+localhostCert.pem
+localhostKey.pem
+
+# flask session data
+flask_session/
+pmdb.saved_state
+
+# glob test
+tests/src/dir2/globtest.mmd
+
+# coverage results
+coverage_report/
+last_good_coverage/
+.coverage*
+
+# docx/pdf tests output
+visual_check/
+
+# python compiled modules
+*.pyc
+
+# VIM swap/backup
+*~
+*.bak
+.*.sw?
+_.sw?
+.sw?
+.sw?.part
+
+# Sublime setup
+#*.sublime*
+
+.svn/
+
+# Word swap
+~*
+
+# Misc windows
+*.lnk
+
+#emacs pollution
+*.*~
+
+#chrome pollution
+debug.log

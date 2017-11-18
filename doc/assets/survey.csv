@@ -1,0 +1,16 @@
+Age,Gender,state,self employed,family history,treatment,work interfere,remote work,tech company,care options,anonymity,leave,mental health consequence,phys health consequence,mental health interview,phys health interview,mental vs physical
+37,Female,IL,NA,No,Yes,Often,No,Yes,Not sure,Yes,Somewhat easy,No,No,No,Maybe,Yes
+44,M,IN,NA,No,No,Rarely,No,No,No,Don't know,Don't know,Maybe,No,No,No,Don't know
+32,Male,NA,NA,No,No,Rarely,No,Yes,No,Don't know,Somewhat difficult,No,No,Yes,Yes,No
+31,Male,NA,NA,Yes,Yes,Often,No,Yes,Yes,No,Somewhat difficult,Yes,Yes,Maybe,Maybe,No
+31,Male,TX,NA,No,No,Never,Yes,Yes,No,Don't know,Don't know,No,No,Yes,Yes,Don't know
+33,Male,TN,NA,Yes,No,Sometimes,No,Yes,Not sure,Don't know,Don't know,No,No,No,Maybe,Don't know
+35,Female,MI,NA,Yes,Yes,Sometimes,Yes,Yes,No,No,Somewhat difficult,Maybe,Maybe,No,No,Don't know
+39,M,NA,NA,No,No,Never,Yes,Yes,Yes,Yes,Don't know,No,No,No,No,No
+42,Female,IL,NA,Yes,Yes,Sometimes,No,Yes,Yes,No,Very difficult,Maybe,No,No,Maybe,No
+23,Male,NA,NA,No,No,Never,No,Yes,No,Don't know,Don't know,No,No,Maybe,Maybe,Yes
+31,Male,OH,NA,No,Yes,Sometimes,Yes,Yes,No,Don't know,Don't know,No,No,No,No,Don't know
+29,male,NA,NA,No,No,Never,Yes,Yes,Not sure,Don't know,Don't know,No,No,Yes,Yes,Don't know
+42,female,CA,NA,Yes,Yes,Sometimes,No,No,Yes,Don't know,Somewhat difficult,Yes,Yes,Maybe,Maybe,No
+36,Male,CT,NA,Yes,No,Never,No,Yes,Not sure,Don't know,Don't know,No,No,No,No,Don't know
+27,Male,NA,NA,No,No,Never,No,Yes,Not sure,Don't know,Somewhat easy,No,No,Maybe,Yes,Yes

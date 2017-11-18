@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+<title>Conversation between Alice and Bob</title>
+
+<script type="text/javascript">
+
+var svg;
+var zoomScaleSensitivity = 0.3;
+var info_displayed = "";
+
+function cancel_evt(evt) {
+   if (evt.preventDefault) {
+      evt.preventDefault();
+   } else {
+      evt.returnValue = false;
+   }
+}
+
+function zoomViaMouseWheel(evt) {      
+   cancel_evt(evt);
+
+   var delta = evt.wheelDelta / 360;
+   var zoom = Math.pow(1 + zoomScaleSensitivity, (-1) * delta);
+
+   bl = svg.createSVGPoint(); // bottom left
+   bl.x = svg.viewBox.animVal.x;
+   bl.y = svg.viewBox.animVal.y;
+   ur = svg.createSVGPoint(); // upper right
+   ur.x = bl.x + svg.viewBox.animVal.width;
+   ur.y = bl.y + svg.viewBox.animVal.height;
+
+   var p = getEventPoint(evt);
+   p = p.matrixTransform(svg.getCTM().inverse()); // Mouse point in SVG coordinates
+
+   // Compute new scale matrix in current mouse position
+   var k = svg.createSVGMatrix().translate(p.x, p.y).scale(zoom).translate(-p.x, -p.y);
+
+   bl = bl.matrixTransform(k);
+   ur = ur.matrixTransform(k);
+
+   var vbstr = "" + bl.x + " " + bl.y + " " + (ur.x - bl.x) + " " + (ur.y - bl.y);
+   svg.setAttribute('viewBox', vbstr);
+}
+
+function handleMouseDown(evt, prevEvt) {
+   cancel_evt(evt);
+   this.state = 'pan';
+   this.stateTf = svg.getCTM().inverse();
+   this.point_dn = getEventPoint(evt).matrixTransform(this.stateTf);
+}
+
+function handleMouseUp(evt) {
+   cancel_evt(evt);
+   this.state = 'none'
+}
+
+function handleMouseMove(evt) {
+   cancel_evt(evt);
+   if (this.state === 'pan') {
+      var point = getEventPoint(evt).matrixTransform(this.stateTf)
+      var x = svg.viewBox.animVal.x - (point.x - this.point_dn.x)
+      var y = svg.viewBox.animVal.y - (point.y - this.point_dn.y)
+      var w = svg.viewBox.animVal.width
+      var h = svg.viewBox.animVal.height
+      var vbstr = "" + x + " " + y + " " + w + " " + h
+      svg.setAttribute('viewBox', vbstr);
+      this.point_dn = point
+   }
+}
+
+function getEventPoint(evt) {
+    point = svg.createSVGPoint()
+    point.x = evt.clientX
+    point.y = evt.clientY
+    return point
+}
+
+function addEvent(element, eventName, callback) {
+    if (element.addEventListener) {
+        element.addEventListener(eventName, callback, false);
+    } else if (element.attachEvent) {
+        element.attachEvent("on" + eventName, callback);
+    }
+}
+
+function initialize() {
+   //svg = document.getElementById('svgElement');
+   svg = document.getElementsByTagName('svg')[0];
+   // Style, height are messing up browser rendering
+   svg.removeAttribute("style")
+   svg.setAttribute("height", "100%")
+   svg.setAttribute("width", "100%")
+
+   //if(svg.namespaceURI != "http://www.w3.org/2000/svg")
+   //   alert("Inline SVG in HTML5 is not supported. This document requires a browser that supports HTML5 inline SVG.");
+   //if(navigator.userAgent.indexOf('Gecko/') >= 0)
+   //   alert("Firefox has only vrey basic SVG support (as of version 33), so this floorplan explorer probably will not work. Try IE >= 10, or Chrome.");
+   addEvent(svg, "mousewheel", zoomViaMouseWheel);
+   addEvent(svg, "mousedown", handleMouseDown);
+   addEvent(svg, "mouseup", handleMouseUp);
+   addEvent(svg, "mousemove", handleMouseMove);
+
+   xx = document.querySelectorAll('[info]');
+   for (var i=0; i < xx.length; i++) {
+      xx[i].onmouseover=function(e)
+      {
+         info_displayed = e.target.getAttribute("info");
+         document.getElementById("infobox").innerHTML = info_displayed;
+      };
+      xx[i].onmouseout=function(e)
+      {
+         if (info_displayed == e.target.getAttribute("info")) {
+            document.getElementById("infobox").innerHTML = "";
+         }
+      };
+   }
+}    
+
+function set_visibility(checkbox) {
+   // The layer with drawn elements is a group in SVG
+   var elem = document.getElementById('layer_' + checkbox.name);
+   elem.setAttributeNS(null, 'visibility', checkbox.checked ? 'visible' : 'hidden');
+   // Also turn the annotation on/off, when present
+   var annot = document.getElementById('annot_' + checkbox.name);
+   if (annot != null) annot.style.display = checkbox.checked ? 'table' : 'none';
+}
+
+function toggle_annot(div, annot, bgcolor) {
+   var vis = (div.style.backgroundColor == "rgb(200, 200, 200)") ? true: false;
+   var x = document.getElementsByClassName("annot_" + annot);
+   for (var i=0; i < x.length; i++) {
+      x[i].setAttributeNS(null, 'visibility', vis ? 'inherit' : 'hidden')
+   }
+   div.style.backgroundColor = vis ? bgcolor : "rgb(200, 200, 200)";
+}
+
+</script>
+
+<style type="text/css">
+
+@font-face {
+    font-family: "Neo Sans Intel Medium";
+    src: url("NeoSansIntel-Medium.woff") format('woff');
+}
+
+body, html {
+   margin:0;
+   height: 100%;
+   font-family: Calibri, arial, sans-serif;
+}
+
+svg text {
+    /* Preserve space in SVG text, otherwise Visio text may be messed up */
+    white-space: pre;
+}
+
+#infobox{
+   position:fixed;
+   top: 20px;
+   left: 20px;
+   font-family: "Neo Sans Intel Medium", "Intel Clear", "Arial";
+   font-size: 0.8em;
+   width: 150px;
+   color: grey;
+   background-color:rgba(255, 255, 255, 0.6);
+   border-radius:5px;
+   padding: 3px;
+}
+
+div.buttons {
+   position:fixed;
+   top: 20px;
+   right: 20px;
+   font-family: "Neo Sans Intel Medium", "Intel Clear", "Arial";
+   text-transform: uppercase;
+   font-size: 0.8em;
+   -webkit-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+   width: 150px;
+}
+table.buttons {
+   right: 0px;
+   background-color:rgba(255, 255, 255, 0.5);
+   border-radius:8px;
+   border:2px solid rgba(0, 0, 0, 0.5);
+   width: 100%;
+}
+table.buttons td {
+   color: rgba(0, 0, 0, 0.5);
+   background-color:rgba(255, 255, 255, 0.5);
+   border-radius:6px;
+}
+table.buttons td:hover {
+   background-color:rgba(100,100,100,0.1);
+}
+.annot_table {
+   margin-top: 20px;
+   background-color:rgba(255, 255, 255, 0.5);
+   border-radius:8px;
+   border:2px solid rgba(0, 0, 0, 0.5);
+   font-size: 0.7em;
+   width: 100%;
+   text-align: center;
+   cursor: default;
+}
+.annot_cell {
+   border-radius:3px;
+   display: inline-block;
+   border: 1px solid white;
+}
+
+</style>
+
+</head>
+
+<body onload="initialize();">
+
+<div id="infobox">
+</div>
+
+<div class="buttons">
+</div>
+
+<div style="width:100%; height:100%; margin:0; overflow:hidden; display:block">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 387 265" zoomAndPan="magnify" style="width:387px; height:265px"><defs/><g><line style="stroke: #021540; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="159" x2="159" y1="39.9727" y2="229.8359"/><line style="stroke: #021540; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="219" x2="219" y1="39.9727" y2="229.8359"/><rect fill="#E5E8EF" height="35.9727" rx="5" ry="5" style="stroke: #021540; stroke-width: 1.5;" width="50" x="134" y="3"/><text fill="#000000" font-family="Calibri" font-size="18" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="36" x="141" y="29.459">Alice</text><rect fill="#E5E8EF" height="35.9727" rx="5" ry="5" style="stroke: #021540; stroke-width: 1.5;" width="50" x="134" y="228.8359"/><text fill="#000000" font-family="Calibri" font-size="18" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="36" x="141" y="255.2949">Alice</text><rect fill="#E5E8EF" height="35.9727" rx="5" ry="5" style="stroke: #021540; stroke-width: 1.5;" width="44" x="197" y="3"/><text fill="#000000" font-family="Calibri" font-size="18" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="30" x="204" y="29.459">Bob</text><rect fill="#E5E8EF" height="35.9727" rx="5" ry="5" style="stroke: #021540; stroke-width: 1.5;" width="44" x="197" y="228.8359"/><text fill="#000000" font-family="Calibri" font-size="18" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="30" x="204" y="255.2949">Bob</text><polygon fill="#000000" points="207,75.9727,217,79.9727,207,83.9727,211,79.9727" style="stroke: #000000; stroke-width: 1.0;"/><line style="stroke: #000000; stroke-width: 1.0;" x1="159" x2="213" y1="79.9727" y2="79.9727"/><text fill="#000000" font-family="Calibri" font-size="18" lengthAdjust="spacingAndGlyphs" textLength="36" x="166" y="76.4316">hello</text><polygon fill="#F8FCFF" points="8,54.9727,8,85.9727,154,85.9727,154,64.9727,144,54.9727,8,54.9727" style="stroke: #021540; stroke-width: 1.0;"/><line style="stroke: #021540; stroke-width: 1.0;" x1="144" x2="144" y1="54.9727" y2="64.9727"/><line style="stroke: #021540; stroke-width: 1.0;" x1="154" x2="144" y1="64.9727" y2="64.9727"/><text fill="#000000" font-family="Calibri" font-size="18" lengthAdjust="spacingAndGlyphs" textLength="125" x="14" y="79.4316">this is a first note</text><polygon fill="#000000" points="170,117.9453,160,121.9453,170,125.9453,166,121.9453" style="stroke: #000000; stroke-width: 1.0;"/><line style="stroke: #000000; stroke-width: 1.0;" x1="164" x2="218" y1="121.9453" y2="121.9453"/><text fill="#000000" font-family="Calibri" font-size="18" lengthAdjust="spacingAndGlyphs" textLength="18" x="176" y="118.4043">ok</text><polygon fill="#F8FCFF" points="224,96.9453,224,127.9453,386,127.9453,386,106.9453,376,96.9453,224,96.9453" style="stroke: #021540; stroke-width: 1.0;"/><line style="stroke: #021540; stroke-width: 1.0;" x1="376" x2="376" y1="96.9453" y2="106.9453"/><line style="stroke: #021540; stroke-width: 1.0;" x1="386" x2="376" y1="106.9453" y2="106.9453"/><text fill="#000000" font-family="Calibri" font-size="18" lengthAdjust="spacingAndGlyphs" textLength="141" x="230" y="121.4043">this is another note</text><line style="stroke: #000000; stroke-width: 1.0;" x1="219" x2="261" y1="180.3633" y2="180.3633"/><line style="stroke: #000000; stroke-width: 1.0;" x1="261" x2="261" y1="180.3633" y2="193.3633"/><line style="stroke: #000000; stroke-width: 1.0;" x1="220" x2="261" y1="193.3633" y2="193.3633"/><polygon fill="#000000" points="230,189.3633,220,193.3633,230,197.3633,226,193.3633" style="stroke: #000000; stroke-width: 1.0;"/><text fill="#000000" font-family="Calibri" font-size="18" lengthAdjust="spacingAndGlyphs" textLength="93" x="226" y="175.8496">I am thinking</text><polygon fill="#F8FCFF" points="52,138.918,52,213.918,214,213.918,214,148.918,204,138.918,52,138.918" style="stroke: #021540; stroke-width: 1.0;"/><line style="stroke: #021540; stroke-width: 1.0;" x1="204" x2="204" y1="138.918" y2="148.918"/><line style="stroke: #021540; stroke-width: 1.0;" x1="214" x2="204" y1="148.918" y2="148.918"/><text fill="#000000" font-family="Calibri" font-size="18" lengthAdjust="spacingAndGlyphs" textLength="47" x="58" y="163.377">a note</text><text fill="#000000" font-family="Calibri" font-size="18" lengthAdjust="spacingAndGlyphs" textLength="141" x="58" y="185.3496">can also be defined</text><text fill="#000000" font-family="Calibri" font-size="18" lengthAdjust="spacingAndGlyphs" textLength="112" x="58" y="207.3223">on several lines</text><!--
+@startuml
+skinparam backgroundColor white 
+skinparam activityArrowColor #021540
+skinparam activityBackgroundColor #E5E8EF
+skinparam activityBorderColor #021540 
+skinparam activityStartColor black 
+skinparam activityEndColor black 
+skinparam activityBarColor black 
+skinparam actorBackgroundColor #E5E8EF
+skinparam actorBorderColor #021540 
+skinparam usecaseArrowColor #021540 
+skinparam usecaseBackgroundColor #E5E8EF
+skinparam usecaseBorderColor #021540 
+skinparam classArrowColor #021540 
+skinparam classBackgroundColor #E5E8EF
+skinparam classBorderColor #021540 
+skinparam objectArrowColor #021540 
+skinparam objectBackgroundColor #E5E8EF
+skinparam objectBorderColor #021540 
+skinparam packageBackgroundColor #E5E8EF
+skinparam packageBorderColor #021540 
+skinparam stereotypeCBackgroundColor #ADD1B2 
+skinparam stereotypeABackgroundColor #A9DCDF 
+skinparam stereotypeIBackgroundColor #B4A7E5 
+skinparam stereotypeEBackgroundColor #EB937F 
+skinparam componentArrowColor #021540 
+skinparam componentBackgroundColor #E5E8EF
+skinparam componentBorderColor #021540 
+skinparam componentInterfaceBackgroundColor #E5E8EF
+skinparam componentInterfaceBorderColor #021540 
+skinparam noteFontColor #000000
+skinparam noteFontSize 18
+skinparam noteFontStyle  plain
+skinparam noteBackgroundColor #f8fcff
+skinparam noteBorderColor #021540
+skinparam noteRoundCorner 10
+skinparam stateBackgroundColor #E5E8EF
+skinparam stateBorderColor #021540 
+skinparam stateArrowColor #021540 
+skinparam stateStartColor black 
+skinparam stateEndColor black 
+skinparam sequenceArrowColor #000000
+skinparam sequenceDividerBackgroundColor #303438 
+skinparam sequenceDividerBorderColor #ffffff
+skinparam sequenceDividerFontColor white
+skinparam sequenceDividerFontSize 18
+skinparam sequenceDividerFontStyle  plain
+skinparam sequenceLifeLineBackgroundColor #41719c
+skinparam sequenceLifeLineBorderColor #021540 
+skinparam sequenceParticipantBackgroundColor #E5E8EF
+skinparam sequenceParticipantBorderColor #021540 
+skinparam sequenceBoxBorderColor #ffffff
+skinparam sequenceBoxBackgroundColor #f8f8f8
+skinparam sequenceBoxRoundcorner 10
+skinparam sequenceReferenceAlign center
+skinparam sequenceActorFontColor black
+skinparam sequenceActorFontSize 18
+skinparam sequenceActorFontStyle bold
+skinparam sequenceArrowFontColor black
+skinparam sequenceArrowFontSize 18
+skinparam sequenceArrowFontStyle  plain
+skinparam sequenceGroupBackgroundColor #EEEEEE 
+skinparam sequenceGroupFontColor black
+skinparam sequenceGroupFontSize 18
+skinparam sequenceGroupFontStyle  bold
+skinparam sequenceGroupHeaderFontColor black
+skinparam sequenceGroupHeaderFontSize 18
+skinparam sequenceGroupHeaderFontStyle  bold
+skinparam sequenceParticipantFontColor black
+skinparam sequenceParticipantFontSize 18
+skinparam sequenceParticipantFontStyle  bold
+skinparam sequenceStereotypeFontColor black
+skinparam sequenceStereotypeFontSize 18
+skinparam sequenceStereotypeFontStyle  italic
+skinparam sequenceTitleFontColor black
+skinparam sequenceTitleFontSize 18
+skinparam sequenceTitleFontStyle  bold
+
+skinparam defaultFontName Calibri
+skinparam defaultFontSize 18
+
+skinparam activityFontColor black
+skinparam activityFontSize 18
+skinparam activityFontStyle bold
+skinparam activityArrowFontColor black
+skinparam activityArrowFontSize 18
+skinparam activityArrowFontStyle  plain
+skinparam circledCharacterFontColor black
+skinparam circledCharacterFontSize 18
+skinparam circledCharacterFontStyle bold
+skinparam circledCharacterRadius 11
+skinparam classArrowFontColor black
+skinparam classArrowFontSize 18
+skinparam classArrowFontStyle  plain
+skinparam classAttributeFontColor black
+skinparam classAttributeFontSize 18
+skinparam classAttributeIconSize  10 
+skinparam classAttributeFontStyle  plain
+skinparam classFontColor black
+skinparam classFontSize 18
+skinparam classFontStyle bold
+skinparam classStereotypeFontColor black
+skinparam classStereotypeFontSize 18
+skinparam classStereotypeFontStyle  italic
+skinparam objectArrowFontColor black
+skinparam objectArrowFontSize 18
+skinparam objectArrowFontStyle  plain
+skinparam objectAttributeFontColor black
+skinparam objectAttributeFontSize 18
+skinparam objectAttributeFontStyle  plain
+skinparam objectFontColor black
+skinparam objectFontSize 18
+skinparam objectFontStyle bold
+skinparam objectStereotypeFontColor black
+skinparam objectStereotypeFontSize 18
+skinparam objectStereotypeFontStyle  italic
+skinparam componentFontColor black
+skinparam componentFontSize 18
+skinparam componentFontStyle bold
+skinparam componentStereotypeFontColor black
+skinparam componentStereotypeFontSize 18
+skinparam componentStereotypeFontStyle  italic
+skinparam componentArrowFontColor black
+skinparam componentArrowFontSize 18
+skinparam componentArrowFontStyle  plain
+skinparam packageFontColor black
+skinparam packageFontSize 18
+skinparam packageFontStyle bold
+skinparam titleFontColor black
+skinparam titleFontSize 18
+skinparam titleFontStyle bold
+skinparam stateFontColor black
+skinparam stateFontSize 18
+skinparam stateFontStyle bold
+skinparam stateArrowFontColor black
+skinparam stateArrowFontSize 18
+skinparam stateArrowFontStyle  plain
+skinparam stateAttributeFontColor black
+skinparam stateAttributeFontSize 18
+skinparam stateAttributeFontStyle  plain
+skinparam usecaseFontColor black
+skinparam usecaseFontSize 18
+skinparam usecaseFontStyle  plain
+skinparam usecaseStereotypeFontColor black
+skinparam usecaseStereotypeFontSize 18
+skinparam usecaseStereotypeFontStyle  italic
+skinparam usecaseActorFontColor black
+skinparam usecaseActorFontSize 18
+skinparam usecaseActorFontStyle  plain
+skinparam usecaseActorStereotypeFontColor black
+skinparam usecaseActorStereotypeFontSize 18
+skinparam usecaseActorStereotypeFontStyle  italic
+skinparam usecaseArrowFontColor black
+skinparam usecaseArrowFontSize 18
+skinparam usecaseArrowFontStyle  plain
+skinparam footerFontColor black
+skinparam footerFontSize 18
+skinparam footerFontStyle  plain
+skinparam headerFontColor black
+skinparam headerFontSize 18
+skinparam headerFontStyle  plain
+skinparam roundcorner 10
+' Removing this auto-wrap, overall default is better
+'skinparam maxMessageSize 200
+
+skinparam shadowing false
+
+Alice->Bob : hello
+note left: this is a first note
+
+Bob->Alice : ok
+note right: this is another note
+
+Bob->Bob : I am thinking
+note left
+	a note
+	can also be defined
+	on several lines
+end note
+
+@enduml
+
+PlantUML version 1.2017.14beta5(Unknown compile time)
+(GPL source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) 64-Bit Server VM
+Java Version: 1.8.0_144-b01
+Operating System: Windows 10
+OS Version: 10.0
+Default Encoding: Cp1252
+Language: en
+Country: US
+--></g></svg>
+</div>
+
+</body>
+</html>
+

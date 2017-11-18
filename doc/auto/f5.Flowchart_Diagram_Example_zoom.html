@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+<title>Flowchart Diagram Example</title>
+
+<script type="text/javascript">
+
+var svg;
+var zoomScaleSensitivity = 0.3;
+var info_displayed = "";
+
+function cancel_evt(evt) {
+   if (evt.preventDefault) {
+      evt.preventDefault();
+   } else {
+      evt.returnValue = false;
+   }
+}
+
+function zoomViaMouseWheel(evt) {      
+   cancel_evt(evt);
+
+   var delta = evt.wheelDelta / 360;
+   var zoom = Math.pow(1 + zoomScaleSensitivity, (-1) * delta);
+
+   bl = svg.createSVGPoint(); // bottom left
+   bl.x = svg.viewBox.animVal.x;
+   bl.y = svg.viewBox.animVal.y;
+   ur = svg.createSVGPoint(); // upper right
+   ur.x = bl.x + svg.viewBox.animVal.width;
+   ur.y = bl.y + svg.viewBox.animVal.height;
+
+   var p = getEventPoint(evt);
+   p = p.matrixTransform(svg.getCTM().inverse()); // Mouse point in SVG coordinates
+
+   // Compute new scale matrix in current mouse position
+   var k = svg.createSVGMatrix().translate(p.x, p.y).scale(zoom).translate(-p.x, -p.y);
+
+   bl = bl.matrixTransform(k);
+   ur = ur.matrixTransform(k);
+
+   var vbstr = "" + bl.x + " " + bl.y + " " + (ur.x - bl.x) + " " + (ur.y - bl.y);
+   svg.setAttribute('viewBox', vbstr);
+}
+
+function handleMouseDown(evt, prevEvt) {
+   cancel_evt(evt);
+   this.state = 'pan';
+   this.stateTf = svg.getCTM().inverse();
+   this.point_dn = getEventPoint(evt).matrixTransform(this.stateTf);
+}
+
+function handleMouseUp(evt) {
+   cancel_evt(evt);
+   this.state = 'none'
+}
+
+function handleMouseMove(evt) {
+   cancel_evt(evt);
+   if (this.state === 'pan') {
+      var point = getEventPoint(evt).matrixTransform(this.stateTf)
+      var x = svg.viewBox.animVal.x - (point.x - this.point_dn.x)
+      var y = svg.viewBox.animVal.y - (point.y - this.point_dn.y)
+      var w = svg.viewBox.animVal.width
+      var h = svg.viewBox.animVal.height
+      var vbstr = "" + x + " " + y + " " + w + " " + h
+      svg.setAttribute('viewBox', vbstr);
+      this.point_dn = point
+   }
+}
+
+function getEventPoint(evt) {
+    point = svg.createSVGPoint()
+    point.x = evt.clientX
+    point.y = evt.clientY
+    return point
+}
+
+function addEvent(element, eventName, callback) {
+    if (element.addEventListener) {
+        element.addEventListener(eventName, callback, false);
+    } else if (element.attachEvent) {
+        element.attachEvent("on" + eventName, callback);
+    }
+}
+
+function initialize() {
+   //svg = document.getElementById('svgElement');
+   svg = document.getElementsByTagName('svg')[0];
+   // Style, height are messing up browser rendering
+   svg.removeAttribute("style")
+   svg.setAttribute("height", "100%")
+   svg.setAttribute("width", "100%")
+
+   //if(svg.namespaceURI != "http://www.w3.org/2000/svg")
+   //   alert("Inline SVG in HTML5 is not supported. This document requires a browser that supports HTML5 inline SVG.");
+   //if(navigator.userAgent.indexOf('Gecko/') >= 0)
+   //   alert("Firefox has only vrey basic SVG support (as of version 33), so this floorplan explorer probably will not work. Try IE >= 10, or Chrome.");
+   addEvent(svg, "mousewheel", zoomViaMouseWheel);
+   addEvent(svg, "mousedown", handleMouseDown);
+   addEvent(svg, "mouseup", handleMouseUp);
+   addEvent(svg, "mousemove", handleMouseMove);
+
+   xx = document.querySelectorAll('[info]');
+   for (var i=0; i < xx.length; i++) {
+      xx[i].onmouseover=function(e)
+      {
+         info_displayed = e.target.getAttribute("info");
+         document.getElementById("infobox").innerHTML = info_displayed;
+      };
+      xx[i].onmouseout=function(e)
+      {
+         if (info_displayed == e.target.getAttribute("info")) {
+            document.getElementById("infobox").innerHTML = "";
+         }
+      };
+   }
+}    
+
+function set_visibility(checkbox) {
+   // The layer with drawn elements is a group in SVG
+   var elem = document.getElementById('layer_' + checkbox.name);
+   elem.setAttributeNS(null, 'visibility', checkbox.checked ? 'visible' : 'hidden');
+   // Also turn the annotation on/off, when present
+   var annot = document.getElementById('annot_' + checkbox.name);
+   if (annot != null) annot.style.display = checkbox.checked ? 'table' : 'none';
+}
+
+function toggle_annot(div, annot, bgcolor) {
+   var vis = (div.style.backgroundColor == "rgb(200, 200, 200)") ? true: false;
+   var x = document.getElementsByClassName("annot_" + annot);
+   for (var i=0; i < x.length; i++) {
+      x[i].setAttributeNS(null, 'visibility', vis ? 'inherit' : 'hidden')
+   }
+   div.style.backgroundColor = vis ? bgcolor : "rgb(200, 200, 200)";
+}
+
+</script>
+
+<style type="text/css">
+
+@font-face {
+    font-family: "Neo Sans Intel Medium";
+    src: url("NeoSansIntel-Medium.woff") format('woff');
+}
+
+body, html {
+   margin:0;
+   height: 100%;
+   font-family: Calibri, arial, sans-serif;
+}
+
+svg text {
+    /* Preserve space in SVG text, otherwise Visio text may be messed up */
+    white-space: pre;
+}
+
+#infobox{
+   position:fixed;
+   top: 20px;
+   left: 20px;
+   font-family: "Neo Sans Intel Medium", "Intel Clear", "Arial";
+   font-size: 0.8em;
+   width: 150px;
+   color: grey;
+   background-color:rgba(255, 255, 255, 0.6);
+   border-radius:5px;
+   padding: 3px;
+}
+
+div.buttons {
+   position:fixed;
+   top: 20px;
+   right: 20px;
+   font-family: "Neo Sans Intel Medium", "Intel Clear", "Arial";
+   text-transform: uppercase;
+   font-size: 0.8em;
+   -webkit-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+   width: 150px;
+}
+table.buttons {
+   right: 0px;
+   background-color:rgba(255, 255, 255, 0.5);
+   border-radius:8px;
+   border:2px solid rgba(0, 0, 0, 0.5);
+   width: 100%;
+}
+table.buttons td {
+   color: rgba(0, 0, 0, 0.5);
+   background-color:rgba(255, 255, 255, 0.5);
+   border-radius:6px;
+}
+table.buttons td:hover {
+   background-color:rgba(100,100,100,0.1);
+}
+.annot_table {
+   margin-top: 20px;
+   background-color:rgba(255, 255, 255, 0.5);
+   border-radius:8px;
+   border:2px solid rgba(0, 0, 0, 0.5);
+   font-size: 0.7em;
+   width: 100%;
+   text-align: center;
+   cursor: default;
+}
+.annot_cell {
+   border-radius:3px;
+   display: inline-block;
+   border: 1px solid white;
+}
+
+</style>
+
+</head>
+
+<body onload="initialize();">
+
+<div id="infobox">
+</div>
+
+<div class="buttons">
+</div>
+
+<div style="width:100%; height:100%; margin:0; overflow:hidden; display:block">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 384.5 542.65625" preserveAspectRatio="xMidYMid meet" style="width:384px; height:542px"><desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphaël @@VERSION</desc><defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><marker id="raphael-marker-endblock33-obj13" markerHeight="3" markerWidth="3" orient="auto" refX="1.5" refY="1.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xlink:href="#raphael-marker-block" transform="rotate(180 1.5 1.5) scale(0.6,0.6)" stroke-width="1.6667" fill="black" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><marker id="raphael-marker-endblock33-obj14" markerHeight="3" markerWidth="3" orient="auto" refX="1.5" refY="1.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xlink:href="#raphael-marker-block" transform="rotate(180 1.5 1.5) scale(0.6,0.6)" stroke-width="1.6667" fill="black" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><marker id="raphael-marker-endblock33-obj15" markerHeight="3" markerWidth="3" orient="auto" refX="1.5" refY="1.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xlink:href="#raphael-marker-block" transform="rotate(180 1.5 1.5) scale(0.6,0.6)" stroke-width="1.6667" fill="black" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><marker id="raphael-marker-endblock33-obj17" markerHeight="3" markerWidth="3" orient="auto" refX="1.5" refY="1.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xlink:href="#raphael-marker-block" transform="rotate(180 1.5 1.5) scale(0.6,0.6)" stroke-width="1.6667" fill="black" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><marker id="raphael-marker-endblock33-obj19" markerHeight="3" markerWidth="3" orient="auto" refX="1.5" refY="1.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xlink:href="#raphael-marker-block" transform="rotate(180 1.5 1.5) scale(0.6,0.6)" stroke-width="1.6667" fill="black" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><marker id="raphael-marker-endblock33-obj20" markerHeight="3" markerWidth="3" orient="auto" refX="1.5" refY="1.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xlink:href="#raphael-marker-block" transform="rotate(180 1.5 1.5) scale(0.6,0.6)" stroke-width="1.6667" fill="black" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker></defs><rect x="0" y="0" width="50" height="36" rx="20" ry="20" fill="#ffffff" stroke="#000000" stroke-width="3" class="flowchart_99fdb6" id="st" transform="matrix(1,0,0,1,68.5,27.6094)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="10" y="18" text-anchor="start" font-family="&quot;Arial&quot;" font-size="14px" stroke="none" fill="#000000" id="stt" class="flowchartt_99fdb6" transform="matrix(1,0,0,1,68.5,27.6094)" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 14px;"><tspan dy="5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Start</tspan></text><rect x="0" y="0" width="105" height="36" rx="0" ry="0" fill="#ffffff" stroke="#000000" stroke-width="3" class="flowchart_99fdb6" id="op1" transform="matrix(1,0,0,1,41,141.2188)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="10" y="18" text-anchor="start" font-family="&quot;Arial&quot;" font-size="14px" stroke="none" fill="#000000" id="op1t" class="flowchartt_99fdb6" transform="matrix(1,0,0,1,41,141.2188)" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 14px;"><tspan dy="5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">My Operation</tspan></text><path fill="#ffffff" stroke="#000000" d="M27,19.8046875L0,39.609375L54,79.21875L108,39.609375L54,0L0,39.609375" stroke-width="3" id="cond" class="flowchart_99fdb6" transform="matrix(1,0,0,1,39.5,233.2188)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="32" y="39.609375" text-anchor="start" font-family="&quot;Arial&quot;" font-size="14px" stroke="none" fill="#000000" id="condt" class="flowchartt_99fdb6" transform="matrix(1,0,0,1,39.5,233.2188)" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 14px;"><tspan dy="-3.40625" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Yes</tspan><tspan dy="16.8" x="32" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">or No?</tspan></text><path fill="#ffffff" stroke="#000000" d="M10,18L0,36L155,36L175,0L20,0L10,18" stroke-width="3" id="io" class="flowchart_99fdb6" transform="matrix(1,0,0,1,6,390.0469)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="30" y="18" text-anchor="start" font-family="&quot;Arial&quot;" font-size="14px" stroke="none" fill="#000000" id="iot" class="flowchartt_99fdb6" transform="matrix(1,0,0,1,6,390.0469)" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 14px;"><tspan dy="5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">catch something...</tspan></text><rect x="0" y="0" width="45" height="36" rx="20" ry="20" fill="#ffffff" stroke="#000000" stroke-width="3" class="flowchart_99fdb6" id="e" transform="matrix(1,0,0,1,71,503.6563)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="10" y="18" text-anchor="start" font-family="&quot;Arial&quot;" font-size="14px" stroke="none" fill="#000000" id="et" class="flowchartt_99fdb6" transform="matrix(1,0,0,1,71,503.6563)" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 14px;"><tspan dy="5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">End</tspan></text><rect x="0" y="0" width="131" height="36" rx="0" ry="0" fill="#ffffff" stroke="#000000" stroke-width="3" class="flowchart_99fdb6" id="sub1" transform="matrix(1,0,0,1,225.5,254.8281)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="10" y="0" width="111" height="36" rx="0" ry="0" fill="#ffffff" stroke="#000000" stroke-width="3" id="sub1i" transform="matrix(1,0,0,1,225.5,254.8281)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="20" y="18" text-anchor="start" font-family="&quot;Arial&quot;" font-size="14px" stroke="none" fill="#000000" id="sub1t" class="flowchartt_99fdb6" transform="matrix(1,0,0,1,225.5,254.8281)" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 14px;"><tspan dy="5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">My Subroutine</tspan></text><path fill="none" stroke="#000000" d="M93.5,63.609375C93.5,63.609375,93.5,120.14694494009018,93.5,136.71068613347597" stroke-width="3" marker-end="url(#raphael-marker-endblock33-obj13)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><path fill="none" stroke="#000000" d="M93.5,177.21875C93.5,177.21875,93.5,215.41952085494995,93.5,228.71891031763516" stroke-width="3" marker-end="url(#raphael-marker-endblock33-obj14)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><path fill="none" stroke="#000000" d="M93.5,312.4375C93.5,312.4375,93.5,368.9750699400902,93.5,385.538811133476" stroke-width="3" marker-end="url(#raphael-marker-endblock33-obj15)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="98.5" y="322.4375" text-anchor="start" font-family="&quot;Arial&quot;" font-size="14px" stroke="none" fill="#000000" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 14px;"><tspan dy="5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">yes</tspan></text><path fill="none" stroke="#000000" d="M147.5,272.828125C147.5,272.828125,204.38716840744019,272.828125,220.99777715140954,272.828125" stroke-width="3" marker-end="url(#raphael-marker-endblock33-obj17)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="152.5" y="262.828125" text-anchor="start" font-family="&quot;Arial&quot;" font-size="14px" stroke="none" fill="#000000" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 14px;"><tspan dy="5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">no</tspan></text><path fill="none" stroke="#000000" d="M93.5,426.046875C93.5,426.046875,93.5,482.5844449400902,93.5,499.148186133476" stroke-width="3" marker-end="url(#raphael-marker-endblock33-obj19)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><path fill="none" stroke="#000000" d="M356.5,272.828125C356.5,272.828125,381.5,272.828125,381.5,272.828125C381.5,272.828125,381.5,116.21875,381.5,116.21875C381.5,116.21875,93.5,116.21875,93.5,116.21875C93.5,116.21875,93.5,129.52272129058838,93.5,136.7203776333481" stroke-width="3" marker-end="url(#raphael-marker-endblock33-obj20)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path></svg>
+</div>
+
+</body>
+</html>
+

@@ -1,0 +1,999 @@
+---
+title: Sample Markdown Document
+date: 2016/06/02 
+...
+
+This file was generated from the source code [here](Example.mmd).  Open in a separate window to compare it with the rendered output.
+
+[Markdown](https://en.wikipedia.org/wiki/Markdown) syntax used for pm_doc documentation is used widely on the Web today. Core markdown syntax is fairly standard, however there are several flavors of the language that allow additional features like tables, etc. The flavor of markdown used in pm_doc is called **pandoc markdown**. Good reference for pandoc markdown syntax can be found here: [Pandoc Markdown](http://rmarkdown.rstudio.com/authoring_pandoc_markdown.html).
+
+# Header1
+
+## Header2
+
+### Bullet List
+
+Bullet list
+
+* Twinkle
+* Twinkle
+* Hi
+* Little
+* Star
+    * How
+    * I 
+    * Wonder
+
+### Numbered List {#explicit_reference}
+
+1. Twinkle
+1. Twinkle
+1. Little
+1. Star
+    * How
+    * I
+    * Wonder
+    * new bullet
+    * next
+        - hi
+
+# Formatting text
+
+## Highlighted text
+
+Use simple html marking to &lt;mark&gt;<mark>highlight</mark>&lt;/mark&gt;
+
+## Emphasized text
+
+To *emphasize* some text, surround it with `*`s or `_`, like this:
+
+This text is _emphasized with underscores_, and this
+is *emphasized with asterisks*.
+
+Double * or _ produces **strong emphasis**:
+
+This is **strong emphasis** and __with underscores__.
+
+A `*` or `_` character surrounded by spaces, or backslash-escaped, will not trigger emphasis:
+
+This is * not emphasized *, and \*neither is this\*.
+
+Because `_` is sometimes used inside words and identifiers, pandoc does not interpret a `_` surrounded by alphanumeric characters as an emphasis marker. If you want to emphasize just part of a word, use `*`:
+
+feas*ible*, not feas*able*.
+
+## Strikeout
+
+This ~~is deleted text.~~
+
+## Superscripts and subscripts
+
+H~2~O is a liquid.  2^10^ is 1024.
+
+# More Markdown
+
+## Comments
+
+Use HTML-style comments `<!-- ... -->` to exclude pieces of documentation from output.
+No characters are allowed between start of line and `<!--`, as well as between `-->` and line end.
+Note that commented out sections will be deleted even from inside \`\`\` ... \`\`\` blocks.
+
+<pre><code>
+&lt;!--
+  ...
+  commented out part
+  ...
+-->
+</code></pre>
+
+<!--
+Actual comment.
+This will not appear in the output.
+-->
+
+## Tables
+
+Simple tables can be created using markdown syntax as described [here](http://rmarkdown.rstudio.com/authoring_pandoc_markdown.html#tables).
+
+  Right     Left     Center     Default
+-------     ------ ----------   -------
+     12     12        12            12
+    123     123       123          123
+      1     1          1             1
+
+Table:  Demonstration of simple table syntax
+
+
+-------     ------ ----------   -------
+     12     12        12             12
+    123     123       123           123
+      1     1          1              1
+-------     ------ ----------   -------
+
+
+| Right | Left | Default | Center |
+|------:|:-----|---------|:------:|
+|   12  |  12  |    12   |    12  |
+|  123  |  123 |   123   |   123  |
+|    1  |    1 |     1   |     1  |
+
+  : Demonstration of pipe table syntax
+
+
+-------------------------------------------------------------
+ Centered   Default           Right Left
+  Header    Aligned         Aligned Aligned
+----------- ------- --------------- -------------------------
+   First    row                12.0 Example of a row that
+                                    spans multiple lines.
+
+  Second    row                 5.0 Here's another one. Note
+                                    the blank line between
+                                    rows.
+-------------------------------------------------------------
+
+Table: Here's the caption. It, too, may span
+multiple lines.
+
+
+The alternative for markdown syntax for simple tables is [Embedded CSV and TSV tables].
+
+[Embedded XLSX Sheet] plugin allows inserting more complex tables with formatting, cell highlighting, column span, and so on.
+
+## Footnotes
+
+Pandoc[^pandoc]-style markdown footnotes[^1] are supported^[Both inlines and non-inlines].
+
+[^pandoc]: See <https://pandoc.org>
+
+[^1]: See <https://pandoc.org/MANUAL.html#footnotes>
+
+## Math formulas
+
+Markdown supports LaTeX-style syntax for rendering formulas. Good quick reference for the syntax here: <http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference>. There's also excellent app to identify TeX symbols from handwriting: <http://detexify.kirelabs.org/classify.html> - just scribble any symbol there and it will give you couple of variant to represent it in the formula. For more info, Google "latex formulas".
+
+To insert a formula in line with the text, surround it in `$` .. `$`, e.g.: `$P_{total} = P_{leak} + C_{dyn} * V^2 * F$`.
+
+The result looks like this: $P_{total} = P_{leak} + C_{dyn} * V^2 * F$.
+
+To insert a formula centered on a separate line, surround it in `$$` .. `$$`, e.g. `$$\sum_{n=1}^{\infty} 2^{-n} = 1$$`. Here's what the result looks like: $$\sum_{n=1}^{\infty} 2^{-n} = 1$$ 
+
+## Cross-References
+
+### Section Headers
+
+You may insert a cross reference by simply using a section header's exact text such as [Numbered List]
+
+You can also [add an explicit reference](#explicit_reference) in case it is not uniquely named in the document.  To set up that reference, use code like this:
+
+```
+### Numbered List {#explicit_reference}
+```
+
+### Figures and Tables
+
+To reference uniquely named figures, use `[Figure: The Title]` syntax. For example, here's the
+link to [Figure: Sample Timing Diagram].
+
+To reference uniquely named tables, use `[Table: The Title]` syntax. For example, here's the
+link to [Table: Sample Excel Sheet].
+
+### Other Files
+
+Use the same directory structure as is in the source directory tree. For any markdown files, replace
+the link with .html instead of .mmd. Use relative paths to refer to files in other directories.
+
+## Code Syntax Highlighting
+
+### Python Code
+
+```python
+BOARD_SIZE = 8
+
+def under_attack(col, queens):
+    left = right = col
+
+    for r, c in reversed(queens):
+        left, right = left - 1, right + 1
+
+        if c in (left, col, right):
+            return True
+    return False
+
+def solve(n):
+    if n == 0:
+        return [[]]
+
+    smaller_solutions = solve(n - 1)
+
+    return [solution+[(n,i+1)]
+        for i in xrange(BOARD_SIZE)
+            for solution in smaller_solutions
+                if not under_attack(i+1, solution)]
+for answer in solve(BOARD_SIZE):
+    print answer
+```
+
+### C code
+
+```c
+#include <stdio.h>
+int main()
+{
+   // printf() displays the string inside quotation
+   printf("C Programming");
+   return 0;
+}
+```
+
+Text spacer
+
+```
+text 
+line 2
+```
+
+### Supported languages
+
+Full list of languages supported for syntax highlighting:
+    abc, actionscript, ada, agda, apache, asn1, asp, awk, bash, bibtex, boo, c,
+    changelog, clojure, cmake, coffee, coldfusion, commonlisp, cpp, cs, css,
+    curry, d, diff, djangotemplate, dockerfile, dot, doxygen, doxygenlua, dtd,
+    eiffel, elixir, email, erlang, fortran, fsharp, gcc, glsl,
+    gnuassembler, go, hamlet, haskell, haxe, html, idris, ini, isocpp, java,
+    javadoc, javascript, json, jsp, julia, kotlin, latex, lex, lilypond,
+    literatecurry, literatehaskell, llvm, lua, m4, makefile, mandoc, markdown,
+    mathematica, matlab, maxima, mediawiki, metafont, mips, modelines, modula2,
+    modula3, monobasic, nasm, noweb, objectivec, objectivecpp, ocaml, octave,
+    opencl, pascal, perl, php, pike, postscript, prolog, pure, python, r,
+    relaxng, relaxngcompact, rest, rhtml, roff, ruby, rust, scala, scheme, sci,
+    sed, sgml, sql, sqlmysql, sqlpostgresql, tcl, tcsh, texinfo, verilog, vhdl,
+    xml, xorg, xslt, xul, yacc, yaml, zsh
+
+## Inline Markdown Files
+
+For large documents, it may be useful to compose text in several chapters and then merge them together in a master document.  The tools support this using a unique tag indicating file insertion.  This tag must be in the first column of the file (no spaces at the front of the line) and must refer to a valid markdown file (*.md or *.mmd).  See the example below.
+
+`[_chapter1.md]`
+
+When this file is parsed, all section headings are adjusted so that it is nested within the current document.  For example, if the current section heading level of this document is H3 (###), then all H1 (#) elements and text in the included file will be modified to be H4 (####).  Raw text in the main body that is not under a heading will be inserted at the H3 level.
+
+In many cases, when developing chapters, the user would like to put them together as isolated documents and rely on the build tools to stitch them together.  Therefore, to differentiate a chapter from a normal document, we are using a simple underscore.  If a document starts with an underscore, it will be excluded from the builds.
+
+The following text is inserted by the tools as a nested chapter.
+
+[_chapter1.md]
+
+You can also insert file located in different folder relative to the current file
+
+`[../chapters/_chapter1.md]`
+
+If you choose to insert a file that doesn't exist, it will just pass through as-is.  No warnings or errors are thrown.  For example, see below a non-existent file.
+
+[_chapter2.md]
+
+Finally, in some cases you may want to insert a chapter at the base heading level (versus inline with the containing header).  To do this:
+
+`[!_chapter1.md]`
+
+Which results in:
+
+[!_chapter1.md]
+
+
+# Plugins
+
+In PM_DOC context, "plugins" term refers to extensions of the regular markdown syntax that enable pm_doc-specific functionality, such as register descriptions, flow diagrams, embedding Visio or Excel, and so on.
+
+## Specifying max-width for plugin content
+
+Most of the time default width/height generated by the tools for showing the plugin content works fine. Sometimes, however the result may look nicer if a particular diagram/drawing/etc. is constrained to a certain width. In this case, specifying max-width attribute is helpful:
+
+    ```plugin("blah"){max-width: 600px}
+    ...
+    ```
+
+The syntax for attribute specification is regular [CSS style declaration](http://www.w3schools.com/css/css_syntax.asp). When it is specified, plugin generated content will be put inside a `<div>` element with specified style attributes.
+
+## Embedded Plantuml 
+
+Below is embedded plantuml sequence diagram.  The syntax spec for plantuml can be found at
+[plantuml.com](http://www.plantuml.com).
+
+```plantuml("Conversation between Alice and Bob")
+Alice->Bob : hello
+note left: this is a first note
+
+Bob->Alice : ok
+note right: this is another note
+
+Bob->Bob : I am thinking
+note left
+	a note
+	can also be defined
+	on several lines
+end note
+```
+
+## Embedded Diagrams Through Ascii Art (ditaa)
+
+You can embedded diagrams written in ASCII Art using ditaa. The syntax spec for ditaa can be found at [ditaa website](http://ditaa.sourceforge.net)
+
+Here is an example of a diagram using ditaa.
+
+```ditaa("Block Diagram")
++-------------+                     +-------------+
+| cRED        | CLK                 | cBLK        |
+|   Block     *-------------------->|   Block     |
+|     A       | RST                 |     B       |
+|             *-------------------->|             |
+|             | DATA_OUT            |             |
+|             *-------------------->|             |
+|             |                     |             |
+|             | DATA_IN             |             |
+|             |<--------------------*             |
+| +---------+ |                     | +---------+ |
+| |         | |                     | |         | |
+| |  Sub    | |<--------I/F-------->| |   Sub   | |
+| |  Block  | |                     | |   Block | |
+| +---------+ |                     | +---------+ |
++-------------+                     +-------------+
+```
+
+## Signal Interface Definition
+
+Using the simple syntax provided below, you can develop some simple but effective diagrams to 
+describe signal interfaces between two logic blocks.  This plugin is called `sigint`.
+
+Syntax is as follows.  The 'clock' and 'power' tags are special.  They are detected by looking for 
+the exact syntax as show below.  If found, they will be picked up and placed in the summary table.
+
+```
+sigint("Test Interface")
+== srcip <- dstip: signame1
+Markdown **description**
+clock: dclk
+power: vccs
+
+== srcip -> dstip: signame2
+
+== srcip <-> dstip: signame3
+clock: aclk
+power: vccp
+This is an *example*
+
+1. Item1
+2. Item2
+```
+
+
+```sigint("Test Interface")
+== srcip <- dstip: signame1
+Markdown **description**
+clock: dclk
+power: vccs
+
+== srcip -> dstip: signame2
+
+== srcip <-> dstip: signame3
+clock: bclk
+power: vccp
+This is an *example*
+
+1. Item1
+2. Item2
+```
+
+## Embedded DOT / Graphviz
+
+You can integrate dot diagrams as follows.  It's super easy.  The syntax spec for dot graphs can be found at [graphviz.org](http://www.graphviz.org).
+
+```dot("Sample Flowchart"){width:600px}
+digraph { 
+
+  rankdir=LR;
+
+  "low-priority" [shape="doublecircle" color="cornflowerblue"];
+  "high-priority" [shape="doublecircle" color="cornflowerblue"];
+
+  "s1" -> "low-priority";
+  "s2" -> "low-priority";
+  "s3" -> "low-priority";
+
+  "low-priority" -> "s4";
+  "low-priority" -> "s5";
+  "low-priority" -> "high-priority" [label="wait-time exceeded"];
+
+  "high-priority" -> "s4";
+  "high-priority" -> "s5";
+
+}
+```
+
+## Embedded Flow Chart diagrams
+
+Flow charts can be embedded as follows. Syntax and examples can be found at <http://flowchart.js.org>.
+
+```flowchart("Flowchart Diagram Example")
+st=>start: Start
+e=>end
+op1=>operation: My Operation
+sub1=>subroutine: My Subroutine
+cond=>condition: Yes
+or No?
+io=>inputoutput: catch something...
+
+st->op1->cond
+cond(yes)->io->e
+cond(no)->sub1(right)->op1
+```
+
+Links in the diagrams are not enabled at the moment, as they are overridden by the zoom
+functionality.
+
+## Embedded Register Definitions
+
+### Simple Register Format
+
+The simple register format follows a simple scheme as follows:
+
+```
+msb:lsb | field name | Description
+msb:lsb | field name | Description
+...
+msb:lsb | field name | Description
+```
+
+And when you are done, it will produce a format like this
+```simplereg("REGNAME")
+23:16 | Reserved     | Reserved
+15:0  | Clock Counts | Total clock count so far
+31:24 | Idle Timer   | Time spent idle
+```
+
+### Rich Register Format
+
+Rich registers allow for things like markdown in the individual cells (multi-line descriptions) and enumerations.
+
+Format for rich registers is as follows.  Note that access type and reset default are optional parameters
+
+```
+---
+Attribute1: Value
+Attribute2: Value
+...
+
+== MSB:LSB | Field Name | Access Type | Reset Default
+Description
+Multi-line is OK.
+Markdown is OK.
+
+= 0 | Enum0
+= 1 | Enum1
+
+== MSB:LSB | Field Name | RO | 0x00
+An example of a register bit that spans multiple bits (msb=lsb is also allowed)
+
+== LSB | Field Name | RO | 0x00
+An example of a register bit that has just a single bit
+...
+```
+
+For example:
+
+```register("SAMPLE_REGISTER")
+---
+Domain: Aunit
+Save On PowerDown: yes
+Security Policy: Secured
+BAR: 0/6/0
+Address Offset: 0x1000
+Description: Sample register format. This is the global description
+...
+
+== 63:48 | Enumerated State | RW | 0x0
+
+This field has some explicitly enumerated legal values
+
+= 0 | Enum0
+= 1 | Enum1
+
+== 32 | OneBit | RO | 0x0
+This is a single bit field
+
+== 47:33 | Reserved | RO | 0x0
+
+== 31:16 | Read Write | RW | 0x0
+This field is read/write
+
+* Bullet1
+* Bullet2
+
+== 15:0 | Read Only | RO | 0x1234
+
+This field is **read-only**.  It always returns 0x1234.
+
+```
+
+## Embedded Packet Definitions
+
+Also supported are packet data types
+
+### Simple Packets
+
+```packet("Trace Packet", 32)
+15:0  | Clock Counts | Total clock count so far
+23:16 | Reserved     | Reserved
+37:24 | Split Field  | This field is split across words
+42:38 | Idle Timer   | Time spent idle
+43:43 | Super Short Field Name   | This is a single bit field with a long name
+63:44 | Reserved     | 
+```
+
+## Embedded XLSX Sheet
+
+This formatting:
+
+`xls("pm_doc_demo.xlsx", "Sheet name" [, "Title Override (optional)"])`
+
+Tells the tools to open crashlog.xlsx, grab the sheet ID named 'Sheet name', and insert its contents into the document. It will also automatically link the table to the original XLSX for further detailed review. If the optional title override is supplied, it will be used when displaying the table instead of the actual sheet name.
+
+```xls("pm_doc_demo.xlsx", "Project Tracker", "Sample Excel Sheet")
+```
+
+Footnotes may be added automatically to the spreadsheet by inserting comments in the cell in which 
+you want a footnote attached.  For example, see below a few footnotes automatically inserted from 
+the excel spreadsheet's comments.  Cross-reference hyperlinks are also included for easy navigation.
+
+```xls("assets\pm_doc_demo.xlsx", "Invoices")
+```
+
+## Embedded XLSX Image Snapshot
+
+Ranges of cells from excel files can be embedded as pictures to preserve exact appearance as when viewed in Excel application.
+
+Command Syntax:
+
+`xlsimg("filename.xlsx" [, sheet="Sheet name (optional)"] [, range="Range (optional)"] [, title="Title Override (optional)"])`
+
+Arguments:
+
+* "Sheet name (optional)" - specifies sheet name to snapshot. If not supplied or equals "" and range doesn't specify the page either, first sheet will be selected.
+* "Range (optional)" - Excel range to snapshot. Syntax is whatever Excel allows - see examples below. If not supplied or equals "", all used cells in a sheet are selected.
+* "Title Override (optional)" - when supplied, will be used when displaying the table instead of the sheet name.
+
+Example syntax:
+
+`xlsimg("test.xlsx", title="MyTitle")`
+
+`xlsimg("test.xlsx", sheet="Sheet2", title="The Title")`
+
+`xlsimg("test.xlsx", range="MyNamedRange")`
+
+`xlsimg("test.xlsx", range="Sheet3!B5:C8")`
+
+`xlsimg("test.xlsx", range="Sheet4!SheetScopedNamedRange")`
+
+Usage example:
+
+`xlsimg("pm_doc_demo.xlsx", range="SquaresAndCubes", title="Squares and Cubes")`
+
+```xlsimg("pm_doc_demo.xlsx", range="SquaresAndCubes", title="Squares and Cubes")
+```
+
+## Embedded CSV and TSV tables
+
+You can edit a table in excel, save as CSV, and use the csv import widget to import it into the final output.
+If the code block is empty, it will automatically look for a file to fill it.
+
+```csv("assets\survey.csv", "Mental Health in Tech survey")
+```
+
+You can also do a simple csv in text format using commas as a delimiter.
+
+Commas in the data are accepted if they are escaped, '\\,'.
+
+```csv("Simple Table")
+Day, High Temperature, Low Temperature
+Monday, 65, 49
+Tuesday, 63, 42
+Wednesday, 72, 45
+Funday, 72, 45\,46
+```
+
+Tab separated lists are also supported using the 'tsv' tag.  For example.
+
+```tsv("US States (plus Washington D.C.) Population and Ranking")
+State	Population Ranking	Population Census Data: 2013
+District of Columbia	49	646,449
+Vermont	50	626,630
+Wyoming	51	582,658
+```
+
+## Embedded VISIO Drawing
+
+You can embed a tab in a visio document as a standalone picture.
+
+Hyperlinks are also supported.  They will be copied locally to the 'auto' directory and inserted
+as if they are locally managed in the repo.  Note that this is just a snapshot, it will only
+update on a clean rebuild.
+
+`visio("filename", "Tab Name" [, "Title Name"][, format="png"])`
+
+```visio("assets\sample_visio.vsdx", "Page-1", "Sample Visio Diagram (click to zoom)")
+```
+
+By default, Visio diagrams will be converted to SVG (Scalable Vector Graphics) format, which
+allows to search text within the images and upscale the image without quality loss. However, for some
+Visio content (like embeddings from other Office tools) Visio SVG export may fail and output
+image will not be correct. In such cases user can specify format="png" switch so that
+Visio diagram will be converted to raster image instead of SVG, and should display exactly like
+in Visio (zoom and search ability will be lost for such diagram).
+
+BKM: if visio diagram comes out too small, you can upscale it using `{width: N px}` syntax,
+similar to one described in [Specifying max-width for plugin content], e.g.:
+
+`visio("filename", "Tab Name"){width: 800px}`
+
+## Embedded Wavedrom Timing Diagram
+
+For drawing timing diagrams, the wavedrom tool is very handy.  See the [wavedrom help documentation](http://wavedrom.com/tutorial.html) for proper syntax.  You may integrate a raw wavedrom source input into the document and it will be rendered by the build tools and integrated as a figure similar to other figures.
+
+For example, the below code:
+
+```
+{ signal: [
+  {    name: 'clk',   wave: 'p..Pp..P'},
+  ['Master',
+    ['ctrl',
+      {name: 'write', wave: '01.0....'},
+      {name: 'read',  wave: '0...1..0'}
+    ],
+    {  name: 'addr',  wave: 'x3.x4..x', data: 'A1 A2'},
+    {  name: 'wdata', wave: 'x3.x....', data: 'D1'   },
+  ],
+  {},
+  ['Slave',
+    ['ctrl',
+      {name: 'ack',   wave: 'x01x0.1x'},
+    ],
+    {  name: 'rdata', wave: 'x.....4x', data: 'Q2'},
+  ]
+]}
+``` 
+
+Is rendered into this wavedrom output
+
+```wavedrom("Sample Timing Diagram")
+{ signal: [
+  {    name: 'clk',   wave: 'p..Pp..P'},
+  ['Master',
+    ['ctrl',
+      {name: 'write', wave: '01.0....'},
+      {name: 'read',  wave: '0...1..0'}
+    ],
+    {  name: 'addr',  wave: 'x3.x4..x', data: 'A1 A2'},
+    {  name: 'wdata', wave: 'x3.x....', data: 'D1'   },
+  ],
+  {},
+  ['Slave',
+    ['ctrl',
+      {name: 'ack',   wave: 'x01x0.1x'},
+    ],
+    {  name: 'rdata', wave: 'x.....4x', data: 'Q2'},
+  ]
+]}
+```
+
+### Wave Diagram Short Syntax
+
+The syntax is basically the same, but it avoids all of the json syntax and focuses on a single line definition of the waveform.
+
+The format is as follows for each signal name:
+
+`signal name   | waveform | data value list (space separated)`
+
+A full waveform definition would look like the following.  To get nice aligned visualizations, you may use editor tricks.  With VIM, you can use the Tabularize plugin to nicely format the text so that it is vertically aligned at the pipes.  Once the text has been selected using visual block mode, you can simply type `Tabularize /|` to get it to be aligned.  You can also use visual block mode to insert columns into the waveform for easy addition or subtraction of the sequence.  Comments are annotated with #.
+
+Lines may be defined immediately below the signal waveform.  The parser assumes that a line with no signal name that starts with | is a node definition.  It is required that the string length of the line definition matches that of the signal preceding it.
+
+Blank lines between signals are assumed to be intentional spacers
+
+<mark>Currently not supported</mark>:
+
+* Period and phase
+* Skins
+
+```
+# Waveform
+clk   | p..Pp..P
+      | .a......
+write | 01.0....
+read  | 0...1..0
+addr  | x3.x4..x  | A1 A2
+      | ....b...
+
+wdata | x3.x....  | D1
+ack   | x01x0.1x
+      | ......c.
+rdata | x.....4x  | Q2
+
+# Edges / Arrows
+a~>b This is an edge definition
+b-|>c a sharp edge
+
+# Config
+hscale: 2
+```
+
+```wavedrom("Shorthand Timing Syntax")
+# Waveform
+clk   | p..Pp..P
+      | .a......
+write | 01.0....
+read  | 0...1..0
+addr  | x3.x4..x  | A1 A2
+      | ....b...
+
+wdata | x3.x....  | D1
+ack   | x01x0.1x
+      | ......c.
+rdata | x.....4x  | Q2
+
+# Edges / Arrows
+a~>b This is an edge definition
+b-|>c a sharp edge
+
+# Config
+hscale: 2
+```
+
+#### Section Grouping
+
+You can add simple section identifiers to group blocks of signals.  In the example below, we have 
+`====` or `____` as markers.  You can use more if desired, e.g., `_________ Dest ___________`.
+
+
+```
+# Waveform
+==== Source ====
+clk   | p..Pp..P
+      | .a......
+write | 01.0....
+read  | 0...1..0
+addr  | x3.x4..x  | A1 A2
+      | ....b...
+
+____ Dest ____ 
+wdata | x3.x....  | D1
+ack   | x01x0.1x
+      | ......c.
+rdata | x.....4x  | Q2
+
+# Edges / Arrows
+a~>b This is an edge definition
+b-|>c a sharp edge
+
+# Config
+hscale: 2
+```
+
+```wavedrom("Grouped Signals")
+# Waveform
+==== Source ====
+clk   | p..Pp..P
+      | .a......
+write | 01.0....
+read  | 0...1..0
+addr  | x3.x4..x  | A1 A2
+      | ....b...
+
+____ Dest ____
+wdata | x3.x....  | D1
+ack   | x01x0.1x
+      | ......c.
+rdata | x.....4x  | Q2
+
+# Edges / Arrows
+a~>b This is an edge definition
+b-|>c a sharp edge
+
+# Config
+hscale: 2
+```
+
+## Embedded Schematic Diagram
+
+For drawing circuit diagrams with the aid of [ShemDraw](https://bitbucket.org/cdelker/schemdraw),
+the following syntax can be used:
+
+`schemdraw("Diagram title")`
+
+For example, the below code:
+
+```python
+d.add(e.GND)
+d.add(e.SOURCE_V, label='$V_{OUT}$')
+d.add(e.RES, label='$R_{AVP}$')
+d.add(e.DOT); d.push()
+rl1 = d.add(e.RES, d='up')
+d.labelI(rl1, '$I_{load1}$')
+d.pop()
+rpp = d.add(e.RES)
+rpp.add_label('$R_{pp}$', loc='bot')
+d.labelI(rpp, '$I_{CROSS}$')
+d.add(e.DOT); d.push()
+rl2 = d.add(e.RES, d='up')
+d.labelI(rl2, '$I_{load2}$', top=False)
+d.pop()
+d.add(e.RES, botlabel='$R_{AVP}$', d='down')
+d.add(e.SOURCE_V, botlabel='$V_{OUT}+V_{ERR}$', reverse=True, d='down')
+d.add(e.GND)
+```
+
+Is rendered into this schematic diagram:
+
+```schemdraw("Supply cross-current simulation")
+d.add(e.GND)
+d.add(e.SOURCE_V, label='$V_{OUT}$')
+d.add(e.RES, label='$R_{AVP}$')
+d.add(e.DOT); d.push()
+rl1 = d.add(e.RES, d='up')
+d.labelI(rl1, '$I_{load1}$')
+d.pop()
+rpp = d.add(e.RES)
+rpp.add_label('$R_{pp}$', loc='bot')
+d.labelI(rpp, '$I_{CROSS}$')
+d.add(e.DOT); d.push()
+rl2 = d.add(e.RES, d='up')
+d.labelI(rl2, '$I_{load2}$', top=False)
+d.pop()
+d.add(e.RES, botlabel='$R_{AVP}$', d='down')
+d.add(e.SOURCE_V, botlabel='$V_{OUT}+V_{ERR}$', reverse=True, d='down')
+d.add(e.GND)
+```
+
+Documentation for the syntax can be found at <https://cdelker.bitbucket.io/SchemDraw/SchemDraw.html>.
+
+Under the hood, user-provided code is inserted in the following template
+and executed as a regular python program:
+
+```python
+import SchemDraw as schem
+import SchemDraw.elements as e
+import SchemDraw.logic as l
+d = schem.Drawing()
+# ...
+# Your code goes here
+# ...
+d.draw(showplot=False)
+d.save("<image file name>")
+```
+
+## Integrated XSD Documentation
+
+For an XML schema that you wish to document, the build tools have automated flows for generating XSD schema specifications in a standard documentation template.
+
+To embed documentation, implement code such as this:
+
+`xsd2html("assets\simple_schema.xsd", "Simple Schema")`
+
+The resulting code is a simple pointer to the documentation as well as a pointer to the original source file for the schema.
+
+```xsd2html("assets\simple_schema.xsd", "Simple Schema")
+```
+
+## Integrated Python Scripts
+
+The 'python_run' plugin may be used to execute python code and generate output.  The script is run standalone in a separate executable shell and the output is captured.
+
+For example, the following code will produce a date string when embedded inside the `python_run` plugin block:
+
+```python
+import time
+print "*%s*" % time.strftime("%B %d, %Y")
+```
+
+The result is as follows:
+
+```python_run
+import time
+print "*%s*" % time.strftime("%B %d, %Y")
+```
+
+### Including source in the output
+
+If you wish to include the source into the output documentation use `python_run(source=True)`. The
+above example with `source=True` looks like this:
+
+```python_run(source=True)
+import time
+print "*%s*" % time.strftime("%B %d, %Y")
+```
+
+### Options for formatting the output
+
+By default python output will be parsed as if it was part of the original document, i.e. markdown
+with all the plugin processing.
+
+For example, here's a piece of python code that produces a table in csv form:
+
+```python_run()
+print '```csv("Squares and cubes of natural numbers")\nN^1^,N^2^,N^3^'
+for x in range(10):
+    print "%d,%d,%d"%(x, x*x, x*x*x)
+print '```'
+```
+
+Alternatively, you may want to show python output as if python was writing to a console window,
+verbatim. In this case, specify the option `output="verbatim"`. Earlier example with `source=True,
+output="verbatim"` will look like follows:
+
+```python_run(source=True, output="verbatim")
+import time
+print "*%s*" % time.strftime("%B %d, %Y")
+```
+
+### Explicitly naming files with python code
+
+When using `python_run` as described above, `mmd2doc.py` creates a temporary file and executes it.
+Optional argument `name` allows to name the file so that it can be subsequently used in other pieces
+of python code. When `name` is provided, the code will be saved to the file under `auto/<name>.py`.
+This allows, for example, to define some calculation in one piece of code which source is shown, and
+then demonstrate the calculation in another piece, the source of which isn't interesting to see in
+final documentation. Here's an example:
+
+
+```python_run(source=True, name="divtab")
+valid_ratios = [8, 10, 12, 16] # defined by divider design
+
+def ratio2divisor(ratio_req):
+    # Input: 25MHz-based ratio
+    # Output: (selected divisor, selected ratio)
+    ratio_in = 1600 / 25 # Divider input frequency, in 25Mhz units (a constant)
+    # Select valid ratio that is equal or higher than requested
+    for r in valid_ratios:
+        if r >= ratio_req:
+            break
+    divisor = ratio_in / r # integer division
+    return (divisor, r)
+```
+
+```python_run(name="div_demo")
+from divtab import ratio2divisor
+print '```csv("Driver ratio request mapping")\n$Ratio_{req}$,$F_{req}$,$Divisor$,$F_{actual}$,$F_{CVF}$'
+for ratio_req in range(4, 19):
+    (divisor, result_ratio) = ratio2divisor(ratio_req)
+    # To avoid another divide, approximate result frequency
+    # in 25MHz-ratio steps
+    cvf_freq = 25 * result_ratio
+    print "%d,%d,%d,%d,%d"%(ratio_req, ratio_req*25, divisor, 1600/divisor, cvf_freq)
+print "```"
+```
+
+In this example the code that produces CSV markdown for the table is hidden from the user, but the
+code that performs the calculation as well as the result table are shown.
+
+## Collecting OPENs/FIXMEs
+
+The `opens` plugin allows to create lists of OPENs/FIXMEs/TODOs in the document. Here's the example
+of how it could be used:
+
+    <!--
+    # Items to close
+
+    ```opens("OPEN")
+    ```
+
+    # Required fixes
+
+    ```opens("FIXME", numbered=True)
+    ```
+
+    ```opens("TODO", numbered=True)
+    ```
+    -->
+
+# Footnote list
+
+Footnotes are currently collected at the end of the document:

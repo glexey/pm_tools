@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+<title>Sample Flowchart</title>
+
+<script type="text/javascript">
+
+var svg;
+var zoomScaleSensitivity = 0.3;
+var info_displayed = "";
+
+function cancel_evt(evt) {
+   if (evt.preventDefault) {
+      evt.preventDefault();
+   } else {
+      evt.returnValue = false;
+   }
+}
+
+function zoomViaMouseWheel(evt) {      
+   cancel_evt(evt);
+
+   var delta = evt.wheelDelta / 360;
+   var zoom = Math.pow(1 + zoomScaleSensitivity, (-1) * delta);
+
+   bl = svg.createSVGPoint(); // bottom left
+   bl.x = svg.viewBox.animVal.x;
+   bl.y = svg.viewBox.animVal.y;
+   ur = svg.createSVGPoint(); // upper right
+   ur.x = bl.x + svg.viewBox.animVal.width;
+   ur.y = bl.y + svg.viewBox.animVal.height;
+
+   var p = getEventPoint(evt);
+   p = p.matrixTransform(svg.getCTM().inverse()); // Mouse point in SVG coordinates
+
+   // Compute new scale matrix in current mouse position
+   var k = svg.createSVGMatrix().translate(p.x, p.y).scale(zoom).translate(-p.x, -p.y);
+
+   bl = bl.matrixTransform(k);
+   ur = ur.matrixTransform(k);
+
+   var vbstr = "" + bl.x + " " + bl.y + " " + (ur.x - bl.x) + " " + (ur.y - bl.y);
+   svg.setAttribute('viewBox', vbstr);
+}
+
+function handleMouseDown(evt, prevEvt) {
+   cancel_evt(evt);
+   this.state = 'pan';
+   this.stateTf = svg.getCTM().inverse();
+   this.point_dn = getEventPoint(evt).matrixTransform(this.stateTf);
+}
+
+function handleMouseUp(evt) {
+   cancel_evt(evt);
+   this.state = 'none'
+}
+
+function handleMouseMove(evt) {
+   cancel_evt(evt);
+   if (this.state === 'pan') {
+      var point = getEventPoint(evt).matrixTransform(this.stateTf)
+      var x = svg.viewBox.animVal.x - (point.x - this.point_dn.x)
+      var y = svg.viewBox.animVal.y - (point.y - this.point_dn.y)
+      var w = svg.viewBox.animVal.width
+      var h = svg.viewBox.animVal.height
+      var vbstr = "" + x + " " + y + " " + w + " " + h
+      svg.setAttribute('viewBox', vbstr);
+      this.point_dn = point
+   }
+}
+
+function getEventPoint(evt) {
+    point = svg.createSVGPoint()
+    point.x = evt.clientX
+    point.y = evt.clientY
+    return point
+}
+
+function addEvent(element, eventName, callback) {
+    if (element.addEventListener) {
+        element.addEventListener(eventName, callback, false);
+    } else if (element.attachEvent) {
+        element.attachEvent("on" + eventName, callback);
+    }
+}
+
+function initialize() {
+   //svg = document.getElementById('svgElement');
+   svg = document.getElementsByTagName('svg')[0];
+   // Style, height are messing up browser rendering
+   svg.removeAttribute("style")
+   svg.setAttribute("height", "100%")
+   svg.setAttribute("width", "100%")
+
+   //if(svg.namespaceURI != "http://www.w3.org/2000/svg")
+   //   alert("Inline SVG in HTML5 is not supported. This document requires a browser that supports HTML5 inline SVG.");
+   //if(navigator.userAgent.indexOf('Gecko/') >= 0)
+   //   alert("Firefox has only vrey basic SVG support (as of version 33), so this floorplan explorer probably will not work. Try IE >= 10, or Chrome.");
+   addEvent(svg, "mousewheel", zoomViaMouseWheel);
+   addEvent(svg, "mousedown", handleMouseDown);
+   addEvent(svg, "mouseup", handleMouseUp);
+   addEvent(svg, "mousemove", handleMouseMove);
+
+   xx = document.querySelectorAll('[info]');
+   for (var i=0; i < xx.length; i++) {
+      xx[i].onmouseover=function(e)
+      {
+         info_displayed = e.target.getAttribute("info");
+         document.getElementById("infobox").innerHTML = info_displayed;
+      };
+      xx[i].onmouseout=function(e)
+      {
+         if (info_displayed == e.target.getAttribute("info")) {
+            document.getElementById("infobox").innerHTML = "";
+         }
+      };
+   }
+}    
+
+function set_visibility(checkbox) {
+   // The layer with drawn elements is a group in SVG
+   var elem = document.getElementById('layer_' + checkbox.name);
+   elem.setAttributeNS(null, 'visibility', checkbox.checked ? 'visible' : 'hidden');
+   // Also turn the annotation on/off, when present
+   var annot = document.getElementById('annot_' + checkbox.name);
+   if (annot != null) annot.style.display = checkbox.checked ? 'table' : 'none';
+}
+
+function toggle_annot(div, annot, bgcolor) {
+   var vis = (div.style.backgroundColor == "rgb(200, 200, 200)") ? true: false;
+   var x = document.getElementsByClassName("annot_" + annot);
+   for (var i=0; i < x.length; i++) {
+      x[i].setAttributeNS(null, 'visibility', vis ? 'inherit' : 'hidden')
+   }
+   div.style.backgroundColor = vis ? bgcolor : "rgb(200, 200, 200)";
+}
+
+</script>
+
+<style type="text/css">
+
+@font-face {
+    font-family: "Neo Sans Intel Medium";
+    src: url("NeoSansIntel-Medium.woff") format('woff');
+}
+
+body, html {
+   margin:0;
+   height: 100%;
+   font-family: Calibri, arial, sans-serif;
+}
+
+svg text {
+    /* Preserve space in SVG text, otherwise Visio text may be messed up */
+    white-space: pre;
+}
+
+#infobox{
+   position:fixed;
+   top: 20px;
+   left: 20px;
+   font-family: "Neo Sans Intel Medium", "Intel Clear", "Arial";
+   font-size: 0.8em;
+   width: 150px;
+   color: grey;
+   background-color:rgba(255, 255, 255, 0.6);
+   border-radius:5px;
+   padding: 3px;
+}
+
+div.buttons {
+   position:fixed;
+   top: 20px;
+   right: 20px;
+   font-family: "Neo Sans Intel Medium", "Intel Clear", "Arial";
+   text-transform: uppercase;
+   font-size: 0.8em;
+   -webkit-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+   width: 150px;
+}
+table.buttons {
+   right: 0px;
+   background-color:rgba(255, 255, 255, 0.5);
+   border-radius:8px;
+   border:2px solid rgba(0, 0, 0, 0.5);
+   width: 100%;
+}
+table.buttons td {
+   color: rgba(0, 0, 0, 0.5);
+   background-color:rgba(255, 255, 255, 0.5);
+   border-radius:6px;
+}
+table.buttons td:hover {
+   background-color:rgba(100,100,100,0.1);
+}
+.annot_table {
+   margin-top: 20px;
+   background-color:rgba(255, 255, 255, 0.5);
+   border-radius:8px;
+   border:2px solid rgba(0, 0, 0, 0.5);
+   font-size: 0.7em;
+   width: 100%;
+   text-align: center;
+   cursor: default;
+}
+.annot_cell {
+   border-radius:3px;
+   display: inline-block;
+   border: 1px solid white;
+}
+
+</style>
+
+</head>
+
+<body onload="initialize();">
+
+<div id="infobox">
+</div>
+
+<div class="buttons">
+</div>
+
+<div style="width:100%; height:100%; margin:0; overflow:hidden; display:block">
+
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: %3 Pages: 1 -->
+<svg
+ viewBox="0.00 0.00 566.08 158.52" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="width:600px; height:167px">
+<g id="graph0" class="graph_7af66d" transform="scale(1 1) rotate(0) translate(4 154.516)">
+<title>%3</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-154.516 562.081,-154.516 562.081,4 -4,4"/>
+<!-- low&#45;priority -->
+<g id="node1" class="node_7af66d"><title>low&#45;priority</title>
+<ellipse fill="none" stroke="cornflowerblue" cx="148.295" cy="-73.6468" rx="53.1055" ry="53.1055"/>
+<ellipse fill="none" stroke="cornflowerblue" cx="148.295" cy="-73.6468" rx="57.0913" ry="57.0913"/>
+<text text-anchor="middle" x="148.295" y="-69.9468" font-family="Times New Roman,serif" font-size="14.00">low&#45;priority</text>
+</g>
+<!-- high&#45;priority -->
+<g id="node2" class="node_7af66d"><title>high&#45;priority</title>
+<ellipse fill="none" stroke="cornflowerblue" cx="407.836" cy="-73.6468" rx="55.4746" ry="55.4746"/>
+<ellipse fill="none" stroke="cornflowerblue" cx="407.836" cy="-73.6468" rx="59.4912" ry="59.4912"/>
+<text text-anchor="middle" x="407.836" y="-69.9468" font-family="Times New Roman,serif" font-size="14.00">high&#45;priority</text>
+</g>
+<!-- low&#45;priority&#45;&gt;high&#45;priority -->
+<g id="edge6" class="edge_7af66d"><title>low&#45;priority&#45;&gt;high&#45;priority</title>
+<path fill="none" stroke="black" d="M205.814,-73.6468C244.799,-73.6468 296.847,-73.6468 338.214,-73.6468"/>
+<polygon fill="black" stroke="black" points="338.216,-77.1469 348.216,-73.6468 338.216,-70.1469 338.216,-77.1469"/>
+<text text-anchor="middle" x="277.091" y="-77.4468" font-family="Times New Roman,serif" font-size="14.00">wait&#45;time exceeded</text>
+</g>
+<!-- s4 -->
+<g id="node6" class="node_7af66d"><title>s4</title>
+<ellipse fill="none" stroke="black" cx="531.081" cy="-103.647" rx="27" ry="18"/>
+<text text-anchor="middle" x="531.081" y="-99.9468" font-family="Times New Roman,serif" font-size="14.00">s4</text>
+</g>
+<!-- low&#45;priority&#45;&gt;s4 -->
+<g id="edge4" class="edge_7af66d"><title>low&#45;priority&#45;&gt;s4</title>
+<path fill="none" stroke="black" d="M200.947,-96.5267C240.483,-112.734 296.837,-133.061 348.591,-141.647 400.543,-150.266 416.346,-155.763 467.081,-141.647 480.48,-137.918 493.879,-130.487 504.854,-123.177"/>
+<polygon fill="black" stroke="black" points="506.903,-126.015 513.089,-117.413 502.889,-120.28 506.903,-126.015"/>
+</g>
+<!-- s5 -->
+<g id="node7" class="node_7af66d"><title>s5</title>
+<ellipse fill="none" stroke="black" cx="531.081" cy="-18.6468" rx="27" ry="18"/>
+<text text-anchor="middle" x="531.081" y="-14.9468" font-family="Times New Roman,serif" font-size="14.00">s5</text>
+</g>
+<!-- low&#45;priority&#45;&gt;s5 -->
+<g id="edge5" class="edge_7af66d"><title>low&#45;priority&#45;&gt;s5</title>
+<path fill="none" stroke="black" d="M200.947,-50.7669C240.483,-34.5598 296.837,-14.2331 348.591,-5.64682 400.543,2.97233 414.691,-0.297849 467.081,-5.64682 476.445,-6.60285 486.471,-8.33843 495.709,-10.2367"/>
+<polygon fill="black" stroke="black" points="495.212,-13.7102 505.727,-12.416 496.7,-6.87016 495.212,-13.7102"/>
+</g>
+<!-- high&#45;priority&#45;&gt;s4 -->
+<g id="edge7" class="edge_7af66d"><title>high&#45;priority&#45;&gt;s4</title>
+<path fill="none" stroke="black" d="M465.553,-87.6806C475.873,-90.234 486.344,-92.8248 495.763,-95.1556"/>
+<polygon fill="black" stroke="black" points="494.967,-98.5641 505.515,-97.5685 496.649,-91.769 494.967,-98.5641"/>
+</g>
+<!-- high&#45;priority&#45;&gt;s5 -->
+<g id="edge8" class="edge_7af66d"><title>high&#45;priority&#45;&gt;s5</title>
+<path fill="none" stroke="black" d="M462.016,-49.523C474.614,-43.8082 487.647,-37.8958 498.895,-32.7934"/>
+<polygon fill="black" stroke="black" points="500.604,-35.8618 508.265,-28.5432 497.712,-29.487 500.604,-35.8618"/>
+</g>
+<!-- s1 -->
+<g id="node3" class="node_7af66d"><title>s1</title>
+<ellipse fill="none" stroke="black" cx="27" cy="-127.647" rx="27" ry="18"/>
+<text text-anchor="middle" x="27" y="-123.947" font-family="Times New Roman,serif" font-size="14.00">s1</text>
+</g>
+<!-- s1&#45;&gt;low&#45;priority -->
+<g id="edge1" class="edge_7af66d"><title>s1&#45;&gt;low&#45;priority</title>
+<path fill="none" stroke="black" d="M49.8806,-117.742C60.3739,-112.993 73.5163,-107.043 86.7193,-101.067"/>
+<polygon fill="black" stroke="black" points="88.171,-104.252 95.8378,-96.9395 85.2843,-97.8748 88.171,-104.252"/>
+</g>
+<!-- s2 -->
+<g id="node4" class="node_7af66d"><title>s2</title>
+<ellipse fill="none" stroke="black" cx="27" cy="-73.6468" rx="27" ry="18"/>
+<text text-anchor="middle" x="27" y="-69.9468" font-family="Times New Roman,serif" font-size="14.00">s2</text>
+</g>
+<!-- s2&#45;&gt;low&#45;priority -->
+<g id="edge2" class="edge_7af66d"><title>s2&#45;&gt;low&#45;priority</title>
+<path fill="none" stroke="black" d="M54.1799,-73.6468C62.1381,-73.6468 71.2715,-73.6468 80.6388,-73.6468"/>
+<polygon fill="black" stroke="black" points="80.8505,-77.1469 90.8505,-73.6468 80.8504,-70.1469 80.8505,-77.1469"/>
+</g>
+<!-- s3 -->
+<g id="node5" class="node_7af66d"><title>s3</title>
+<ellipse fill="none" stroke="black" cx="27" cy="-19.6468" rx="27" ry="18"/>
+<text text-anchor="middle" x="27" y="-15.9468" font-family="Times New Roman,serif" font-size="14.00">s3</text>
+</g>
+<!-- s3&#45;&gt;low&#45;priority -->
+<g id="edge3" class="edge_7af66d"><title>s3&#45;&gt;low&#45;priority</title>
+<path fill="none" stroke="black" d="M49.8806,-29.5512C60.3739,-34.3011 73.5163,-40.2501 86.7193,-46.2266"/>
+<polygon fill="black" stroke="black" points="85.2843,-49.4189 95.8378,-50.3541 88.171,-43.0418 85.2843,-49.4189"/>
+</g>
+</g>
+</svg>
+
+</div>
+
+</body>
+</html>
+

@@ -1,0 +1,1866 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+  <meta content="IE=edge,11,10" http-equiv="X-UA-Compatible"/>
+  <meta content="text/css" http-equiv="Content-Style-Type"/>
+  <meta content="mmd2doc version=5.7" name="generator"/>
+  <meta content="pm_doc" data-owner="aagaidiu" data-src-path="UNRELEASED:README.md" data-src-rev="UNRELEASED:README.md" data-src-sha1="UNRELEASED:README.md" name="application-name"/>
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono" rel="stylesheet"/>
+
+
+  <link href="data:text/css;charset=utf-8,%40font%2Dface%20%7B%0Afont%2Dfamily%3A%20%27FontAwesome%27%3B%0Asrc%3A%20url%28data%3Aapplication%2Fx%2Dfont%2Dwoff%3Bbase64%2Cd09GRgABAAAAAAeoAA0AAAAAC%2FgABAAHAAAAAAAAAAAAAAAAAAAAAAAAAABGRlRNAAAHjAAAABwAAAAcdviA0EdERUYAAAdwAAAAHAAAAB4AJwAOT1MvMgAAAaQAAAA%2BAAAAYHhWdrZjbWFwAAAB%2BAAAAFQAAAFi4hfWhmdhc3AAAAdoAAAACAAAAAj%2F%2FwADZ2x5ZgAAAmAAAAJ5AAADfKhnUnFoZWFkAAABMAAAADUAAAA2B3Yy%2FGhoZWEAAAFoAAAAGwAAACQNAgYJaG10eAAAAeQAAAATAAAAIC8AAEBsb2NhAAACTAAAABIAAAASA1ICXG1heHAAAAGEAAAAHQAAACAAUgBMbmFtZQAABNwAAAJEAAAEhuOXi6xwb3N0AAAHIAAAAEgAAABgHuqUnnicY2BkYGBgYTyt2RIeEs9v85WBm50BBE772xiA6Gssq48wMPx3YGdgA3E5GJhAFAAVMQkAAAAAeJxjYGRgYGP4z8DAwM7AACEZGVABBwAgRAEeAHicY2BkYGDgYPAEYhBgAmJGBpCYA5jPAAAK6gCfAAAAeJxjYGabyTiBgZWBgaWHxZiBgaENQjMVMzAwdjHgAQWVRcUMDh9cPrqxMfwH8tkYGEHCjEhKFBgYAQwcCfQAAHicY2eAAHYkzAahHUA0AAR8AHAAeJxjYGBgZoBgGQZGBhCIAfIYwXwWBgcgzcPAwcDEwPLB5cODD%2F8%2BCnx0%2B%2F%2BfgQGZx7%2BfX4Wfne8b30GoCXDAyMYAF2JkAhJMDGgKGIY9AAD19xZHAAAAAAAAAAAAeADQARwBjAG%2BAAB4nG1Sz2vTcBR%2F75s2cUPbZWsTVzrXdTWVVVbappnd7Jb2skmmTgQvZrHoRXqQInMVBCmuoCDIwMuOQ0%2FdHyEBjyL%2BB7KTngS9iGiT%2BZK4zekC4SXf932f7%2BfHF8JAD%2F8j3AEeIlCBeVgCwJmsEC%2FFQRGQl2ZwJB7jJyfSSllUtdJEUZZkKYp8VqE1Pi7GJFrTqqguoCZxAzghooAzWnEcpRj3cG1rrcEgJbqvxJSI1rVeu2%2B3e702py9oUY47WYgMy1LfrltWndPr1oAePdfAlNNwd0Om6e6ayZXkVhIbBHOhwewDHOfDmwCl3RsVhkSC4XmrHuA8PkUoQ%2By9u%2BsQFEuamDKThLLiSWUAex0BSHYCZkmpuC9NkkPyGTbHivNE%2Fqw2EuMFECKhHEtPc1klk53Gsq9eEsCq%2FySq5yvYfFpZXC8hltYXKzu4VMndvuQ%2BMwdruaomI8paNVcbvOnupOfvXb8ctmu3uNn%2BJ19poqB8vzOVLxTyU48%2BZvHG1c2S%2B0sX8mOZ4eHMWF7Qv5yeerlw5a4V8OWB8pmEEvEtq2S7qCo59LynAMbQC4BSmMOiVhYpikNNAeEwKAnXVhKdhOLaCUVJoO7%2FoE4vUCC6byXFwvQ%2Fy%2F8PsNnDbT3y8QToezpv8wADIMIoscsRvzlYBMjQ8XS6qhUhxqeVvyr6HfqQ%2Fu0c3eE5XZRYxCiry0aTVY2mYTSd534JOctqmarRv2h1Lasb%2Bhp037W2W61t9qRrrm5srJrdt03D2%2Bh%2B9roGe%2BAX54UHaBjcN2%2FUcl4HzU1vtOXeDya7B%2FfE9z0K4%2Fu%2B77t9vMf9jucV1znWVd%2FNoy7%2BBj8Z3C4AAAB4nJWT32oTQRTGv92kTWukYNFSvJBBRMGL3bSUFoI32z%2FpTWhiCKVX6jY7SZYmu2F2kpBrX0DwBcQrH0C8F7z0VQQfwW8nYxOxQk1I5jdn5vz5ztkFsO08hYP5x8cbyw7K%2BGTZRQnfLBdwDz8tF1F2HlpewaZTt7xK%2B9RyCS%2FdZ5bXcNd9b3kdd9wvlst44P6wvIFHhYBZnOI6d69MxpwdbOGdZZe3Plsu4DG%2BWy5iy3Etr%2BAJdc15lfbXlkv46Ly1vIZtd2Z5HffdD5bLeO5%2BtbyBF4UCjpBihBkUYvTQh4bAMUJMIEmnpAQRzwV2UcEO9uGRAwz4FUtemdlJrpJr7h3xJo7S0UzFvb4Wx%2BFEitMwiWZit7Kz74lgMBDmKBNKZlJNZESHGutJGC%2FA1ERLMeSKWproYCqzdMhNi5YexqwgZC60ZG88CFXu28AZ2qjT%2BxBV7tq0neACTXKLO9QaZ%2B16cFhttGsnF81Gq327jOdGVUa1%2BV2BPWo74K%2By1BecS5XFaSL2vAOvYkTeLniTQiSlZKbleRO7Jp2gX2r%2B%2B%2BbkplHlPh3S78K6XNWST9fmzy2KOSJah6ZtV7SFtGoT75LtXERJuOa7jqmZU2kOZJhJzqkrldCp0H0pFqPNZEfnwrupMiddqhNahZEchupKhFqr%2BHJsriSpjjsys4NWprK%2FeqO0uG7OTc8iFs8STB80%2B1LlK%2B5f6w3%2FiOkZZehrPar6fl5eOI%2Fvxen%2FRPA5qXlXEtN5%2Fx8x%2FQFFJpn08QvPi9gReJxjYGLADziAmJGBiZGJkZmRhZGVkY0lNSWzhCc1ryw1J78gNT4xp4QlzSAtlb24IDMvL7WILzczr7Q4vjgzPQ8kBwCJhxEwAAAAAf%2F%2FAAJ4nGNgZGBg4AFiMSBmYmAEQnYgZgHzGAAD6wA2AAAAAQAAAADVpJjbAAAAAMtPPDAAAAAA1gSrxA%3D%3D%29%20format%28%27woff%27%29%3B%0Afont%2Dweight%3A%20normal%3B%0Afont%2Dstyle%3A%20normal%0A%7D%0A%2Efa%20%7B%0Adisplay%3A%20inline%2Dblock%3B%0Afont%3A%20normal%20normal%20normal%2014px%2F1%20FontAwesome%3B%0Afont%2Dsize%3A%20inherit%3B%0Atext%2Drendering%3A%20auto%3B%0A%2Dwebkit%2Dfont%2Dsmoothing%3A%20antialiased%3B%0A%2Dmoz%2Dosx%2Dfont%2Dsmoothing%3A%20grayscale%0A%7D%0A%2Efa%2Dspinner%3Abefore%20%7B%0Acontent%3A%20%22%5Cf110%22%0A%7D%0A%2Efa%2Dspin%20%7B%0A%2Dwebkit%2Danimation%3A%20fa%2Dspin%202s%20infinite%20linear%3B%0Aanimation%3A%20fa%2Dspin%202s%20infinite%20linear%0A%7D%0A%2Efa%2Dpencil%2Dsquare%2Do%3Abefore%20%7B%0Acontent%3A%20%22%5Cf044%22%0A%7D%0A%2Efa%2Dminus%2Dsquare%3Abefore%20%7B%0Acontent%3A%20%22%5Cf146%22%0A%7D%0A%2Efa%2Dplus%2Dsquare%3Abefore%20%7B%0Acontent%3A%20%22%5Cf0fe%22%0A%7D%0A%2Efa%2Denvelope%3Abefore%20%7B%0Acontent%3A%20%22%5Cf0e0%22%0A%7D%0A" rel="stylesheet" type="text/css"/>
+  <style>
+  
+  body, html {
+  height: 100%;
+  }
+  
+  * { box-sizing: border-box; }
+  
+  body {
+  font-family: Calibri, arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.2;
+  color: #333;
+  margin: 0;
+  overflow-x: hidden;
+  }
+  
+  a {
+  color: #4183C4;
+  text-decoration: none;
+  }
+  
+  a.absent {
+  color: #cc0000;
+  }
+  
+  .dim-body {
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
+  z-index: -1;
+  background-color: black;
+  opacity: 0;
+  transition: opacity 0s;
+  }
+  
+  .dim-body.show_form {
+  z-index: 1;
+  opacity: 0.6;
+  transition: opacity 0.4s;
+  }
+  
+  .dim-body.waiting, .dim-body.show_form.waiting{
+  cursor: progress;
+  z-index: 9;
+  opacity: 0.6;
+  transition: opacity 0.4s;
+  }
+  
+  .feedback-form {
+  height: 0;
+  width: 0;
+  top: 50%;
+  left: 50%;
+  position: fixed;
+  z-index: 2;
+  background-color: rgba(240,240,240, 0.95);
+  overflow: hidden;
+  transition: 0.3s;
+  }
+  
+  .feedback-border {
+  padding: 5px;
+  }
+  
+  .feedback-content {
+  padding: 20px;
+  border: 1px solid #777;
+  overflow: hidden;
+  }
+  
+  .feedback-content h2 {
+  color: inherit;
+  border: none;
+  margin-top: 0;
+  }
+  
+  .feedback-content table { width: 100%; }
+  .feedback-content input.wide { width: 100%; }
+  .feedback-content textarea { width: 100%; }
+  .feedback-content select { width: 100%; }
+  
+  .feedback-content td { vertical-align: top; border: none; }
+  
+  .feedback-content td + td { width: 100%; }
+  
+  .feedback-escape {
+  position: absolute;
+  left: 2em;
+  bottom: 1.5em;
+  color: grey;
+  }
+  
+  .feedback-submit {
+  background-color: white;
+  border: 2px solid #008CBA;
+  padding: 5px;
+  margin-right: 10px;
+  float: right;
+  user-select: none;
+  transition-duration: 0.3s;
+  cursor: pointer;
+  }
+  
+  .feedback-submit.disabled {
+  background-color: lightgrey;
+  border: 2px solid grey;
+  }
+  
+  .feedback-submit:hover {
+  background-color: #008CBA;
+  color: white;
+  }
+  
+  .feedback-submit.disabled:hover {
+  background-color: lightgrey;
+  color: inherit;
+  cursor: default;
+  }
+  
+  .feedback { background-color: rgba(255,0,0,0.2); }
+  span.feedback { margin: 0 0.3em; }
+  .feedback.acknowledged { background-color: rgba(0,0,255,0.2); }
+  
+  .hastooltip { position: relative; }
+  
+  .hastooltip .tooltip, .hastooltip .tooltip2 {
+  visibility: hidden;
+  min-width: 200px;
+  width: auto;
+  background-color: #555;
+  color: #eee;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.5s;
+  /* Override font explicitly so that it doesn't inherit parent span font */
+  font-size: 14px;
+  font-weight: normal;
+  font-family: Calibri, arial, sans-serif;
+  font-style: normal;
+  }
+  
+  .hastooltip .tooltip2 { bottom: initial; top: 100%; }
+  
+  .hastooltip:hover .tooltip, .hastooltip:hover .tooltip2 {
+  visibility: visible;
+  opacity: 1;
+  }
+  
+  .sign_off {
+  padding: 1px 4px;
+  margin-right: 5px;
+  display: inline-block;
+  margin-top: 5px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  background-color: #666;
+  color: #ddd;
+  font-size: 12px;
+  cursor: pointer;
+  }
+  
+  .sign_off:hover {
+  background-color: #999;
+  color: #fff;
+  }
+  
+  .feedback-table {
+  border-collapse: separate;
+  }
+  
+  .feedback-table th, .feedback-table td {
+  border: 0;
+  background: #f5f5f5;
+  font-size: inherit;
+  }
+  
+  .feedback-table th {
+  text-align: right;
+  color: #555;
+  white-space: nowrap;
+  vertical-align: top;
+  font-weight: inherit;
+  }
+  
+  .feedback-table td {
+  }
+  
+  .feedback-table pre, .feedback-table code {
+  background: inherit;
+  margin: 0;
+  padding: 0;
+  font-family: inherit;
+  font-size: inherit;
+  border: 0;
+  }
+  
+  body.selecting { background-color: rgba(0,0,10,0.1); transition: background-color 0.3s; }
+  
+  #SIDEBAR, #SIDEBAR a { color: #dddddd; }
+  
+  div#SIDEBAR {
+  position: fixed;
+  top: 1.6em;
+  left: 0;
+  float: left;
+  width: 20%;
+  bottom: 0px;
+  background: #777;
+  overflow-x: hidden;
+  overflow-y: auto;
+  }
+  
+  div#TOC {
+  padding: 0.5em;
+  /* for registers as headers, wrap anywhere */
+  word-wrap: break-word;
+  font-size: 90%;
+  }
+  
+  div#EDGE {
+  position: fixed;
+  top: 0;
+  left: 20%;
+  width: 0.5%;
+  min-height: 100%;
+  max-height: 100%;
+  cursor: col-resize;
+  }
+  
+  div#MAIN {
+  position: absolute;
+  top: 0;
+  left: 20.5%;
+  width: 79%;
+  padding: 0 2em 2em 1.5em;
+  }
+  
+  div#TOCOPEN:hover {
+  color: #ddd;
+  background-color: #999;
+  cursor: pointer;
+  }
+  
+  div#TOCCLOSE, div#TOCOPEN {
+  position: fixed;
+  left: 0; top: 0;
+  height: 1.6em;
+  text-align: right;
+  padding-right: 0.2em;
+  background-color: #777;
+  color: #ccc;
+  user-select: none;
+  z-index: 1;
+  }
+  
+  div#TOCCLOSE {
+  width: 20%;
+  border-bottom: 1px solid #888;
+  }
+  
+  div#TOCOPEN {
+  width: 2%;
+  display: none;
+  }
+  
+  /* For PDF generation, we don't need the side bar */
+  @media print {
+  div#EDGE { display: none }
+  div#SIDEBAR { display: none }
+  div#TOCCLOSE { display: none }
+  div#feedback_form { display: none }
+  div#feedback_cover { display: none }
+  div#feedback_help { display: none }
+  div#MAIN { left: 0; width: 100%; }
+  }
+  
+  .toc_li {
+  font-size:0.7em;
+  position:absolute;
+  margin-left:-1.6em;
+  margin-top:0.3em;
+  cursor: pointer;
+  z-index: 2; /* otherwise occluded by toc_dot with large font */
+  }
+  
+  .toc_dot {
+  font-size:1.7em;
+  position:absolute;
+  margin-left:-0.6em;
+  margin-top:-0.3em;
+  cursor: default;
+  user-select: none;
+  }
+  
+  .hide_level0, .hide_level1, .hide_level2, .hide_level3, .hide_level4, .hide_level5, .hide_level6, .hide_level7 {
+  display: none;
+  }
+  
+  .menubutton {
+  cursor: pointer;
+  color: #ccc;
+  float: right;
+  font-size: 120%;
+  margin-top: 0.1em;
+  background: none;
+  border: none;
+  outline: none;
+  }
+  
+  .subscribed {
+  color: rgb(255, 255, 153);
+  }
+  
+  .toclevel {
+  float: left;
+  border-radius: 0.3em;
+  margin-top: 0.25em;
+  margin-left: 0.25em;
+  width: 1.1em;
+  height: 1.1em;
+  text-align: center;
+  background-color: #888;
+  cursor: pointer;
+  font-family: Consolas;
+  color: #ccc;
+  }
+  
+  .toclevel span {
+  margin-top: -0.1em;
+  display: inline-block;
+  }
+  
+  .toclevel:hover {
+  background-color: #999;
+  }
+  
+  /* indent the levels */
+  .section.level2, .section.level3, .section.level4 { margin-left: 1em; }
+  
+  /* header styles */
+  
+  h1, h2, h3, h4, h5, h6, p.title, p.subtitle, p.author, p.date {
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  page-break-after: avoid; /* Doesn't work in WebKit today, but maybe will someday */
+  color: black;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+  margin-top: 1.5em;
+  margin-bottom: 1em;
+  font-size: 16px;
+  }
+  
+  h1, p.title, p.subtitle {
+  font-size: 32px;
+  }
+  
+  h2, p.author {
+  font-size: 24px;
+  border-bottom: 3px solid #cccccc;
+  width: 70%;
+  }
+  
+  h3, p.date {
+  font-size: 18px;
+  border-bottom: 2px solid #cccccc;
+  width: 70%;
+  }
+  
+  p.date { border: 0; }
+  
+  h4 {
+  border-bottom: 1px solid #cccccc;
+  width: 70%;
+  }
+  
+  h6 {
+  font-style: italic;
+  font-weight: normal;
+  }
+  
+  p, blockquote, dl, table, pre {
+  margin: 15px 0;
+  }
+  
+  p.table_notes {
+  font-size: 90%;
+  font-weight: bold;
+  margin-top: -6pt;
+  margin-bottom: 0;
+  color: #616163;
+  display: none;
+  }
+  
+  table.notes {
+  margin-top: -6pt;
+  }
+  
+  table.notes td {
+  font-size: 90%;
+  border: 0;
+  padding: 1px 3px;
+  color: #616163;
+  }
+  
+  hr {
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0;
+  width: 50%;
+  }
+  
+  ul, ol {
+  padding-left: 20px;
+  }
+  
+  #TOC ul, #TOC ol, #TOC li {
+  margin: 0;
+  margin-left: 3px;
+  padding-left: 0;
+  line-height: 1.2;
+  list-style:none;
+  }
+  
+  #TOC > ul {
+  padding-top: 0.5em;
+  margin-left: 0;
+  }
+  
+  #TOC ul {
+  padding-left: 1em;
+  }
+  
+  ul, ol, li {
+  margin: 2px;
+  padding-top: 0;
+  padding-bottom: 0;
+  }
+  
+  dl {
+  padding: 0;
+  }
+  
+  dl dt {
+  font-size: 12px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+  }
+  
+  dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+  }
+  
+  blockquote {
+  border-left: 10px solid #dddddd;
+  padding: 0 15px;
+  color: #555;
+  background-color: #f7f7f7;
+  margin-left: 2em;
+  margin-right: 2em;
+  }
+  
+  table {
+  font-family: Calibri, arial, sans-serif;
+  font-size: 16px;
+  color: #333333;
+  border-collapse: collapse;
+  }
+  
+  th {
+  background-color: #C2DFE8;
+  }
+  
+  table:not(.index) tr:hover td {
+  background-color: #DFEBF1;
+  }
+  
+  #feedback_help {
+  position: fixed;
+  bottom: 2em;
+  padding: 0.5em 1em;
+  left: 30%;
+  width: auto;
+  height: auto;
+  background-color: #555;
+  opacity: 0;
+  color: #ddd;
+  border: 0.5em solid rgba(0.1,0.1,0.1,0.1);
+  border-radius: 1em;
+  font-size: 110%;
+  z-index: -1;
+  }
+  
+  body.selecting #feedback_help {
+  opacity: 0.9;
+  transition: opacity 0.3s;
+  z-index: 20;
+  }
+  
+  #feedback_form table tr:hover td {
+  background-color: inherit;
+  }
+  
+  th, td {
+  padding: 2px 7px;
+  font-size: 90%;
+  border: 1px solid #777;
+  }
+  
+  td p, th p {
+  margin: 0.4em 0;
+  }
+  
+  table { page-break-after:auto }
+  tr    { page-break-inside:avoid; page-break-after:auto }
+  td    { page-break-inside:avoid; page-break-after:auto }
+  thead { display:table-header-group; page-break-after: avoid; }
+  tfoot { display:table-footer-group }
+  .nobreak { page-break-inside: avoid; }
+  
+  .index th, .index td {
+  padding: 5px 8px;
+  font-size: inherit;
+  border: none;
+  }
+  
+  .index th {
+  border-bottom:2pt solid black;
+  background-color:transparent;
+  }
+  
+  .index td {
+  vertical-align: top;
+  }
+  
+  table.enum th {
+  background-color: #cccccc;
+  }
+  
+  table.enum td, table.enum th {
+  padding: 1px 7px;
+  border-color: #cccccc;
+  }
+  
+  table.enum {
+  margin: 7px;
+  }
+  
+  table.enum tr:hover td {
+  background-color: #eeeecc;
+  }
+  
+  table.register {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  }
+  
+  /* For vertically aligned cells */
+  .vertical_cell {
+  /* code will insert the right height-- 
+  height: 220px; 
+  */
+  white-space: nowrap;
+  }
+  
+  /* Rotated div inside the vertical cell */
+  div.rotate {
+  /* Rotate on the left/bottom of this div.*/
+  transform-origin: left bottom 0;
+  float: left;
+  /* build code will insert the transform-- 
+  transform: translate(0px, 110px) rotate(-90deg);
+  */
+  }
+  
+  .register.bits { width: 4em; }
+  .register.field { width: 14em; }
+  .register.description { width: 45em; }
+  
+  table.packet { table-layout: fixed; }
+  td.bitnum.wd16 { min-width: 2.5em }
+  td.bitnum.wd32 { min-width: 1.5em }
+  td.bitnum.wd64 { min-width: 0.9em }
+  td.rsvd { background-color: #cccccc; }
+  
+  td.bitnum:hover, td.bitnumr:hover {
+  background-color: LightBlue;
+  }
+  
+  td.bitnum, td.bitnumr {
+  font-size: 75%;
+  color: grey;
+  padding: 2px;
+  text-align: center;
+  border: 0;
+  }
+  
+  td.bitnumr {
+  padding: 2px 8px;
+  }
+  
+  td.field_reset, td.field_bits, td.field_access {
+  text-align: center;
+  }
+  
+  .field_name {
+  font-weight: bold;
+  }
+  
+  p.field_name {
+  margin-top: 1px;
+  margin-bottom: 3px;
+  }
+  
+  span.frame {
+  display: block;
+  overflow: hidden;
+  }
+  
+  span.frame > span {
+  border: 1px solid #dddddd;
+  display: block;
+  float: left;
+  overflow: hidden;
+  margin: 13px 0 0;
+  padding: 7px;
+  width: auto;
+  }
+  
+  span.frame span img {
+  display: block;
+  float: left;
+  }
+  
+  span.frame span span {
+  clear: both;
+  color: #333333;
+  display: block;
+  padding: 5px 0 0;
+  }
+  
+  span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both;
+  }
+  
+  span.align-center > span {
+  display: block;
+  overflow: hidden;
+  margin: 13px auto 0;
+  text-align: center;
+  }
+  
+  span.align-center span img {
+  margin: 0 auto;
+  text-align: center;
+  }
+  
+  span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both;
+  }
+  
+  span.align-right > span {
+  display: block;
+  overflow: hidden;
+  margin: 13px 0 0;
+  text-align: right;
+  }
+  
+  span.align-right span img {
+  margin: 0;
+  text-align: right;
+  }
+  
+  li img {
+  margin: 0.6em 0;
+  }
+  
+  span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left;
+  }
+  
+  span.float-left span {
+  margin: 13px 0 0;
+  }
+  
+  span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right;
+  }
+  
+  span.float-right > span {
+  display: block;
+  overflow: hidden;
+  margin: 13px auto 0;
+  text-align: right;
+  }
+  
+  pre, code {
+  font-size: 13px;
+  white-space: pre-wrap; /* preserve spaces, but wrap content when required */
+  }
+  
+  pre {
+  line-height: 19px;
+  overflow: auto;
+  margin-right: 1em;
+  background-color: inherit;
+  }
+  
+  code {
+  font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,sans-serif;
+  display: inline-block;
+  /* following is for inline code only, overriden in pre > code */
+  background-color: #eff0f1; /* little darker for inline code */
+  min-width: 0;
+  padding: 1px 5px;
+  }
+  
+  /* This is for block of code */
+  pre > code {
+  min-width: 50%;
+  padding: 0.6em;
+  /* ligth background with border for blocks of code */
+  background-color: #f8f8f8;
+  border: 1px solid #e2e2dd;
+  border-radius: 3px;
+  }
+  
+  /* fasm code syntax highlighting: VIM's "dawn" light scheme */
+  .fasmCode       { line-height: 18px; }
+  .fasm_instrs    { color: #b76161; }
+  .fasm_comment   { color: #4d72e1; }
+  .fasm_labels    { color: #4e438f; }
+  .fasm_fixme     { color: #ff1493; font-weight: bold; }
+  .fasm_registers { color: #3e6a8f; }
+  .fasm_constants { color: #921192; }
+  .fasm_variables { color: #008b8b; font-weight: bold; }
+  
+  
+  div.figure /* Pandoc figure-style image */
+  {
+  display: block; 
+  margin-left: 3%;
+  margin-bottom: 2em;
+  }
+  
+  div.figure p, p.table_caption /* Figure and table captions */
+  {
+  text-align: left;
+  font-weight: bold;
+  color: #0064a5;
+  }
+  
+  div.figure::before
+  {
+  content: '\A'; 
+  white-space: pre;
+  }
+  
+  p.caption::before /* Pandoc figure-style caption within div.figure */
+  {
+  content: "Figure: ";
+  }
+  
+  p.table_caption::before
+  {
+  content: "Table: ";
+  }
+  
+  
+  /* Folder Icon */
+  i.folder{display:inline-block;position:relative;margin:0.4em 0.4em 0 0;}
+  i.folder::before{content:"";position:absolute;display:block;}
+  
+  .folder{
+  width:14px;
+  height:10px;
+  background-image:-webkit-linear-gradient(#a7c3d9, #709fc2);
+  box-shadow:inset 0 1px 0 #c6d9e7, 0 1px 0 #bbbfc3;
+  border-width:1px;
+  border-style:solid;
+  border-color:#65849b #5a7b92 #4c6f87 #5f7f96;
+  }
+  .folder::before{
+  top:-3px;
+  width:4px;
+  height:1px;
+  background:#96b8d3;
+  border-width:1px;
+  border-style:solid;
+  border-color:#69879e #67869d #98b4c8 #67869d;
+  }
+  
+  img, svg {
+  max-width: 100%;
+  }
+  
+  div.figure img, div.figure svg {
+  display: block;
+  max-width: 100%;
+  color: #0064a5;
+  }
+  
+  svg text {
+  /* Preserve space in SVG text, otherwise Visio text may be messed up */
+  white-space: pre;
+  }
+  
+  div.packet {
+  margin-top: 1.5em;
+  margin-bottom: 2.5em;
+  }
+  
+  /* not used yet, but cound be used to highlight changes */
+  .change {
+  border-left: 3px solid red;
+  padding-left: 15px;
+  margin-left: -18px;
+  }
+  
+  a.open, a.fixme, a.todo {
+  color: inherit; /* Do not show link color */
+  background-color: yellow;
+  }
+  
+  a.open_link {
+  color: inherit; /* Do not show link color */
+  }
+  
+  /* Fancier fonts, text width constraining, more consistent spacing */
+  
+  #MAIN, #MAIN table {
+  font-family: 'Roboto', Calibri, arial, sans-serif;
+  font-size: 16px;
+  }
+  p {
+  margin: 0.8em 0 0.4em 0;
+  }
+  p, li {
+  max-width: 60em;
+  line-height: 1.4;
+  }
+  th, td {
+  font-size: 14.5px;
+  }
+  table {
+  line-height: 1.4;
+  }
+  blockquote {
+  max-width: 58em;
+  }
+  li {
+  padding-left: 0.5em;
+  margin-top: 0.2em;
+  }
+  li p {
+  margin: 0;
+  }
+  code {
+  font-family: 'Roboto Mono',Consolas,Lucida Console,Bitstream Vera Sans Mono,monospace,sans-serif;
+  padding: 0px 5px;
+  font-size: 14.5px;
+  }
+  div.table {
+  margin-bottom: 1em;
+  }
+  @media screen {
+  div.table { overflow-x: auto; }
+  }
+  
+  /* open feedback for previous versions */
+  div.feedback {
+  border-left: 3px solid red;
+  padding-left: 1em;
+  margin-left: -1em;
+  margin-top: 1em;
+  max-width: 60em;
+  background-color: aliceblue;
+  }
+  div.feedback table { margin-top: 0.2em; }
+  div.feedback p { margin-bottom: 0; font-weight: bold; font-size: 14px; }
+  div.feedback th, div.feedback td { font-size: 14px; border: 0; }
+  div.feedback th {
+  background-color: inherit;
+  padding-left: 0;
+  text-align: right;
+  vertical-align: top;
+  white-space: pre;
+  }
+  div.feedback td { white-space: pre-wrap; padding: 2px 4px; }
+  table.notes { margin-top: 2px; }
+  #MAIN .caption { margin-top: 1em; }
+  
+  </style>
+  <script>
+  
+  var g = {}; // Global variables
+  g.fdb_state = "none";
+  g.rsz_state = "none";
+  g.toc_arr = [];
+  g.svg_arr = [];
+  g.feedback_arr = [];
+  
+  g.pmdb_url = '';
+  
+  var f = {}; // Namespace for local functions
+  
+  f.pmdb_connection = function(url) {
+      var xhttp = f.createCORSRequest("POST", url);
+      // I do not set Content-type=application/json here because it triggers
+      // prefligt OPTIONS request to the sso server, which gets rejected..
+      xhttp.withCredentials = true;
+      return xhttp;
+  }
+  
+  f.openTOC = function() {
+      // FIXME: instead of specifying explicitly would be better
+      // to remember the values on close, and restore here
+      document.getElementById("TOCCLOSE").style.display = "block";
+      document.getElementById("TOCCLOSE").style.width = "20%";
+      document.getElementById("TOCOPEN").style.display = "none";
+      document.getElementById("EDGE").style.display = "block";
+      document.getElementById("EDGE").style.left = "20%";
+      document.getElementById("TOC").style.display = "block";
+      document.getElementById("SIDEBAR").style.width = "20%";
+      document.getElementById("MAIN").style.left = "20.5%";
+      document.getElementById("MAIN").style.width = "79.5%";
+  }
+  
+  f.closeTOC = function() {
+      document.getElementById("TOCCLOSE").style.display = "none";
+      document.getElementById("TOCOPEN").style.display = "block";
+      document.getElementById("EDGE").style.display = "none";
+      document.getElementById("TOC").style.display = "none";
+      document.getElementById("SIDEBAR").style.width = "2%";
+      document.getElementById("MAIN").style.left = "2%";
+      document.getElementById("MAIN").style.width = "98%";
+  }
+  
+  f.removeTOC = function() {
+      document.getElementById("TOCCLOSE").style.display = "none";
+      document.getElementById("TOCOPEN").style.display = "none";
+      document.getElementById("SIDEBAR").style.display = "none";
+      document.getElementById("EDGE").style.display = "none";
+      document.getElementById("MAIN").style.left = "0%";
+      document.getElementById("MAIN").style.width = "100%";
+  }
+  
+  f.highlight_element = function(el, hl, page_height) {
+      if (hl) {
+          el.tocobj.style.backgroundColor = "#959595";
+          el.tocobj.style.color = "#ff9";
+          var rect = el.tocobj.getBoundingClientRect();
+          if (rect.top < 0) {
+              el.tocobj.scrollIntoView(true);
+          }
+          if (rect.bottom > page_height) {
+              el.tocobj.scrollIntoView(false);
+          }
+          var p = el.tocobj;
+          do {
+              p = p.parentElement;
+              if (p && p.toc_span && p.toc_span.classList.contains("fa-plus-square")) {
+                  f.toggle_toc_entry(p);
+                  p.classList.add("temporarily_expanded");
+              }
+          } while (p);
+      } else {
+          el.tocobj.style.backgroundColor = "inherit";
+          el.tocobj.style.color = "inherit";
+      }
+  }
+  
+  f.highlight_toc = function() {
+      var page_height = window.innerHeight;
+      var found = false;
+      var closest_entry = null;
+      var closest_y = -Infinity;
+  
+      Array.prototype.forEach.call(document.querySelectorAll(".temporarily_expanded"), function(li) {
+          li.classList.remove("temporarily_expanded");
+          f.toggle_toc_entry(li);
+      });
+      for (var i = 0; i < g.toc_arr.length; i++) {
+          var rect = g.toc_arr[i].headobj.getBoundingClientRect();
+          if (rect.top < 0 && rect.top > closest_y) {
+              closest_y = rect.top;
+              closest_entry = g.toc_arr[i];
+          }
+          in_view = (rect.top >= 0 && rect.bottom <= page_height);
+          f.highlight_element(g.toc_arr[i], in_view, page_height);;
+          found = found || in_view;
+      }
+      if (!found && closest_entry != null) {
+          f.highlight_element(closest_entry, true, page_height);
+      }
+  }
+  
+  f.scale_svg_height = function() {
+      for (var i = 0; i < g.svg_arr.length; i++) {
+          svg = g.svg_arr[i].elem;
+          if (svg.offsetWidth == 0) { break; } // wkhtml2pdf bug
+          svg.style.height = ""; // Reset the height (to unconstrain width)
+          new_h = svg.clientWidth * g.svg_arr[i].h2w;
+          svg.style.height = new_h.toFixed() + "px";
+      }
+  }
+  
+  f.cancel_evt = function(evt) {
+      if (evt.preventDefault) {
+          evt.preventDefault();
+      } else {
+          evt.returnValue = false;
+      }
+  }
+  
+  f.handleMouseDown = function(evt, prevEvt) {
+      if (g.rsz_state === "none") {
+          f.cancel_evt(evt);
+          g.rsz_state = "resize";
+      }
+  }
+  
+  f.handleMouseMove = function(evt) {
+      if (g.rsz_state === "resize") {
+          f.cancel_evt(evt);
+          x = evt.clientX;
+          wd = window.innerWidth;
+          p = x / wd * 100;
+          if (p < 5 || p > 90) return;
+          g.sidebar.style.width = p + "%";
+          g.tocclose.style.width = p + "%";
+          g.resizer.style.left = p + "%";
+          g.main.style.left = (p+0.5) + "%";
+          g.main.style.width = (99.5-p) + "%";
+      }
+  }
+  
+  f.handleMouseUp = function(evt) {
+      if (g.rsz_state === "resize") {
+          f.cancel_evt(evt);
+          g.rsz_state = "none";
+      }
+  }
+  
+  f.addEvent = function(element, eventName, callback) {
+      if (element.addEventListener) {
+          element.addEventListener(eventName, callback, false);
+      } else if (element.attachEvent) {
+          element.attachEvent("on" + eventName, callback);
+      }
+  }
+  
+  f.show_feedback_form = function() {
+      fb = document.getElementById("feedback_form");
+      fb.style.width = "600px";
+      fb.style.height = "auto";
+      fb.style.top = "250px";
+      fb.style.left = "30%";
+      g.cover.classList.add("show_form");
+      g.fdb_state = "show";
+      document.getElementById("feedback_text").focus();
+  }
+  
+  f.hide_feedback_form = function() {
+      fb = document.getElementById("feedback_form");
+      fb.style.width = "0";
+      fb.style.height = "0";
+      fb.style.top = "50%";
+      fb.style.left = "50%";
+      g.cover.classList.remove("show_form");
+      g.fdb_state = "none";
+      if (g.fb_obj) {
+          g.fb_obj.rollback();
+          g.fb_obj = null;
+      }
+  }
+  
+  f.get_header_path = function(node) {
+      var ans = [];
+      while (node.nodeName != "#document") {
+          var p = node.parentNode;
+          if (p.nodeName == "DIV" && /^section level/.test(p.className)) {
+              // Assume first child of a section DIV is a header tag
+              ans.push([p.firstElementChild.innerText, p.id]);
+          }
+          node = p; // go up the hierarchy
+      }
+      ans.reverse();
+      return ans;
+  }
+  
+  f.get_dom_path = function(node) {
+      var ans = [];
+      while (node.nodeName != "#document") {
+          var p = node.parentNode;
+          var i = Array.prototype.indexOf.call(p.childNodes, node); // index of self
+          ans.push(i);
+          node = p; // go up the hierarchy
+      }
+      return ans;
+  }
+  
+  f.dom_path_to_node = function(path) {
+      var ans = document;
+      for (var i = path.length - 1; i >= 0; i--) {
+          let node = ans.childNodes[path[i]];
+          if (node) {
+              ans = node;
+          } else {
+              ans.path_error = true;
+              return ans;
+          }
+      }
+      return ans;
+  }
+  
+  f.fb_text_update = function(elem) {
+      if (!g.fb_obj) return;
+      if (/\S/.test(elem.value)) {
+          g.fb_obj.textnode.nodeValue = elem.value;
+          document.getElementById("feedback_submit").classList.remove("disabled");
+      } else {
+          g.fb_obj.textnode.nodeValue = "[]";
+          document.getElementById("feedback_submit").classList.add("disabled");
+      }
+  }
+  
+  f.sign_off = function(span, id) {
+      g.cover.classList.add("waiting");
+      status = "dismissed";
+      var req = JSON.stringify([{
+          "action": "update_comment",
+          "_id": id,
+          "data": { "status": status },
+      }]);
+      var conn = f.pmdb_connection(g.pmdb_url + "/execute");
+      conn.onload = function() {
+          if (conn.status == 200) {
+              f.query_feedback();
+          } else {
+              window.alert("ERROR :: HSD-ES response:\n" + JSON.stringify(resp, null, 4));
+          }
+      }
+      conn.send(req);
+  }
+  
+  f.create_feedback_tooltip = function(fb) {
+      // Create pop-up "tooltip" for the feedback record
+      fb.elem.className += " hastooltip";
+      var tiptext = "Feedback by " + fb.rec.who_created + " on " + fb.rec.time_created;
+      var tip = "<span class=\"tooltip\">" + tiptext + "<br>";
+      if (fb.rec.status == "acknowledged") {
+          // TODO: remove this
+          tip += "Acknowledged by " + fb.rec.who_modified + " on " + fb.rec.time_modified + "<br>";
+          fb.elem.className += " acknowledged";
+      }
+      if (fb.rec.status == "dismissed") {
+          // Change the color of the feedback that has been already closed by the author
+          fb.elem.className += " acknowledged";
+          tip += "Closed by " + fb.rec.who_modified + " on " + fb.rec.time_modified + "<br>";
+          tip += '<a href="' + g.pmdb_url + '/feedback?id=' + fb.rec._id + '" class="sign_off">View details</a>';
+      } else {
+          tip += '<a href="' + g.pmdb_url + '/feedback?id=' + fb.rec._id + '" class="sign_off">Reply and/or close</a>';
+      }
+      tip += "</span>";
+      fb.elem.insertAdjacentHTML('beforeend', tip);
+  }
+  
+  f.insert_feedback = function(type, node_start, offset_start, node_end, offset_end, fbtext, rec) {
+      var fb = {}
+      var del = function(elem) {
+          if (elem.parentNode) // elem could lose its parent if document version checking
+                               // is not working (e.g. during local testing)
+              elem.parentNode.removeChild(elem);
+      }
+  
+      if (type == "append_at_end") {
+          var num = parseInt("0x" + rec._id.substr(rec._id.length-3));
+          var link = '<a href="' + g.pmdb_url + '/feedback?id=' + rec._id + '">[' + num + ']</a>';
+          var table = '<table>';
+          var text = rec.selection_text;
+          if ((text.length < 25) && (rec.prefix || rec.suffix)) {
+              // For short selection, add some context
+              if (!text) text = "&caret;";
+              text = rec.prefix + "<mark>" + text + "</mark>" + rec.suffix;
+          }
+          table += '<tr><th>Selected text:</th><td>' + text + '</td></tr>';
+          table += '<tr><th>[' + rec.who_created + ']</th><td>' + rec.text + '</td></tr>';
+          if (rec.replies)
+              for (var i = 0; i < rec.replies.length; i++)
+                  table += '<tr><th>[' + rec.replies[i].who + ']</th><td>' + rec.replies[i].what + '</td></tr>';
+          table += '</table>';
+          var html = '<div class="feedback"><p>Open feedback record ' + link + '</p>' + table + '</div>';
+          node_start.insertAdjacentHTML('beforeend', html);
+          fb.elem = node_start.lastChild;
+          fb.rollback = function() { del(fb.elem); }
+          return fb;
+      }
+      var end_parent_elem = node_end.parentElement;
+      if (node_start.nodeType != node_start.TEXT_NODE ||
+              node_end.nodeType != node_end.TEXT_NODE)
+          type = "add_paragraph";
+      else if (end_parent_elem && /^H\d+$/.test(end_parent_elem.tagName)) {
+          type = "add_paragraph"; // I don't want comments appear inline in headers
+          node_end = end_parent_elem; // hack to look as if it was H* paragraph selection
+          offset_end = 0;
+      }
+      fb.elem = document.createElement(type == "add_paragraph" ? "P" : "SPAN");
+      fb.elem.className = "feedback";
+      fb.textnode = document.createTextNode(fbtext);
+      fb.elem.appendChild(fb.textnode);
+      fb.rec = rec;
+      if (rec)
+          f.create_feedback_tooltip(fb);
+      if (type == "add_paragraph") {
+          // Insert paragraph after selection
+          // One of start and end is Element, not text node
+          // End element is usually one *after* the selection
+          // e.g. can be <td> across a <tr> from selected <td>!
+          if (node_start.nodeType == node_start.TEXT_NODE && node_end.nodeType == node_end.ELEMENT_NODE) {
+              if (offset_end) {
+                  node_end.insertBefore(fb.elem, node_end.childNodes[offset_end]);
+              } else {
+                  var n = node_start.parentElement;
+                  while (true) {
+                      // We want to skip inline elements and stop at "block" ones
+                      let display = window.getComputedStyle(n, null).display;
+                      if (display == "block" || display == "list-item") {
+                          n.insertAdjacentElement("afterend", fb.elem);
+                          break;
+                      } else if (display == "table-cell") {
+                          n.insertAdjacentElement("beforeend", fb.elem);
+                          break;
+                      }
+                      n = n.parentNode;
+                  }
+              }
+          } else {
+              console.log(node_start.nodeType.toString() + " " + node_start.nodeType.toString());
+          }
+          fb.rollback = function() { del(fb.elem); }
+      } else if (type == "add_text") {
+          var text = node_end.nodeValue;
+          fb.orig_value = node_end.nodeValue;
+          node_end.nodeValue = text.substring(0, offset_end);
+          fb.aftertext = document.createTextNode(text.substring(offset_end));
+          let p = node_end.parentNode;
+          p.insertBefore(fb.aftertext, node_end.nextSibling);
+          p.insertBefore(fb.elem, fb.aftertext);
+          fb.rollback = function() {
+              node_end.nodeValue = fb.orig_value;
+              del(fb.elem);
+              del(fb.aftertext);
+          }
+      }
+  
+      // For feedback filed by mistake, remove text
+      // We still want the HTML element, but make it empty
+      if (rec && rec.replies)
+          if (/filed by mistake/i.test(rec.replies[rec.replies.length-1].what))
+              fb.textnode.nodeValue = "";
+  
+      return fb;
+  }
+  
+  f.scroll_to = function(from, to) {
+      // gradually scroll
+      let delta = 20; // delta increment
+      let us = 10; // microseconds per delta
+      if (Math.abs(from - to) > delta) {
+          let step = from > to ? delta : -delta;
+          window.scrollBy(0, step);
+          window.setTimeout(function() { f.scroll_to(from - step, to) }, 5);
+      }
+  }
+  
+  f.start_feedback_form = function() {
+      sel = window.getSelection();
+      if (sel.rangeCount == 0) return;
+      // Capture the selection start and end path/offset
+      g.selection_text = sel.toString();
+      g.sel_start_node = sel.anchorNode;
+      g.sel_end_node = sel.focusNode;
+      g.offset_start = sel.anchorOffset;
+      g.offset_end = sel.focusOffset;
+      // Swap start and end if user selected right-to-left
+      var cmp = g.sel_start_node.compareDocumentPosition(g.sel_end_node);
+      if ((cmp == g.sel_start_node.DOCUMENT_POSITION_PRECEDING) || // Note: strictly preceding (shouldn't contain)
+              (g.sel_start_node == g.sel_end_node && g.offset_end < g.offset_start)) {
+          var t1 = g.sel_start_node; g.sel_start_node = g.sel_end_node; g.sel_end_node = t1;
+          var t2 = g.offset_start; g.offset_start = g.offset_end; g.offset_end = t2;
+      }
+      
+      g.header_path_start = f.get_header_path(g.sel_start_node);
+  
+      g.dom_path_end = f.get_dom_path(g.sel_end_node);
+      g.dom_path_start = f.get_dom_path(g.sel_start_node);
+  
+      // Top coordinate of the selection
+      let sel_top = sel.getRangeAt(0).getClientRects()[0].top;
+      // Scroll it to somewhere not occcluded by the form
+      f.scroll_to(sel_top, 125);
+  
+      // Initialize form elements
+      document.getElementById("fb-form-owner").value = g.doc_id.owner;
+      document.getElementById("feedback_text").value = "";
+      document.getElementById("feedback_submit").classList.add("disabled");
+      
+      // Save text before and after selection, for more context
+      g.prefix = "";
+      g.suffix = "";
+      var MAX_CHARS = 50;
+      if (g.sel_start_node.nodeType == g.sel_start_node.TEXT_NODE) {
+          g.prefix = g.sel_start_node.nodeValue.substring(0, g.offset_start).replace(/^\s+/, '');
+          while (g.prefix.length > MAX_CHARS) {
+              var pos = g.prefix.indexOf(' ');
+              if (pos == -1) break;
+              g.prefix = "..." + g.prefix.substr(pos + 1);
+          }
+      }
+      if (g.sel_end_node.nodeType == g.sel_end_node.TEXT_NODE) {
+          g.suffix = g.sel_end_node.nodeValue.substr(g.offset_end).replace(/\s+$/, '');
+          while (g.suffix.length > MAX_CHARS) {
+              var pos = g.suffix.lastIndexOf(' ');
+              if (pos == -1) break;
+              g.suffix = g.suffix.substring(0, pos) + "...";
+          }
+      }
+      
+      // Add new insertion element
+      g.fb_obj = f.insert_feedback("add_text", g.sel_start_node, g.offset_start, g.sel_end_node, g.offset_end, "[]", null);
+      
+      f.show_feedback_form();
+  
+  }
+  
+  f.start_feedback = function() {
+      // If some text is already selected, start the form right away,
+      // otherwise wait for user to select something
+      if (!g.feedback_enabled) return;
+      if (window.getSelection().toString()) {
+          f.start_feedback_form();
+      } else {
+          document.onmouseup = function() {
+              window.setTimeout(function() {
+                  document.body.classList.remove("selecting");
+                  document.onmouseup = null;
+                  f.start_feedback_form();
+              }, 500); // enough for triple-click selection?
+          }
+          g.fdb_state = "selecting";
+          document.body.classList.add("selecting");
+      }
+  }
+  
+  f.handleKeypress = function(evt) {
+      // TODO :: when productizing, replace hot key with the GUI button
+      if (g.fdb_state == "none" && evt.keyCode == 67 && !evt.ctrlKey) { // letter "c"
+          f.start_feedback();
+          f.cancel_evt(evt);
+      } else if (g.fdb_state == "selecting" && evt.keyCode == 27) { // Escape
+          document.body.classList.remove("selecting");
+          document.onmouseup = null;
+          g.fdb_state = "none";
+          f.cancel_evt(evt);
+      } else if (g.fdb_state == "show" && evt.keyCode == 27) { // Escape
+          f.hide_feedback_form();
+          g.fdb_state = "none";
+          f.cancel_evt(evt);
+      }
+  }
+  
+  f.createCORSRequest = function(method, url) {
+      var xhr = new XMLHttpRequest();
+      if ("withCredentials" in xhr) {
+          xhr.open(method, url, true);
+      } else if (typeof XDomainRequest != "undefined") {
+          xhr = new XDomainRequest();
+          xhr.open(method, url);
+      } else {
+          xhr = null;
+      }
+      return xhr;
+  }
+  
+  f.display_fb_record = function(rec) {
+      var node_start, node_end;
+      if (!rec.vchanged) {
+          node_start = f.dom_path_to_node(rec.dom_path_start);
+          if (node_start.path_error)
+              // if DOM path resolution failed fall back to header-based location
+              rec.vchanged = true;
+      }
+      if (rec.vchanged) {
+          // Version changed or DOM path error, need to find good place to put the record
+          if (rec.status == "dismissed") return; // if the record is closed, skip it
+          if (!rec.header_path) return; // No header path: very old record, bail out
+          // Try locating by header id, walk backwards
+          var header_elem = null;
+          for (var i = rec.header_path.length; i-- > 0 && !header_elem; ) {
+              var h_id = rec.header_path[i][1];
+              header_elem = document.getElementById(h_id);
+          }
+          // if not found, append to end of the document
+          if (!header_elem) header_elem = g.main;
+          rec.type = "append_at_end";
+          node_start = header_elem;
+      }
+      node_end = f.dom_path_to_node(rec.dom_path_end);
+      var fbtext = rec.text;
+      if (rec.type != "replace_text")
+          fbtext = "[" + rec.who_created + "] " + fbtext
+      var fb_obj = f.insert_feedback(rec.type, node_start, rec.offset_start, node_end, rec.offset_end, fbtext, rec);
+      g.feedback_arr.push(fb_obj);
+  }
+  
+  f.query_feedback = function() {
+      var ss = g.doc_id.src_path.split(':');
+      var req = JSON.stringify([{ 
+          "action": "query_comments",
+          "query" : { "$or": [
+              {"doc_sha1": g.doc_id.git_sha1},
+              {"status": "new", "repo_name": ss[0], "src_path": ss[1]}
+          ] },
+      }]);
+      var xhttp = f.pmdb_connection(g.pmdb_url + "/query");
+      xhttp.onload = function() {
+          if (xhttp.status == 200) {
+              resp = JSON.parse(xhttp.responseText);
+              // First, roll back all the feedback
+              while (g.feedback_arr.length)
+                  g.feedback_arr.pop().rollback();
+              // Second, display newly fetched one
+              var recs = resp[0];
+              // First, display all records with the exact version match
+              for (var i = 0; i < recs.length; i++)
+                  if (recs[i].doc_sha1 == g.doc_id.git_sha1) {
+                      f.display_fb_record(recs[i]);
+                  }
+              // Then, display past versions feedback, trying to 
+              // place it in the most suitable location
+              for (var i = 0; i < recs.length; i++)
+                  if (recs[i].doc_sha1 != g.doc_id.git_sha1) {
+                      recs[i].vchanged = true;
+                      f.display_fb_record(recs[i]);
+                  }
+              //
+              f.enable_feedback();
+          } else {
+              console.log("ERROR :: HSD-ES response: " + xhttp.status + " " + xhttp.responseText);
+              g.feedback_enabled = false;
+          }
+          g.cover.classList.remove("waiting");
+      }
+      xhttp.send(req);
+  }
+  
+  f.enable_feedback = function() {
+      g.feedback_enabled = true;
+      document.getElementById("feedback_button").style.display = "block";
+  }
+  
+  f.submit_feedback = function() {
+      if (!/\S/.test(document.getElementById("feedback_text").value)) return;
+      if (g.fdb_state == "show") {
+          g.cover.classList.add("waiting");
+          g.fdb_state = "submit"; // Make sure user can't submit twice  
+          var ss = g.doc_id.src_path.split(':');
+          var comment = {
+              "repo_name": ss[0],
+              "src_path": ss[1],
+              "doc_sha1": g.doc_id.git_sha1,
+              "header_path": g.header_path_start,
+              "dom_path_start": g.dom_path_start,
+              "dom_path_end": g.dom_path_end,
+              "offset_start": g.offset_start,
+              "offset_end": g.offset_end,
+              "selection_text": g.selection_text,
+              "prefix": g.prefix,
+              "suffix": g.suffix,
+              "owner": g.doc_id.owner,                                      // From the document itself
+              "user_owner": document.getElementById("fb-form-owner").value, // From the form, specified by user
+              "text": document.getElementById("feedback_text").value,
+              "type": "add_text",
+              "url": window.location.origin + window.location.pathname,
+          };
+          var request_str = JSON.stringify([{
+              action: "insert_comment",
+              comment: comment,
+          }]);
+          console.log("REQUEST: " + request_str + "\n");
+          var xhttp = f.pmdb_connection(g.pmdb_url + "/execute");
+          xhttp.onload = function() {
+              if (xhttp.status != 200) {
+                  window.alert("ERROR :: PMDB response: " + xhttp.status + xhttp.responseText);
+                  g.fdb_state = "show";
+              } else {
+                  resp = JSON.parse(xhttp.responseText);
+                  f.hide_feedback_form(); // will roll back the changes, too
+                  rec = resp[0];
+                  f.display_fb_record(rec);
+                  g.fdb_state = "none";
+              }
+              g.cover.classList.remove("waiting");
+          }
+          xhttp.send(request_str);
+      }
+  }
+  
+  f.prevent_scroll_propagation = function(evt) {
+      // When scrolling down table of contents, and reaching bottom, we want to
+      // not scroll the main document, as it resets the TOC scroll.
+      // http://stackoverflow.com/questions/5802467/prevent-scrolling-of-parent-element
+      let t = g.sidebar;
+      let scrollTop = t.scrollTop;
+      let scrollHeight = t.scrollHeight;
+      let height = parseInt(window.getComputedStyle(t, null).height);
+      let delta = evt.wheelDelta;
+      let up = delta > 0;
+      let prevent = function() {
+          evt.stopPropagation();
+          evt.preventDefault();
+          evt.returnValue = false;
+          return false;
+      }
+      if (!up && -delta > scrollHeight - height - scrollTop) {
+          // Scrolling down, but this will take us past the bottom.
+          t.scrollTop = scrollHeight;
+          return prevent();
+      } else if (up && delta > scrollTop) {
+          // Scrolling up, but this will take us past the top.
+          t.scrollTop = 0;
+          return prevent();
+      }
+  }
+  
+  f.foreach_elem_under = function(elem, tagname, func) {
+      let children = elem.getElementsByTagName(tagname);
+      for (var i = 0; i < children.length; i++)
+          func(children[i]);
+  }
+  
+  f.toggle_toc_entry = function(li) {
+      let span = li.toc_span;
+      collapse = span.classList.contains("fa-minus-square");
+      let class_str = "hide_level" + li.toc_level;
+      f.foreach_elem_under(li, "LI", function(child_li) {
+          if (collapse)
+              child_li.classList.add(class_str);
+          else
+              child_li.classList.remove(class_str);
+      });
+      if (collapse) {
+          span.classList.remove("fa-minus-square");
+          span.classList.add("fa-plus-square");
+      } else {
+          span.classList.remove("fa-plus-square");
+          span.classList.add("fa-minus-square");
+      }
+  }
+  
+  f.make_toc_interactive = function() {
+      if (!document.getElementById("TOC")) return;
+      let top_ul = document.getElementById("TOC").firstElementChild;
+      let toc_collapse = function(level) {
+          f.foreach_elem_under(top_ul, "LI", function(li) {
+              if (li.toc_span) {
+                  let is_expanded = li.toc_span.classList.contains("fa-minus-square");
+                  li.toc_span.classList.remove("temporarily_expanded");
+                  if (li.toc_level >= level - 1) {
+                      if (is_expanded) f.toggle_toc_entry(li);
+                  } else {
+                      if (!is_expanded) f.toggle_toc_entry(li);
+                  }
+              }
+          });
+      }
+      let add_toc_collapse_button = function(text, level) {
+          let div = document.createElement('DIV');
+          div.className = "toclevel";
+          div.onclick = function() { toc_collapse(level); }
+          let span = document.createElement('SPAN');
+          span.appendChild(document.createTextNode(text));
+          div.appendChild(span);
+          toc_close.insertAdjacentElement("beforeend", div);
+      }
+      let toc_close = document.getElementById("TOCCLOSE");
+      var max_level = 0;
+      let traverse = function(ul, level) {
+          if (level > max_level) {
+              add_toc_collapse_button(""+level, level);
+              max_level = level;
+          }
+          for (var i = 0; i < ul.children.length; i++) {
+              let li = ul.children[i];
+              li.toc_level = level; // custom attribute to remember the level
+              let uls = li.getElementsByTagName("UL");
+              if (uls.length > 0) {
+                  let span = document.createElement('SPAN');
+                  li.toc_span = span;
+                  span.className = "fa fa-minus-square toc_li";
+                  span.onclick = function() {
+                      li.toc_span.classList.remove("temporarily_expanded");
+                      f.toggle_toc_entry(li);
+                  }
+                  li.insertAdjacentElement("afterbegin", span);
+                  traverse(uls[0], level + 1);
+              } else {
+                  li.insertAdjacentHTML("afterbegin", "<span class=\"toc_dot\">&middot;</span>");
+              }
+          }
+      }
+      traverse(top_ul, 0);
+      add_toc_collapse_button("A", max_level + 1);
+      toc_collapse(2);
+  }
+  
+  f.is_subscribed = function() {
+      g.apath = g.doc_id.src_path.split(':');
+      if (g.apath[0] == "UNRELEASED") return; // Cannot rely on source path of non-released documents
+      var req = JSON.stringify([{'action':'is_subscribed', 'repo':g.apath[0], 'document':g.apath[1]}]);
+      var xhttp = f.pmdb_connection(g.pmdb_url + "/subscriptions");
+      xhttp.onload = function() {
+          var resp = JSON.parse(xhttp.responseText);
+          console.log("is_subscribed: " + (resp[0] > 0));
+          g.is_subscribed = (resp[0] > 0);
+          g.subscribe_button = document.getElementById("subscribe_button");
+          g.subscribe_button.style.display = "block";
+          if (g.is_subscribed) {
+              g.subscribe_button.classList.add("subscribed");
+          }
+      }
+      xhttp.send(req);
+  }
+  
+  f.subscribe = function() {
+      if (g.apath[0] == "UNRELEASED") return; // Cannot rely on source path of non-released documents
+      let action = g.is_subscribed ? 'unsubscribe' : 'subscribe';
+      var req = JSON.stringify([{'action':action, 'repo':g.apath[0], 'document':g.apath[1]}]);
+      var xhttp = f.pmdb_connection(g.pmdb_url + "/subscriptions");
+      xhttp.onload = function() {
+          var resp = JSON.parse(xhttp.responseText);
+          console.log(action + " -> " + resp[0]);
+      }
+      xhttp.send(req);
+      g.is_subscribed = !g.is_subscribed;
+      if (g.is_subscribed) {
+          g.subscribe_button.classList.add("subscribed");
+      } else {
+          g.subscribe_button.classList.remove("subscribed");
+      }
+  }
+  
+  function init() {
+  
+      // Some shortcuts
+      g.tocclose = document.getElementById("TOCCLOSE");
+      g.sidebar = document.getElementById("SIDEBAR");
+      g.resizer = document.getElementById("EDGE");
+      g.main = document.getElementById("MAIN");
+      g.cover = document.getElementById("feedback_cover");
+  
+      var x = document.querySelectorAll("#TOC a");
+      for (var i = 0; i < x.length; i++) {
+          var entry = {tocobj: x[i]};
+          entry.id = x[i].href.split("#").pop(); // http://blah#header_id -> header_id
+          divobj = document.getElementById(entry.id); // should be div, containing the header as first element
+          if (divobj == null) { continue; }
+          entry.headobj = divobj.firstElementChild;
+          if (entry.headobj == null) { continue; }
+          g.toc_arr.push(entry);
+      }
+      if (g.toc_arr.length <= 1) {
+          f.removeTOC();
+      }
+      var x = document.getElementsByTagName("svg");
+      for (var i = 0; i < x.length; i++) {
+          var entry = {elem: x[i]};
+          entry.h2w = parseInt(x[i].style.height) / parseInt(x[i].style.width);
+          g.svg_arr.push(entry);
+      }
+      f.highlight_toc();
+      f.scale_svg_height();
+      window.onscroll = f.highlight_toc;
+      window.onresize = f.scale_svg_height;
+  
+      // Add g.sidebar resize handlers
+      f.addEvent(g.resizer, "mousedown", f.handleMouseDown);
+      f.addEvent(window, "mouseup", f.handleMouseUp);
+      f.addEvent(window, "mousemove", f.handleMouseMove);
+      f.addEvent(document, "keydown", f.handleKeypress);
+      f.addEvent(g.sidebar, "mousewheel", f.prevent_scroll_propagation);
+  
+      // Fetch document id info
+      var metas = document.getElementsByTagName('meta'); 
+      g.doc_id = {};
+      for (var i=0; i<metas.length; i++) { 
+          if (metas[i].getAttribute("name") == "application-name") { 
+              g.doc_id.owner = metas[i].getAttribute("data-owner"); 
+              g.doc_id.src_path = metas[i].getAttribute("data-src-path"); 
+              g.doc_id.git_sha1 = metas[i].getAttribute("data-src-sha1"); 
+          } 
+      } 
+  
+      // Fetch feedback records from HSD-ES and display them
+      g.feedback_enabled = false;
+      f.query_feedback();
+  
+      // Make TOC "interactive" (expandable tree)
+      f.make_toc_interactive();
+  
+      f.is_subscribed();
+  }
+  
+  </script>
+
+</head>
+<body onload="init()">
+<div class="dim-body" id="feedback_cover"></div>
+<section id="feedback_section">
+<div class="feedback-help" id="feedback_help">
+    Select the text that you want to reference in your feedback.<br/>
+    Alternatively, make selection first, and then click on a comment button.<br/>
+    Hit Escape to exit selection mode.
+</div>
+<div class="feedback-form" id="feedback_form">
+  <div class="feedback-border"><div class="feedback-content">
+     <h2>Submit feedback / comment</h2>
+     <table>
+        <tbody><tr class="nohover"><td>Doc Owner:</td><td><input class="wide" id="fb-form-owner" type="text"/></td></tr>
+        <tr class="nohover"><td>Feedback:</td><td><textarea id="feedback_text" oninput="f.fb_text_update(this)" rows="8"></textarea></td></tr>
+     </tbody></table>
+     <div class="feedback-escape">Press 'Esc' to cancel</div>
+     <div class="feedback-submit" id="feedback_submit" onclick="f.submit_feedback()">Submit</div>
+  </div></div>
+</div>
+</section>
+<div id="TOCCLOSE">
+    <button class="menubutton hastooltip" id="subscribe_button" onclick="f.subscribe()" style="display:none">
+        <span class="fa fa-envelope"></span>
+        <span class="tooltip2">Subscribe to this document's updates and comments</span>
+    </button>
+    <button class="menubutton hastooltip" id="feedback_button" onclick="f.start_feedback()" style="display:none">
+        <span class="fa fa-pencil-square-o"></span>
+        <span class="tooltip2">Provide feedback to the author, or ask a question</span>
+    </button>
+    <div class="toclevel" onclick="f.closeTOC()"><span>«</span></div>
+</div>
+<div id="TOCOPEN" onclick="f.openTOC()">»</div>
+<div id="SIDEBAR">
+<div id="TOC">
+<ul>
+<li id="c066e645"><a href="#pm_tools">pm_tools</a></li>
+<li id="04eb8d81"><a href="#requirements">Requirements</a></li>
+<li id="1d2a0ed6"><a href="#quick-start">Quick start</a></li>
+<li id="6a03eca0"><a href="#fixme">FIXME</a></li>
+</ul>
+</div>
+</div>
+<div id="EDGE"></div>
+<div id="MAIN">
+<div class="section level1" id="pm_tools">
+<h1>pm_tools</h1>
+<p id="46c2ec9c"><strong>pm_tools</strong> is a framework for authoring technical documentation in markdown. Basic markdown capabilities are provided by pandoc. Pm_tools extends pandoc-flavored markdown with "plugin" syntax that allows embedding:</p>
+<ul>
+<li id="33a29993"><a href="http://plantuml.com">Plantuml</a> diagrams</li>
+<li id="4bb9c800"><a href="http://www.graphviz.org">Graphviz</a> charts</li>
+<li id="66e5fe3f"><a href="http://wavedrom.com">Wavedrom</a> waveform diagrams</li>
+<li id="7b9d144a"><a href="http://ditaa.sourceforge.net">Ditaa</a> diagrams</li>
+<li id="f0fcb5be"><a href="http://flowchart.js.org">Flowchart.js</a> diagrams</li>
+<li id="cdd6b67e"><a href="https://cdelker.bitbucket.io/SchemDraw/SchemDraw.html">Schemdraw</a> circuit diagrams</li>
+<li id="d957b004"><a href="https://www.mathjax.org">Mathjax</a> formulas</li>
+<li id="b7bd3c4e">Arbitrary python code output</li>
+<li id="a0304ecd">Data structure (registers, packets) definitions</li>
+<li id="c4a2804a">MS Visio diagrams (as zoomable SVG)</li>
+<li id="713e292a">Excel tables (as HTML tables)</li>
+<li id="858c6a2c">Excel "screenshots" (as PNG)</li>
+<li id="1e52641c">csv/tsv</li>
+<li id="7d652e97">XSD schemas</li>
+</ul>
+<p id="8b93e599">Main output format is HTML (single-file), with PDF also supported.</p>
+<p id="6ea443f8">Principles of pm_doc:</p>
+<ul>
+<li id="7d878cc1">Ability to edit documents fully offline</li>
+<li id="a854ca02">Ability to view documents fully offline (Mathjax formulas currently require online connection or cached Mathjax)</li>
+<li id="47afaf98">Single output document contained in a single HTML file (to make easy to copy / send by e-mail)</li>
+</ul>
+</div>
+<div class="section level1" id="requirements">
+<h1>Requirements</h1>
+<ul>
+<li id="9f0eccc9">Windows</li>
+<li id="b90d2cf9">Python 2.7</li>
+<li id="207457a6">MS Visio (for embedding Visio diagrams)</li>
+<li id="35d790c4">MS Excel (for embedding Excel "screenshots")</li>
+</ul>
+</div>
+<div class="section level1" id="quick-start">
+<h1>Quick start</h1>
+<p id="e14a95db">Create <code>hello.md</code> with the following content:</p>
+<pre><code># Quick start example
+
+## Hello, World
+
+```plantuml("Communication to the world")
+Pm_doc -&gt; World: Hello there
+```</code></pre>
+<p id="3bd25840">Run from the console:</p>
+<pre><code>python $PM_DOC/scripts/mmd2doc.py hello.md</code></pre>
+<p id="59204313">An overview of all features with the examples is in <code>doc/Example.mmd</code>.</p>
+</div>
+<div class="section level1" id="fixme">
+<h1>FIXME</h1>
+<p id="9831d808">The following features are missing from this <strong>pm_doc</strong> distribution:</p>
+<ul>
+<li id="0620f4a8">Word2mmd conversion</li>
+<li id="b8cd4e35">Test/regressions</li>
+<li id="6f9e6369">Build/release automation</li>
+<li id="33cd7586">Python 3 support</li>
+<li id="c9974ae9">Linux support</li>
+<li id="6112cbca">Firefox and Safari browser support</li>
+</ul>
+</div>
+</div>
+
+
+</body></html>

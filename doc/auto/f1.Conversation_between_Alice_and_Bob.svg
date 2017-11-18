@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="265px" preserveAspectRatio="none" style="width:387px;height:265px;" version="1.1" viewBox="0 0 387 265" width="387px" zoomAndPan="magnify"><defs/><g><line style="stroke: #021540; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="159" x2="159" y1="39.9727" y2="229.8359"/><line style="stroke: #021540; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="219" x2="219" y1="39.9727" y2="229.8359"/><rect fill="#E5E8EF" height="35.9727" rx="5" ry="5" style="stroke: #021540; stroke-width: 1.5;" width="50" x="134" y="3"/><text fill="#000000" font-family="Calibri" font-size="18" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="36" x="141" y="29.459">Alice</text><rect fill="#E5E8EF" height="35.9727" rx="5" ry="5" style="stroke: #021540; stroke-width: 1.5;" width="50" x="134" y="228.8359"/><text fill="#000000" font-family="Calibri" font-size="18" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="36" x="141" y="255.2949">Alice</text><rect fill="#E5E8EF" height="35.9727" rx="5" ry="5" style="stroke: #021540; stroke-width: 1.5;" width="44" x="197" y="3"/><text fill="#000000" font-family="Calibri" font-size="18" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="30" x="204" y="29.459">Bob</text><rect fill="#E5E8EF" height="35.9727" rx="5" ry="5" style="stroke: #021540; stroke-width: 1.5;" width="44" x="197" y="228.8359"/><text fill="#000000" font-family="Calibri" font-size="18" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="30" x="204" y="255.2949">Bob</text><polygon fill="#000000" points="207,75.9727,217,79.9727,207,83.9727,211,79.9727" style="stroke: #000000; stroke-width: 1.0;"/><line style="stroke: #000000; stroke-width: 1.0;" x1="159" x2="213" y1="79.9727" y2="79.9727"/><text fill="#000000" font-family="Calibri" font-size="18" lengthAdjust="spacingAndGlyphs" textLength="36" x="166" y="76.4316">hello</text><polygon fill="#F8FCFF" points="8,54.9727,8,85.9727,154,85.9727,154,64.9727,144,54.9727,8,54.9727" style="stroke: #021540; stroke-width: 1.0;"/><line style="stroke: #021540; stroke-width: 1.0;" x1="144" x2="144" y1="54.9727" y2="64.9727"/><line style="stroke: #021540; stroke-width: 1.0;" x1="154" x2="144" y1="64.9727" y2="64.9727"/><text fill="#000000" font-family="Calibri" font-size="18" lengthAdjust="spacingAndGlyphs" textLength="125" x="14" y="79.4316">this is a first note</text><polygon fill="#000000" points="170,117.9453,160,121.9453,170,125.9453,166,121.9453" style="stroke: #000000; stroke-width: 1.0;"/><line style="stroke: #000000; stroke-width: 1.0;" x1="164" x2="218" y1="121.9453" y2="121.9453"/><text fill="#000000" font-family="Calibri" font-size="18" lengthAdjust="spacingAndGlyphs" textLength="18" x="176" y="118.4043">ok</text><polygon fill="#F8FCFF" points="224,96.9453,224,127.9453,386,127.9453,386,106.9453,376,96.9453,224,96.9453" style="stroke: #021540; stroke-width: 1.0;"/><line style="stroke: #021540; stroke-width: 1.0;" x1="376" x2="376" y1="96.9453" y2="106.9453"/><line style="stroke: #021540; stroke-width: 1.0;" x1="386" x2="376" y1="106.9453" y2="106.9453"/><text fill="#000000" font-family="Calibri" font-size="18" lengthAdjust="spacingAndGlyphs" textLength="141" x="230" y="121.4043">this is another note</text><line style="stroke: #000000; stroke-width: 1.0;" x1="219" x2="261" y1="180.3633" y2="180.3633"/><line style="stroke: #000000; stroke-width: 1.0;" x1="261" x2="261" y1="180.3633" y2="193.3633"/><line style="stroke: #000000; stroke-width: 1.0;" x1="220" x2="261" y1="193.3633" y2="193.3633"/><polygon fill="#000000" points="230,189.3633,220,193.3633,230,197.3633,226,193.3633" style="stroke: #000000; stroke-width: 1.0;"/><text fill="#000000" font-family="Calibri" font-size="18" lengthAdjust="spacingAndGlyphs" textLength="93" x="226" y="175.8496">I am thinking</text><polygon fill="#F8FCFF" points="52,138.918,52,213.918,214,213.918,214,148.918,204,138.918,52,138.918" style="stroke: #021540; stroke-width: 1.0;"/><line style="stroke: #021540; stroke-width: 1.0;" x1="204" x2="204" y1="138.918" y2="148.918"/><line style="stroke: #021540; stroke-width: 1.0;" x1="214" x2="204" y1="148.918" y2="148.918"/><text fill="#000000" font-family="Calibri" font-size="18" lengthAdjust="spacingAndGlyphs" textLength="47" x="58" y="163.377">a note</text><text fill="#000000" font-family="Calibri" font-size="18" lengthAdjust="spacingAndGlyphs" textLength="141" x="58" y="185.3496">can also be defined</text><text fill="#000000" font-family="Calibri" font-size="18" lengthAdjust="spacingAndGlyphs" textLength="112" x="58" y="207.3223">on several lines</text><!--
+@startuml
+skinparam backgroundColor white 
+skinparam activityArrowColor #021540
+skinparam activityBackgroundColor #E5E8EF
+skinparam activityBorderColor #021540 
+skinparam activityStartColor black 
+skinparam activityEndColor black 
+skinparam activityBarColor black 
+skinparam actorBackgroundColor #E5E8EF
+skinparam actorBorderColor #021540 
+skinparam usecaseArrowColor #021540 
+skinparam usecaseBackgroundColor #E5E8EF
+skinparam usecaseBorderColor #021540 
+skinparam classArrowColor #021540 
+skinparam classBackgroundColor #E5E8EF
+skinparam classBorderColor #021540 
+skinparam objectArrowColor #021540 
+skinparam objectBackgroundColor #E5E8EF
+skinparam objectBorderColor #021540 
+skinparam packageBackgroundColor #E5E8EF
+skinparam packageBorderColor #021540 
+skinparam stereotypeCBackgroundColor #ADD1B2 
+skinparam stereotypeABackgroundColor #A9DCDF 
+skinparam stereotypeIBackgroundColor #B4A7E5 
+skinparam stereotypeEBackgroundColor #EB937F 
+skinparam componentArrowColor #021540 
+skinparam componentBackgroundColor #E5E8EF
+skinparam componentBorderColor #021540 
+skinparam componentInterfaceBackgroundColor #E5E8EF
+skinparam componentInterfaceBorderColor #021540 
+skinparam noteFontColor #000000
+skinparam noteFontSize 18
+skinparam noteFontStyle  plain
+skinparam noteBackgroundColor #f8fcff
+skinparam noteBorderColor #021540
+skinparam noteRoundCorner 10
+skinparam stateBackgroundColor #E5E8EF
+skinparam stateBorderColor #021540 
+skinparam stateArrowColor #021540 
+skinparam stateStartColor black 
+skinparam stateEndColor black 
+skinparam sequenceArrowColor #000000
+skinparam sequenceDividerBackgroundColor #303438 
+skinparam sequenceDividerBorderColor #ffffff
+skinparam sequenceDividerFontColor white
+skinparam sequenceDividerFontSize 18
+skinparam sequenceDividerFontStyle  plain
+skinparam sequenceLifeLineBackgroundColor #41719c
+skinparam sequenceLifeLineBorderColor #021540 
+skinparam sequenceParticipantBackgroundColor #E5E8EF
+skinparam sequenceParticipantBorderColor #021540 
+skinparam sequenceBoxBorderColor #ffffff
+skinparam sequenceBoxBackgroundColor #f8f8f8
+skinparam sequenceBoxRoundcorner 10
+skinparam sequenceReferenceAlign center
+skinparam sequenceActorFontColor black
+skinparam sequenceActorFontSize 18
+skinparam sequenceActorFontStyle bold
+skinparam sequenceArrowFontColor black
+skinparam sequenceArrowFontSize 18
+skinparam sequenceArrowFontStyle  plain
+skinparam sequenceGroupBackgroundColor #EEEEEE 
+skinparam sequenceGroupFontColor black
+skinparam sequenceGroupFontSize 18
+skinparam sequenceGroupFontStyle  bold
+skinparam sequenceGroupHeaderFontColor black
+skinparam sequenceGroupHeaderFontSize 18
+skinparam sequenceGroupHeaderFontStyle  bold
+skinparam sequenceParticipantFontColor black
+skinparam sequenceParticipantFontSize 18
+skinparam sequenceParticipantFontStyle  bold
+skinparam sequenceStereotypeFontColor black
+skinparam sequenceStereotypeFontSize 18
+skinparam sequenceStereotypeFontStyle  italic
+skinparam sequenceTitleFontColor black
+skinparam sequenceTitleFontSize 18
+skinparam sequenceTitleFontStyle  bold
+
+skinparam defaultFontName Calibri
+skinparam defaultFontSize 18
+
+skinparam activityFontColor black
+skinparam activityFontSize 18
+skinparam activityFontStyle bold
+skinparam activityArrowFontColor black
+skinparam activityArrowFontSize 18
+skinparam activityArrowFontStyle  plain
+skinparam circledCharacterFontColor black
+skinparam circledCharacterFontSize 18
+skinparam circledCharacterFontStyle bold
+skinparam circledCharacterRadius 11
+skinparam classArrowFontColor black
+skinparam classArrowFontSize 18
+skinparam classArrowFontStyle  plain
+skinparam classAttributeFontColor black
+skinparam classAttributeFontSize 18
+skinparam classAttributeIconSize  10 
+skinparam classAttributeFontStyle  plain
+skinparam classFontColor black
+skinparam classFontSize 18
+skinparam classFontStyle bold
+skinparam classStereotypeFontColor black
+skinparam classStereotypeFontSize 18
+skinparam classStereotypeFontStyle  italic
+skinparam objectArrowFontColor black
+skinparam objectArrowFontSize 18
+skinparam objectArrowFontStyle  plain
+skinparam objectAttributeFontColor black
+skinparam objectAttributeFontSize 18
+skinparam objectAttributeFontStyle  plain
+skinparam objectFontColor black
+skinparam objectFontSize 18
+skinparam objectFontStyle bold
+skinparam objectStereotypeFontColor black
+skinparam objectStereotypeFontSize 18
+skinparam objectStereotypeFontStyle  italic
+skinparam componentFontColor black
+skinparam componentFontSize 18
+skinparam componentFontStyle bold
+skinparam componentStereotypeFontColor black
+skinparam componentStereotypeFontSize 18
+skinparam componentStereotypeFontStyle  italic
+skinparam componentArrowFontColor black
+skinparam componentArrowFontSize 18
+skinparam componentArrowFontStyle  plain
+skinparam packageFontColor black
+skinparam packageFontSize 18
+skinparam packageFontStyle bold
+skinparam titleFontColor black
+skinparam titleFontSize 18
+skinparam titleFontStyle bold
+skinparam stateFontColor black
+skinparam stateFontSize 18
+skinparam stateFontStyle bold
+skinparam stateArrowFontColor black
+skinparam stateArrowFontSize 18
+skinparam stateArrowFontStyle  plain
+skinparam stateAttributeFontColor black
+skinparam stateAttributeFontSize 18
+skinparam stateAttributeFontStyle  plain
+skinparam usecaseFontColor black
+skinparam usecaseFontSize 18
+skinparam usecaseFontStyle  plain
+skinparam usecaseStereotypeFontColor black
+skinparam usecaseStereotypeFontSize 18
+skinparam usecaseStereotypeFontStyle  italic
+skinparam usecaseActorFontColor black
+skinparam usecaseActorFontSize 18
+skinparam usecaseActorFontStyle  plain
+skinparam usecaseActorStereotypeFontColor black
+skinparam usecaseActorStereotypeFontSize 18
+skinparam usecaseActorStereotypeFontStyle  italic
+skinparam usecaseArrowFontColor black
+skinparam usecaseArrowFontSize 18
+skinparam usecaseArrowFontStyle  plain
+skinparam footerFontColor black
+skinparam footerFontSize 18
+skinparam footerFontStyle  plain
+skinparam headerFontColor black
+skinparam headerFontSize 18
+skinparam headerFontStyle  plain
+skinparam roundcorner 10
+' Removing this auto-wrap, overall default is better
+'skinparam maxMessageSize 200
+
+skinparam shadowing false
+
+Alice->Bob : hello
+note left: this is a first note
+
+Bob->Alice : ok
+note right: this is another note
+
+Bob->Bob : I am thinking
+note left
+	a note
+	can also be defined
+	on several lines
+end note
+
+@enduml
+
+PlantUML version 1.2017.14beta5(Unknown compile time)
+(GPL source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) 64-Bit Server VM
+Java Version: 1.8.0_144-b01
+Operating System: Windows 10
+OS Version: 10.0
+Default Encoding: Cp1252
+Language: en
+Country: US
+--></g></svg>
