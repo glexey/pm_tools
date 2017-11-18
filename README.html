@@ -1789,17 +1789,18 @@
 <div id="SIDEBAR">
 <div id="TOC">
 <ul>
-<li id="c066e645"><a href="#pm_tools">pm_tools</a></li>
+<li id="7c53d6c0"><a href="#overview">Overview</a></li>
 <li id="04eb8d81"><a href="#requirements">Requirements</a></li>
 <li id="1d2a0ed6"><a href="#quick-start">Quick start</a></li>
+<li id="a5f0518a"><a href="#next-steps">Next steps</a></li>
 <li id="6a03eca0"><a href="#fixme">FIXME</a></li>
 </ul>
 </div>
 </div>
 <div id="EDGE"></div>
 <div id="MAIN">
-<div class="section level1" id="pm_tools">
-<h1>pm_tools</h1>
+<div class="section level1" id="overview">
+<h1>Overview</h1>
 <p id="46c2ec9c"><strong>pm_tools</strong> is a framework for authoring technical documentation in markdown. Basic markdown capabilities are provided by pandoc. Pm_tools extends pandoc-flavored markdown with "plugin" syntax that allows embedding:</p>
 <ul>
 <li id="33a29993"><a href="http://plantuml.com">Plantuml</a> diagrams</li>
@@ -1836,7 +1837,7 @@
 </div>
 <div class="section level1" id="quick-start">
 <h1>Quick start</h1>
-<p id="e14a95db">Create <code>hello.md</code> with the following content:</p>
+<p id="3bee2baa">Create a file named <code>hello.md</code> with the following content:</p>
 <pre><code># Quick start example
 
 ## Hello, World
@@ -1844,9 +1845,13 @@
 ```plantuml("Communication to the world")
 Pm_doc -&gt; World: Hello there
 ```</code></pre>
-<p id="3bd25840">Run from the console:</p>
+<p id="ee720a2a">Run from the git bash (recommended) console:</p>
 <pre><code>python $PM_DOC/scripts/mmd2doc.py hello.md</code></pre>
-<p id="59204313">An overview of all features with the examples is in <code>doc/Example.mmd</code>.</p>
+<p id="ddb704de">This command should produce hello.html file similar to <a href="https://glexey.github.io/pm_tools/doc/hello_world/hello.html">this</a>.</p>
+</div>
+<div class="section level1" id="next-steps">
+<h1>Next steps</h1>
+<p id="958657bb">An overview of all features with the examples can be found here: <a href="https://glexey.github.io/pm_tools/doc/example.html">example.html</a>. The source of this document is in <code>doc/example.mmd</code>. Best way to learn pm_tools features is to display source <code>example.mmd</code> and output <a href="https://glexey.github.io/pm_tools/doc/example.html">example.html</a> side-by-side and scroll through the examples.</p>
 </div>
 <div class="section level1" id="fixme">
 <h1>FIXME</h1>
