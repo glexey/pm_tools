@@ -92,7 +92,7 @@ class WavedromPlugin(object):
             if (line.split()[0] == "|"):
                 node = line.split()[1]
                 if (len(node) != len(last_wave)):
-                    error("Node definition length does not match preceding waveform length for %s:\n  wave: %s\n  node: %s" % (last_name, last_wave, node))
+                    self.pp.error("Node definition length does not match preceding waveform length for %s:\n  wave: %s\n  node: %s" % (last_name, last_wave, node))
                 if wavedef[-1].node is None:
                     wavedef[-1].node = node
                 else:
@@ -109,7 +109,7 @@ class WavedromPlugin(object):
             # If we get here, this must be a regular signal def line
             data = line.split("|")
             if len(data) < 2:
-                error("Found waveform definition line that is too short.  Each line requires a minimum of 2 columns: %s" % line)
+                self.pp.error("Found waveform definition line that is too short.  Each line requires a minimum of 2 columns: %s" % line)
             name = data[0].lstrip().rstrip()
             wave = data[1].lstrip().rstrip()
             last_wave = wave

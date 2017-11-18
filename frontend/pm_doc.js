@@ -280,11 +280,18 @@ f.insert_feedback = function(type, node_start, offset_start, node_end, offset_en
                              // is not working (e.g. during local testing)
             elem.parentNode.removeChild(elem);
     }
+
     if (type == "append_at_end") {
         var num = parseInt("0x" + rec._id.substr(rec._id.length-3));
         var link = '<a href="' + g.pmdb_url + '/feedback?id=' + rec._id + '">[' + num + ']</a>';
         var table = '<table>';
-        table += '<tr><th>Selected text:</th><td>' + rec.selection_text + '</td></tr>';
+        var text = rec.selection_text;
+        if ((text.length < 25) && (rec.prefix || rec.suffix)) {
+            // For short selection, add some context
+            if (!text) text = "&caret;";
+            text = rec.prefix + "<mark>" + text + "</mark>" + rec.suffix;
+        }
+        table += '<tr><th>Selected text:</th><td>' + text + '</td></tr>';
         table += '<tr><th>[' + rec.who_created + ']</th><td>' + rec.text + '</td></tr>';
         if (rec.replies)
             for (var i = 0; i < rec.replies.length; i++)
@@ -353,7 +360,7 @@ f.insert_feedback = function(type, node_start, offset_start, node_end, offset_en
             del(fb.aftertext);
         }
     }
-    
+
     // For feedback filed by mistake, remove text
     // We still want the HTML element, but make it empty
     if (rec && rec.replies)
@@ -405,6 +412,27 @@ f.start_feedback_form = function() {
     document.getElementById("fb-form-owner").value = g.doc_id.owner;
     document.getElementById("feedback_text").value = "";
     document.getElementById("feedback_submit").classList.add("disabled");
+    
+    // Save text before and after selection, for more context
+    g.prefix = "";
+    g.suffix = "";
+    var MAX_CHARS = 50;
+    if (g.sel_start_node.nodeType == g.sel_start_node.TEXT_NODE) {
+        g.prefix = g.sel_start_node.nodeValue.substring(0, g.offset_start).replace(/^\s+/, '');
+        while (g.prefix.length > MAX_CHARS) {
+            var pos = g.prefix.indexOf(' ');
+            if (pos == -1) break;
+            g.prefix = "..." + g.prefix.substr(pos + 1);
+        }
+    }
+    if (g.sel_end_node.nodeType == g.sel_end_node.TEXT_NODE) {
+        g.suffix = g.sel_end_node.nodeValue.substr(g.offset_end).replace(/\s+$/, '');
+        while (g.suffix.length > MAX_CHARS) {
+            var pos = g.suffix.lastIndexOf(' ');
+            if (pos == -1) break;
+            g.suffix = g.suffix.substring(0, pos) + "...";
+        }
+    }
     
     // Add new insertion element
     g.fb_obj = f.insert_feedback("add_text", g.sel_start_node, g.offset_start, g.sel_end_node, g.offset_end, "[]", null);
@@ -555,6 +583,8 @@ f.submit_feedback = function() {
             "offset_start": g.offset_start,
             "offset_end": g.offset_end,
             "selection_text": g.selection_text,
+            "prefix": g.prefix,
+            "suffix": g.suffix,
             "owner": g.doc_id.owner,                                      // From the document itself
             "user_owner": document.getElementById("fb-form-owner").value, // From the form, specified by user
             "text": document.getElementById("feedback_text").value,
@@ -668,10 +698,8 @@ f.make_toc_interactive = function() {
             add_toc_collapse_button(""+level, level);
             max_level = level;
         }
-        ul.style.paddingLeft = "1em";
         for (var i = 0; i < ul.children.length; i++) {
             let li = ul.children[i];
-            li.style.listStyleType = "none";
             li.toc_level = level; // custom attribute to remember the level
             let uls = li.getElementsByTagName("UL");
             if (uls.length > 0) {

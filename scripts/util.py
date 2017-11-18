@@ -226,7 +226,7 @@ def fixme_pattern(word):
     # <mark>OPEN[John Doe]:</mark> blah blah
     # <mark>OPEN[John Doe]</mark>: blah blah
     # OPEN - blah blah blah
-    return r'(?i)\b%s\b(?:\\?\[[^]]+\\?\]|</mark>|[ \t]*[:\-\*]+)+[ \t]*(?=\S)'%word
+    return r'(?i)(\b%s\b(?:\\?\[[^]]+\\?\]|</mark>|[ \t]*[:\-\*]+)+[ \t]*)(?=\S)'%word
 
 def check_hooks(cfg):
     hooks = [
@@ -255,7 +255,11 @@ def get_config(start_dir='.', skip_hooks=False):
             execfile(fn, config)
             def norm_paths(k1, k2):
                 for dict1 in config[k1]:
-                    dict1[k2] = os.path.normpath(dict1[k2])
+                    # Support strings and lists of strings
+                    if isinstance(dict1[k2], basestring):
+                        dict1[k2] = os.path.normpath(dict1[k2])
+                    else:
+                        dict1[k2] = [os.path.normpath(x) for x in dict1[k2]]
             norm_paths('build_targets', 'src')
             norm_paths('build_targets', 'dst')
             # Side effect: if we're in the repo, check and populate git hooks
@@ -277,6 +281,11 @@ def get_toolconfig():
         execfile(ffn, config)
     return config
 
+def string_seq(str_or_sequence):
+    if isinstance(str_or_sequence, basestring):
+        str_or_sequence = [str_or_sequence]
+    return str_or_sequence
+
 def src2dest(srcname, targets):
     # map given source file/dir name to "distrib" file/dir name(s),
     # according to provided targets list.
@@ -284,21 +293,23 @@ def src2dest(srcname, targets):
     dst_list= []
     src = os.path.normpath(srcname)
     for t in targets:
-        s, d = [os.path.normpath(x) for x in (t['src'], t['dst'])]
-        if src.lower().startswith(s.lower()):
-            # Careful with case: see unittests
-            answer = t['dst'] + src[len(s):]
-            dst_list.append(os.path.normpath(answer))
-        elif src.lower().startswith(d.lower()):
-            # Given path already in dest
-            answer = t['dst'] + src[len(d):]
-            dst_list.append(os.path.normpath(answer))
+        d = os.path.normpath(t['dst'])
+        for source in string_seq(t['src']):
+            s = os.path.normpath(source)
+            if src.lower().startswith(s.lower()):
+                # Careful with case: see unittests
+                answer = t['dst'] + src[len(s):]
+                dst_list.append(os.path.normpath(answer))
+            elif src.lower().startswith(d.lower()):
+                # Given path already in dest
+                answer = t['dst'] + src[len(d):]
+                dst_list.append(os.path.normpath(answer))
     return dst_list
 
 def src2dest_unittest():
     t = [
             {'src': 'src/Foo',         'dst': 'dist/src/Foo'},
-            {'src': 'src/Foo/bar.txt', 'dst': 'dist/foobar.txt'},
+            {'src': ['src/Foo/bar.txt'], 'dst': 'dist/foobar.txt'},
             ]
     assert src2dest('src/foo/Dir/Abc.def', t) == ['dist\\src\\Foo\\Dir\\Abc.def']
     assert src2dest('src/foo/bar.txt', t) == ['dist\\src\\Foo\\bar.txt', 'dist\\foobar.txt']

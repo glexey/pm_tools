@@ -39,7 +39,6 @@ class ParseError(Exception): pass
 g.figure_count = 0
 g.xml = {}
 g.pythoncom_initialized = False
-g.anchor_count = collections.Counter()
 g.deptree_cleanup = []
 g.deptree_depends = []
 g.svg_hash = {} # holds SVG content for replacement after pandoc run
@@ -105,10 +104,17 @@ class PandocPreproc(object):
         self.find_xml = find_xml
         self.log_dependency = log_dependency # FIXME use get_source() instead
         self.repo_root = repo_root
+        self.error = error
         # initialize plugins
         plugins.initialize(self)
         # parse the input
-        self.parse(fname, self.outf.file)
+        s = self.parse(fname)
+        # plugin pre-processing
+        s = plugins.preprocess(s)
+        # Write output for pandoc processing
+        self.outf.file.write(s)
+        self.outf.file.close()
+        #
         self.convert_visio()
         self.fix_broken_svg()
         if self.fmt == "docx" or g.opts.email:
@@ -405,21 +411,6 @@ class PandocPreproc(object):
             print "While processing %s token:\n%s"%(token.typ, token.value)
             raise
 
-    def add_named_anchors(self, s):
-        # For OPEN/FIXME/TODO, add named "anchors", so that we could auto-link to them
-
-        def anchor_subst(pattern, name, s):
-            def repl(matchobj):
-                g.anchor_count[name] += 1
-                return '<a name="%s_%04d" class="%s">%s</a>'%(name, g.anchor_count[name], name, matchobj.group(0))
-            return re.sub(pattern, repl, s)
-
-        # 'OPEN: fix me' -> '<a name="open_0001">OPEN</a>: fix me'
-        s = anchor_subst(util.fixme_pattern('OPEN'), "open", s)
-        s = anchor_subst(util.fixme_pattern('FIXME'), "fixme", s)
-        s = anchor_subst(util.fixme_pattern('TODO'), "todo", s)
-        return s
-
     def insert_file(self, fullpath):
         """
         Read file and collect new tokens
@@ -431,7 +422,7 @@ class PandocPreproc(object):
         new_tokens = [t for t in self.tokenize(insert_code, self.token_specification)]
         return new_tokens
 
-    def parse(self, fname, output):
+    def parse(self, fname):
         """
         Parse the file, build output collateral as needed
         """
@@ -490,6 +481,7 @@ class PandocPreproc(object):
         # to global list of tokens. maybe not the most effective approach..
         self.tokens = [t for t in self.tokenize(src_code, self.token_specification)]
 
+        output = ""
         while self.tokens:
             token = self.tokens.pop(0)
             if (token.typ.lower() in self.legal_tokens):
@@ -498,7 +490,7 @@ class PandocPreproc(object):
                 s = self.parse_image(token)
             elif token.typ == "MISMATCH":
                 s = cleanstr(token.value)
-                s = self.add_named_anchors(s) # annotate OPENS/FIXMEs
+                s = plugins.process_mismatch(s)
             elif token.typ in ("COMMENT", "VERBATIM"):
                 s = cleanstr(token.value)
             elif token.typ == "INSERT_FILE":
@@ -518,9 +510,12 @@ class PandocPreproc(object):
             else:
                 raise Exception("Did not understand token %s" % token.typ)
 
-            s = s.encode('ascii', 'xmlcharrefreplace')
-
-            output.write(s)
+            try:
+                s = s.encode('ascii', 'xmlcharrefreplace')
+            except:
+                print "This error will be fixed in the tool if you send the log to the developer"
+                print "While processing token %s: %s"%(token.typ, repr(s))
+                raise
 
             # Check for references to local drive in the output.. catch lots of bugs
             if token.typ not in ("COMMENT", "VERBATIM", "CODE"):
@@ -529,10 +524,9 @@ class PandocPreproc(object):
                         # The check is very crude, may need to improve in future
                         raise Exception("Reference to local drive in output:\n%s"%line)
 
-        # FIXME - eventually we would prefer to delete this file once it has
-        #         been fully processed.
-        output.close()
+            output += s
 
+        return output
 
     def parse_insert_file(self, token):
         """
@@ -626,6 +620,7 @@ class PandocPreproc(object):
 def title2id(s):
     # Create linkable title from arbitrary capition string
     ans = re.sub(r'[^\w]+', r'-', s.lower())
+    ans = re.sub(r'^-|-$', '', ans)
     return ans
 
 def write_svg_html(svg_zoom_file, svg, title):
@@ -732,7 +727,9 @@ def inline_svg(dirname, svg_full_path, title, fmt, div_style):
     hyperlink = '<a xmlns="http://www.w3.org/2000/svg" xlink:href="%s" xmlns:xlink="http://www.w3.org/1999/xlink"><rect x="0" y="0" width="100%%" height="100%%" fill-opacity="0" style="fill:white"/></a>' % (zoom_rel_path)
     s = unicode(s, 'utf-8')
     s = s.replace("</svg>", hyperlink + "</svg>")
-    s += "<p class=\"caption\">%s</p></div>" % (title)
+    if title:
+        s += "<p class=\"caption\">%s</p>"%title
+    s += "</div>"
 
     s = s.encode('ascii', 'xmlcharrefreplace')
 
@@ -975,14 +972,19 @@ def build_doc(opts):
 
             # Post-process pandoc's HTML output
             s = open(outfile).read()
+            s = plugins.postprocess_html(s)
             s = re.sub('<!-- INLINE_SVG (\w+) -->', replace_svg_ref, s)
             if opts.fmt != 'pdf':
                 # By some inexplicable reason including fonts break mathjax in PDF
                 s = s.replace('<!-- FONTS -->', g.fonts, 1)
             s = s.replace('<!-- MATHJAX -->', g.mathjax4pdf if opts.fmt == "pdf" else g.mathjax, 1)
             s = s.replace('%PMDB_SERVER_URL%', "'%s'"%toolcfg['pmdb_server'], 1)
+            s = s.replace('<code>&lt;!--\n', '<code>').replace('\n--&gt;</code>', '</code>') # hack for plugin documentation
 
             doc = bs4.BeautifulSoup(s, "html5lib")
+
+            plugins.postprocess_soup(doc)
+            
             # Convert native tables into mmd2doc-style tables
             for tbl in doc("table"):
                 cap = tbl.find("caption")
@@ -995,10 +997,30 @@ def build_doc(opts):
                 cap.attrs["class"] = "table_caption"
                 tbl.wrap(div)
                 tbl.insert_after(cap)
+            
+            # Add ids to figures
+            for fig in doc.find_all("div", class_="figure"):
+                cap = fig.find("p", class_="caption")
+                if cap and cap.string:
+                    fig.attrs["id"] = title2id("figure-" + cap.string)
 
             # Add paragraph ids for easier feedback location
             for e in doc.find_all(['p', 'li']):
+                if e.get('id', None): continue
                 e['id'] = get_id(str(e))
+
+            # Replace figure and table references with links
+            for string in list(doc.strings):
+                if string.parent.name == "code": continue # skip code fragments
+                m = re.search(r'(?i)(.*)\[((?:table|figure)\s*:.*?)(?<!\\)\](.*)', string)
+                if not m: continue
+                string.insert_before(bs4.NavigableString(m.group(1)))
+                ahref = doc.new_tag("a", href='#%s'%title2id(m.group(2)))
+                ahref.string = m.group(2)
+                string.insert_before(ahref)
+                string.insert_before(bs4.NavigableString(m.group(3)))
+                string.extract()
+
             open(outfile, 'w').write(str(doc))
 
             # If PDF is requested, take the next step to convert the html to PDF
@@ -1373,33 +1395,37 @@ def cleanstr(s):
     """
     Remove non-ascii (some specific and frequent chars > 0x7f)
 
-     's/\%x85/.../ge'
-     's/\%x91/' . "'/ge"
-     's/\%x92/' . "'/ge"
-     's/\%x93/"/ge'
-     's/\%x94/"/ge'
-     's/\%x95/*/ge'
-     's/\%x96/-/ge'
-     's/\%x97/-/ge'
+    The challenge here is that part of the input moight be ASCII-8bit
+    and part UTF-8 encoded, when copy-pasted from different sources.
+    So need to be careful to not break UTF-8 encoding while replacing
+    ASCII-8bit characters.
     """
     if (s == None): return ""
     if (not isinstance(s, str)):
         s = "%s" % s
-    s = re.sub(r'[\x85]' , '...', s)  # ellipses
-    s = re.sub(r'[\x91\x92]', "'", s) # smart quote
-    s = re.sub(r'[\x93\x94]', '"', s) # smart quote
-    s = re.sub(r'[\x95]', 'o', s)   # special bullet character
-    s = re.sub(r'[\xA0]', ' ', s)   # "no break space".  just replacing with space
-    s = re.sub(r'[\x96\xE2\x97]', '-', s)   # long dash
-    s = re.sub(r'[\xA6]', '|', s)   # special vertical characther
-    s = re.sub(r'[\xA9]', '&copy;', s)   # copyright
-    s = re.sub(r'[\xAe]', '&reg;', s)   # registered
-    s = re.sub(r'[\xbc]', '1/4', s)
-    s = re.sub(r'[\xbf]', ' ', s)       # inverted question mark??
-    s = re.sub(r'[\xE2\x80\x99]', "", s)   # random chars
-    s = re.sub(r'[\xb0]', "&deg;", s)   # Degree character
-    s = re.sub(r'[\xd7]', 'x', s)   # special x char
-    s = re.sub(r'[\xb1]', '&plusmn;', s)   # special x char
+    # UTF-8
+    s = re.sub(r'\xE2\x80\x91', "-", s)               # non-breaking hyphen
+    s = re.sub(r'\xE2\x80[\x92\x93\x94\x95]', '-', s) # various dash marks
+    s = re.sub(r'\xE2\x80\x98', "'", s)               # left quotation mark
+    s = re.sub(r'\xE2\x80\x99', "'", s)               # right quotation mark
+    s = re.sub(r'\xE2\x80\x9c', '"', s)               # left quote
+    s = re.sub(r'\xE2\x80\x9d', '"', s)               # right quote
+    s = re.sub(r'\xE2\x80\xa6', '...', s)             # ellipsis
+    # ASCII-8bit (latin encoding)
+    s = re.sub(r'\x85' , '...', s)     # ellipsis
+    s = re.sub(r'[\x91\x92]', "'", s)  # smart quote
+    s = re.sub(r'[\x93\x94]', '"', s)  # smart quote
+    s = re.sub(r'\x95', 'o', s)        # special bullet character
+    s = re.sub(r'[\x96\x97]', '"', s)  # dashes
+    s = re.sub(r'\xA0', ' ', s)        # "no break space"
+    s = re.sub(r'\xA6', '|', s)        # special vertical characther
+    s = re.sub(r'\xA9', '&copy;', s)   # copyright
+    s = re.sub(r'\xAe', '&reg;', s)    # registered
+    s = re.sub(r'\xb0', "&deg;", s)    # Degree character
+    s = re.sub(r'\xb1', '&plusmn;', s) # special x char
+    s = re.sub(r'\xbc', '1/4', s)
+    s = re.sub(r'\xbf', ' ', s)        # inverted question mark??
+    s = re.sub(r'\xd7', 'x', s)        # special x char
 
     # Use HTML "micro" entity for 1us, 0.8uV, 100uA, and so on
     s = fix_units(s)

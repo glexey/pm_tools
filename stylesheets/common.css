@@ -431,13 +431,16 @@ margin: 0;
 margin-left: 3px;
 padding-left: 0;
 line-height: 1.2;
+list-style:none;
 }
 
 #TOC > ul {
-list-style:none;
-padding-left: 0;
 padding-top: 0.5em;
 margin-left: 0;
+}
+
+#TOC ul {
+padding-left: 1em;
 }
 
 ul, ol, li {

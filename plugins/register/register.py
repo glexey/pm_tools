@@ -127,11 +127,11 @@ class RegisterPlugin(object):
         msb = 0
         lsb = 0
         if '|' not in lines[0]:
-            error("Register %s: expected '|', got: %s"%(regname, lines[0].strip()))
+            self.pp.error("Register %s: expected '|', got: %s"%(regname, lines[0].strip()))
         else:
             params = [x.strip() for x in lines[0].split("|")]
             if (len(params) < 2):
-                error("Register %s bitfield has an incorrect definition: '%s'" % (regname, lines[0].strip()))
+                self.pp.error("Register %s bitfield has an incorrect definition: '%s'" % (regname, lines[0].strip()))
             bits = params[0]
             name = params[1]
             if (not struct):
@@ -142,7 +142,7 @@ class RegisterPlugin(object):
                     msb = int(bits)
                     lsb = int(bits)
                 else:
-                    error("Register %s bitfield has an incorrect bit definition: '%s'" % (regname, lines[0].strip()))
+                    self.pp.error("Register %s bitfield has an incorrect bit definition: '%s'" % (regname, lines[0].strip()))
 
                 # Fix incorrectly ordered bit fields
                 if lsb > msb:
@@ -150,20 +150,20 @@ class RegisterPlugin(object):
             else:
                 size = int(bits)
                 if (size == 0):
-                    error("Register %s bitfield has an invalid 0-sized field (did you intend to use struct formatting?): '%s'" % (regname,
+                    self.pp.error("Register %s bitfield has an invalid 0-sized field (did you intend to use struct formatting?): '%s'" % (regname,
                         lines[0].strip()))
                 lsb = next_lsb
                 msb = size + lsb - 1
             if (len(params) > 2):
                 access_type = params[2].replace("/", "").upper()
                 if (access_type not in valid_access_types):
-                    error("Register field %s.%s has an invalid/unsupported access type: '%s'. Valid access types are: %s" % (regname, name, access_type, access_types_help_msg))
+                    self.pp.error("Register field %s.%s has an invalid/unsupported access type: '%s'. Valid access types are: %s" % (regname, name, access_type, access_types_help_msg))
             if (len(params) > 3):
                 value = params[3]
                 try:
                     reset_default = self.pp.formatters.to_int(value)
                     if (reset_default > (2**(msb - lsb + 1)) - 1):
-                        error("Register field %s.%s default value 0x%x cannot be encoded with %d bits." % (regname, name, reset_default, msb - lsb + 1))
+                        self.pp.error("Register field %s.%s default value 0x%x cannot be encoded with %d bits." % (regname, name, reset_default, msb - lsb + 1))
                 except ValueError:
                     reset_default = value
 
@@ -189,7 +189,7 @@ class RegisterPlugin(object):
                 enum = re.sub(r"^=\s*", "", line)
                 enum_line = re.split(r"\s*\|\s*", enum)
                 if (len(enum_line) > 2):
-                    error("Improperly formatted enum: %s" % enum)
+                    self.pp.error("Improperly formatted enum: %s" % enum)
                 value = enum_line[0]
                 text = enum_line[1]
                 try:

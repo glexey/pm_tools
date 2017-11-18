@@ -127,7 +127,7 @@ class Worksheet(object):
         comment_id = 0
         for r, row in enumerate(ws.iter_rows(range_string=range_str)):
             if (r > 1000):
-                error("Worksheet '%s' has more than 1000 rows!" % ws.title)
+                self.pp.error("Worksheet '%s' has more than 1000 rows!" % ws.title)
 
             # Calculate size for this row
             row_width = self.calc_row_width(row)

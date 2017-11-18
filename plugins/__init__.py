@@ -3,6 +3,10 @@ import os
 _thisdir = os.path.dirname(os.path.realpath(__file__))
 g = globals()
 modules = []
+process_mismatch_callbacks = []
+preprocess_callbacks = []
+postprocess_soup_callbacks = []
+postprocess_html_callbacks = []
 
 pkgnames = [x for x in os.listdir(_thisdir) if os.path.isfile(os.path.join(_thisdir, x, '__init__.py'))]
 
@@ -39,3 +43,37 @@ def initialize(preprocessor):
         for whereto, what in inst.send.iteritems():
             to = token2plugin[whereto]
             to.received[inst.token] = what
+    # collect optional callbacks
+    for inst in token2plugin.values():
+        if hasattr(inst, 'process_mismatch'):
+            process_mismatch_callbacks.append(inst.process_mismatch)
+        if hasattr(inst, 'preprocess'):
+            preprocess_callbacks.append(inst.preprocess)
+        if hasattr(inst, 'postprocess_html'):
+            postprocess_html_callbacks.append(inst.postprocess_html)
+        if hasattr(inst, 'postprocess_soup'):
+            postprocess_soup_callbacks.append(inst.postprocess_soup)
+
+# process_mismatch() gets called for the "regular text", i.e. everything
+# that is otherwise not explicitly purposed
+def process_mismatch(s):
+    for func in process_mismatch_callbacks:
+        s = func(s)
+    return s
+
+# preprocess gets called before pandoc processing
+def preprocess(s):
+    for func in preprocess_callbacks:
+        s = func(s)
+    return s
+
+# postprocess_html gets called after pandoc processing on the HTML string
+def postprocess_html(s):
+    for func in postprocess_html_callbacks:
+        s = func(s)
+    return s
+
+# postprocess_soup gets called after pandoc processing on the bs4 soup object
+def postprocess_soup(soup):
+    for func in postprocess_soup_callbacks:
+        func(soup)

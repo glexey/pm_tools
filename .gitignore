@@ -1,0 +1,71 @@
+auto/
+distrib/
+tools/
+.*/
+
+*.db
+*.backup
+build_profile.csv
+unused_sources.txt
+
+# credentials for pmdb
+vcap_services.txt
+localhostCert.pem
+localhostKey.pem
+
+# flask session data
+flask_session/
+pmdb.saved_state
+
+# glob test
+tests/src/dir2/globtest.mmd
+
+# coverage results
+coverage_report/
+last_good_coverage/
+.coverage*
+
+# docx/pdf tests output
+visual_check/
+
+# python compiled modules
+*.pyc
+
+# HTML and PDF are assumed to be the result of a build
+*.html
+*.pdf
+
+# but, include the contents of ref directory
+!tests/ref/**
+!tests/src/math.html
+
+# Also include html/javascript sources
+!frontend/**/*.html
+!web/**/*.html
+!stylesheets/*.html
+!flowchart/*.html
+
+# VIM swap/backup
+*~
+*.bak
+.*.sw?
+_.sw?
+.sw?
+.sw?.part
+
+# Sublime setup
+#*.sublime*
+
+.svn/
+
+# Word swap
+~*
+
+# Misc windows
+*.lnk
+
+#emacs pollution
+*.*~
+
+#chrome pollution
+debug.log

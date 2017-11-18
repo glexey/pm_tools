@@ -228,7 +228,7 @@ class SigintPlugin(object):
         enum = re.sub(r"^=\s*", "", line)
         enum_line = re.split(r"\s*\|\s*", enum)
         if (len(enum_line) > 2):
-            error("Improperly formatted enum: %s" % enum)
+            self.pp.error("Improperly formatted enum: %s" % enum)
         value = enum_line[0]
         text = enum_line[1]
         try:
